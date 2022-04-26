@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Admin\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Admin\LoginController;
 
@@ -21,8 +22,12 @@ Route::get('/', function () {
 Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::namespace('Auth\Admin')->name('auth.')->group(function () {
-        Route::get('login', [LoginController::class,'showLoginForm'])->name('form');
+        Route::get('login', [LoginController::class,'showLoginForm'])->name('form-login');
         Route::post('login', 'LoginController@login')->name('login');
         Route::get('logout', 'LoginController@logout')->name('logout');
+
+        Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
+        Route::get('new-password', [ForgotPasswordController::class, 'showNewPasswordForm'])->name('new-password');
+
     });
 });

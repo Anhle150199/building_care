@@ -24,7 +24,7 @@
                     <!--begin::Wrapper-->
                     <div class="d-flex flex-stack mb-2">
                         <label class="form-label fw-bolder text-dark fs-6 mb-0">Mật khẩu</label>
-                        <a href="../../demo1/dist/authentication/layouts/dark/password-reset.html"
+                        <a href="{{ route('admin.auth.forgot-password') }}"
                             class="link-primary fs-6 fw-bolder">Quên mật khẩu ?</a>
                     </div>
                     <!--end::Wrapper-->
