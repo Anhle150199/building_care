@@ -19,7 +19,7 @@
                         <span class="indicator-progress">Đang tải...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
-                    <a href="{{ route('admin.auth.form-login') }}"
+                    <a href="{{ route('auth.form-login') }}"
                         class="btn btn-lg btn-light-primary fw-bolder">Hủy</a>
                 </div>
             </form>

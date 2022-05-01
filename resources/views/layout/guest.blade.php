@@ -25,6 +25,7 @@
     <script>
         var hostUrl = "assets/";
     </script>
+    <script src="js/app.js"></script>
     <script src="assets/plugins/global/plugins.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
     @stack('js')

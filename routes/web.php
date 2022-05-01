@@ -1,8 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\Admin\ForgotPasswordController;
+namespace App;
+
+use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\Admin\LoginController;
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +22,13 @@ use App\Http\Controllers\Auth\Admin\LoginController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::namespace('Auth\Admin')->name('auth.')->group(function () {
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('form-login');
+    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::prefix('admin')->name('admin.')->group(function () {
-
-    Route::namespace('Auth\Admin')->name('auth.')->group(function () {
-        Route::get('login', [LoginController::class,'showLoginForm'])->name('form-login');
-        Route::post('login', 'LoginController@login')->name('login');
-        Route::get('logout', 'LoginController@logout')->name('logout');
-
-        Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
-        Route::get('new-password', [ForgotPasswordController::class, 'showNewPasswordForm'])->name('new-password');
-
-    });
+    Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
+    Route::get('new-password', [ForgotPasswordController::class, 'showNewPasswordForm'])->name('new-password');
 });
+
+

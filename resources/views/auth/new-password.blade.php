@@ -11,7 +11,7 @@
                     <!--end::Title-->
                     <!--begin::Link-->
                     <div class="text-gray-400 fw-bold fs-4">Bạn đã có mật khẩu mới?
-                        <a href="{{ route('admin.auth.form-login') }}"
+                        <a href="{{ route('auth.form-login') }}"
                             class="link-primary fw-bolder">Đăng nhập</a>
                     </div>
                     <!--end::Link-->
