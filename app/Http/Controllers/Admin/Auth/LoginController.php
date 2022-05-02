@@ -24,57 +24,65 @@ class LoginController extends Controller
     |
     */
 
-    // use AuthenticatesUsers;
+    use AuthenticatesUsers;
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    public function login()
+    public function login(Request $request)
     {
-        return 'xx';
-        // return view('auth.login');
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => ['required', 'string', 'exists:admins,email'],
+                'password' => ['required', 'string', 'min:8']
+            ]
+        );
 
-        // return view('auth.login');
-        // dd($request);
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if ($validator->fails()) {
+            return new JsonResponse(['errors' => $validator->getMessageBag()->toArray()], 406);
+        }
 
-        // $validator = Validator::make([
-        //     $request->all(),
-        //     [
-        //         'email' => ['required','string', 'exists:admins,email'],
-        //         'password' => ['required', 'string', 'min:8']
-        //     ]
-        // ]);
+        // Check login quá nhiều lần
+        if (
+            method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)
+        ) {
+            $this->fireLockoutEvent($request);
+            $this->sendLockoutResponse($request);
+            return new JsonResponse(['errors' => ['email' => 'Bạn đã đăng nhập quá nhiều lần.']], 406);
+        }
 
-        // // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // // the login attempts for this application. We'll key this by the username and
-        // // the IP address of the client making these requests into this application.
-        // if ($validator->fails()) {
-        //     return new JsonResponse(['errors'=> $validator->getMessageBag()->toArray()], 406);
-        // }
-
-        // // Check login quá nhiều lần
-        // if (
-        //     method_exists($this, 'hasTooManyLoginAttempts') &&
-        //     $this->hasTooManyLoginAttempts($request)
-        // ) {
-        //     $this->fireLockoutEvent($request);
-
-        //     return $this->sendLockoutResponse($request);
-        // }
-
+        // Check tài khoản
+        $credentials = $request->only(['email', 'password']);
         // if ($this->attemptLogin($request)) {
-        //     if ($request->hasSession()) {
-        //         $request->session()->put('auth.password_confirmed_at', time());
-        //     }
+        if (Auth::guard('admin')->attempt($credentials)) {
 
-        //     return $this->sendLoginResponse($request);
-        // }
+            if ($request->hasSession()) {
+                $request->session()->put('auth.password_confirmed_at', time());
+            }
 
-        // // If the login attempt was unsuccessful we will increment the number of attempts
-        // // to login and redirect the user back to the login form. Of course, when this
-        // // user surpasses their maximum number of attempts they will get locked out.
-        // $this->incrementLoginAttempts($request);
+            $request->session()->regenerate();
+
+            $this->clearLoginAttempts($request);
+
+            if ($response = $this->authenticated($request, $this->guard()->user())) {
+                return $response;
+            }
+
+            return new JsonResponse([], 200);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return new JsonResponse(['errors' => ['email' => 'Email hoặc mật khẩu không chính xác.']], 406);
 
         // return $this->sendFailedLoginResponse($request);
     }
@@ -84,7 +92,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/admin';
+    protected $redirectTo = '/admin';
 
     // public function __construct()
     // {

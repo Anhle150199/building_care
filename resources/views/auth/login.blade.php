@@ -4,7 +4,7 @@
     <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
         <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
             <!--begin::Form-->
-            <form class="form w-100" novalidate="novalidate" method="post" id="kt_sign_in_form" data-kt-redirect-url="{{ route('admin.dashboard', []) }}" action="{{ route('auth.login') }}">
+            <form class="form w-100" novalidate="novalidate" method="post" id="kt_sign_in_form" data-kt-redirect-url="{{ route('admin.dashboard') }}" action="{{ route('auth.login') }}">
                 @csrf
                 <div class="text-center mb-10">
                     <h1 class="text-dark mb-3">Đăng nhập Building Care</h1>
