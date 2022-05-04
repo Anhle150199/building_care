@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::namespace('Auth\Admin')->name('auth.')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('form-login');
     Route::post('login', [LoginController::class, 'login'])->name('login');
-    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
     Route::get('new-password', [ForgotPasswordController::class, 'showNewPasswordForm'])->name('new-password');

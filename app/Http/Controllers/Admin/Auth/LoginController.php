@@ -99,59 +99,18 @@ class LoginController extends Controller
     //     $this->middleware('guest', ['except'=>['logout']]);
     // }
 
+    public function logout(Request $request){
+        $this->guard('admin')->logout();
 
-    // public function login(Request $request)
-    // {
+        $request->session()->invalidate();
 
-    //     $validator = Validator::make([
-    //         $request->only(['email', 'password']),
-    //         [
-    //             'email' =>['required', 'string', 'max:255', 'min:5', ]
-    //         ]
-    //     ]);
-    //     // Validate the form data
-    //     $this->validate($request, [
-    //         'email' => 'required',
-    //         'password' => 'required|min:6',
-    //     ]);
+        $request->session()->regenerateToken();
 
-    //      $email =  $request->email;
-    //     // che thong chi cho phep dang nhap bang sdt hoac email.
-    //     if( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
-    //         // $email = $email . "@phone.dxmb";
-    //         if (Auth::guard('backend_public')->attempt([
-    //             'mobile' => $email,
-    //             'password'       =>$request->password
-    //         ],  $request->remember)) {
-    //             $token = JWTAuth::fromUser(\Auth::user());
-    //             Helper::setToken(\Auth::user()->id,$token);
-    //             return redirect()->route('admin.home');
-    //         }
-
-    //         // if unsuccessful, then redirect back to the login with the form data
-    //         return redirect()->route('admin.auth.form')->withInput($request->all())->withErrors( ['Đăng nhập thất bại! Số điện thoại hoặc mật khẩu không đúng.']);
-    //     }
-
-    //     if (Auth::guard('backend_public')->attempt([
-    //         'email' => $email,
-    //         'password'       =>$request->password
-    //     ],  $request->remember)) {
-    //         $token = JWTAuth::fromUser(\Auth::user());
-    //         Helper::setToken(\Auth::user()->id,$token);
-    //         return redirect()->route('admin.home');
-    //     }
-    //     // if unsuccessful, then redirect back to the login with the form data
-    //     return redirect()->route('admin.auth.form')->withInput($request->all())->withErrors( ['Đăng nhập thất bại! Tài khoản đăng nhập (Email/Số điện thoại) hoặc mật khẩu không đúng.']);
-    // }
-
-    // public function logout()
-    // {
-    //     if(Auth::user() && Helper::getToken(Auth::user()->id)){
-    //         Helper::delToken(\Auth::user()->id);
-    //     }
-    //     Auth::guard('backend_public')->logout();
-    //     return redirect()->route('admin.auth.login');
-    // }
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+        return redirect()->route('auth.form-login');
+    }
 
 
     /**
