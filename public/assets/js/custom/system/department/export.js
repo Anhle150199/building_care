@@ -33,7 +33,6 @@ var KTModalExportUsers = (function () {
                     t.preventDefault(),
                     o && o.validate().then(function (t) {
                         const format = $("select[name=format]").val();
-                        // let btnExport = trim('.buttons-'+format);
                         console.log('-'+format+'-');
                         console.log("validated!"),
                         "Valid" == t ? (
