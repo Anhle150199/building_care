@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Redirect;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,9 +19,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+foreach(config('constants.urls') as $url) {
+    Route::get('/'. $url, function(){
+        return redirect()->route('admin.dashboard');
+    });
+}
+
 Route::namespace('Auth\Admin')->name('auth.')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('form-login');
     Route::post('login', [LoginController::class, 'login'])->name('login');

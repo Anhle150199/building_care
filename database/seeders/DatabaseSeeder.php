@@ -16,11 +16,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        DB::table('departments')->insert([
+            'name' => 'Chăm sóc khách hàng',
+            "created_at"=>now(),
+            'updated_at'=>now()
+        ]);
         DB::table('admins')->insert([
             'name' => 'Super Admin',
             'email' => 'anhle150199@gmail.com',
             'password' => Hash::make('superAdmin'),
-            'email_verified_at' => now()
+            'department_id' => '1',
+            "position" => "Nhân viên tiếp nhận",
+            "avatar" => "avatar-1.png",
+            "created_at"=>now(),
+            'updated_at'=>now()
+
         ]);
     }
 }

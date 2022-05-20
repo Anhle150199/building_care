@@ -1,12 +1,8 @@
-<!--begin::Header-->
 <div id="kt_header" style="" class="header align-items-stretch">
-    <!--begin::Container-->
     <div class="container-fluid d-flex align-items-stretch justify-content-between">
-        <!--begin::Aside mobile toggle-->
         <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
             <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
                 id="kt_aside_mobile_toggle">
-                <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
                 <span class="svg-icon svg-icon-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none">
@@ -18,29 +14,19 @@
                             fill="currentColor" />
                     </svg>
                 </span>
-                <!--end::Svg Icon-->
             </div>
         </div>
-        <!--end::Aside mobile toggle-->
-        <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-            <a href="../../demo1/dist/index.html" class="d-lg-none">
-                <img alt="Logo" src="assets/media/logos/logo-2.svg" class="h-30px" />
+            <a href=".{{ route('admin.dashboard') }}" class="d-lg-none">
+                <img alt="Logo" src="{{url('/')}}/assets/media/logos/logo-2.svg" class="h-30px" />
             </a>
         </div>
-        <!--end::Mobile logo-->
-        <!--begin::Wrapper-->
         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
-            <!--begin::Navbar-->
             <div class="d-flex align-items-stretch" id="kt_header_nav">
 
             </div>
-            <!--end::Navbar-->
-            <!--begin::Toolbar wrapper-->
             <div class="d-flex align-items-stretch flex-shrink-0">
-                <!--begin::Notifications-->
                 <div class="d-flex align-items-center ms-1 ms-lg-3">
-                    <!--begin::Menu- wrapper-->
                     <div class="btn btn-icon btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px position-relative"
                         data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
@@ -58,21 +44,14 @@
                         <span
                             class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
                     </div>
-                    <!--begin::Menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
                         data-kt-menu="true">
-                        <!--begin::Tab content-->
                         <div class="tab-content">
-                            <!--begin::Tab panel-->
                             <div class="tab-pane fade show active" id="kt_topbar_notifications_1"
                                 role="tabpanel">
-                                <!--begin::Items-->
                                 <div class="scroll-y mh-325px my-5 px-8">
-                                    <!--begin::Item-->
                                     <div class="d-flex flex-stack py-4">
-                                        <!--begin::Section-->
                                         <div class="d-flex align-items-center">
-                                            <!--begin::Symbol-->
                                             <div class="symbol symbol-35px me-4">
                                                 <span class="symbol-label bg-light-primary">
                                                     <!--begin::Svg Icon | path: icons/duotune/technology/teh008.svg-->
@@ -230,22 +209,13 @@
                                                     theme
                                                 </div>
                                             </div>
-                                            <!--end::Title-->
                                         </div>
-                                        <!--end::Section-->
-                                        <!--begin::Label-->
                                         <span class="badge badge-light fs-8">2 days</span>
-                                        <!--end::Label-->
                                     </div>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
                                     <div class="d-flex flex-stack py-4">
-                                        <!--begin::Section-->
                                         <div class="d-flex align-items-center">
-                                            <!--begin::Symbol-->
                                             <div class="symbol symbol-35px me-4">
                                                 <span class="symbol-label bg-light-primary">
-                                                    <!--begin::Svg Icon | path: icons/duotune/maps/map001.svg-->
                                                     <span class="svg-icon svg-icon-2 svg-icon-primary">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             width="24" height="24" viewBox="0 0 24 24"
@@ -258,11 +228,8 @@
                                                                 fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->
                                                 </span>
                                             </div>
-                                            <!--end::Symbol-->
-                                            <!--begin::Title-->
                                             <div class="mb-0 me-2">
                                                 <a href="#"
                                                     class="fs-6 text-gray-800 text-hover-primary fw-bolder">Project
@@ -270,22 +237,13 @@
                                                 <div class="text-gray-400 fs-7">Product launch status
                                                     update</div>
                                             </div>
-                                            <!--end::Title-->
                                         </div>
-                                        <!--end::Section-->
-                                        <!--begin::Label-->
                                         <span class="badge badge-light fs-8">21 Jan</span>
-                                        <!--end::Label-->
                                     </div>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
                                     <div class="d-flex flex-stack py-4">
-                                        <!--begin::Section-->
                                         <div class="d-flex align-items-center">
-                                            <!--begin::Symbol-->
                                             <div class="symbol symbol-35px me-4">
                                                 <span class="symbol-label bg-light-info">
-                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen006.svg-->
                                                     <span class="svg-icon svg-icon-2 svg-icon-info">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             width="24" height="24" viewBox="0 0 24 24"
@@ -298,11 +256,8 @@
                                                                 fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->
                                                 </span>
                                             </div>
-                                            <!--end::Symbol-->
-                                            <!--begin::Title-->
                                             <div class="mb-0 me-2">
                                                 <a href="#"
                                                     class="fs-6 text-gray-800 text-hover-primary fw-bolder">Banner
@@ -310,22 +265,13 @@
                                                 <div class="text-gray-400 fs-7">Collection of banner
                                                     images</div>
                                             </div>
-                                            <!--end::Title-->
                                         </div>
-                                        <!--end::Section-->
-                                        <!--begin::Label-->
                                         <span class="badge badge-light fs-8">21 Jan</span>
-                                        <!--end::Label-->
                                     </div>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
                                     <div class="d-flex flex-stack py-4">
-                                        <!--begin::Section-->
                                         <div class="d-flex align-items-center">
-                                            <!--begin::Symbol-->
                                             <div class="symbol symbol-35px me-4">
                                                 <span class="symbol-label bg-light-warning">
-                                                    <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
                                                     <span class="svg-icon svg-icon-2 svg-icon-warning">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             width="24" height="25" viewBox="0 0 24 25"
@@ -338,11 +284,8 @@
                                                                 fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->
                                                 </span>
                                             </div>
-                                            <!--end::Symbol-->
-                                            <!--begin::Title-->
                                             <div class="mb-0 me-2">
                                                 <a href="#"
                                                     class="fs-6 text-gray-800 text-hover-primary fw-bolder">Icon
@@ -351,22 +294,14 @@
                                                     icons
                                                 </div>
                                             </div>
-                                            <!--end::Title-->
                                         </div>
-                                        <!--end::Section-->
-                                        <!--begin::Label-->
                                         <span class="badge badge-light fs-8">20 March</span>
-                                        <!--end::Label-->
                                     </div>
-                                    <!--end::Item-->
                                 </div>
-                                <!--end::Items-->
-                                <!--begin::View more-->
                                 <div class="py-3 text-center border-top">
                                     <a href="../../demo1/dist/pages/user-profile/activity.html"
                                         class="btn btn-color-gray-600 btn-active-color-primary">View
                                         All
-                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
                                         <span class="svg-icon svg-icon-5">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                 height="24" viewBox="0 0 24 24" fill="none">
@@ -378,40 +313,25 @@
                                                     fill="currentColor" />
                                             </svg>
                                         </span>
-                                        <!--end::Svg Icon-->
                                     </a>
                                 </div>
-                                <!--end::View more-->
                             </div>
-                            <!--end::Tab panel-->
                         </div>
-                        <!--end::Tab content-->
                     </div>
-                    <!--end::Menu-->
-                    <!--end::Menu wrapper-->
                 </div>
-                <!--end::Notifications-->
-
-                <!--begin::User menu-->
                 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
-                    <!--begin::Menu wrapper-->
                     <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
                         data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        <img src="assets/media/avatars/300-1.jpg" alt="user" />
+                        <img src="{{url('/')}}/assets/media/avatars/{{Auth::user()->avatar}}" alt="user" />
                     </div>
-                    <!--begin::User account menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
                         data-kt-menu="true">
-                        <!--begin::Menu item-->
                         <div class="menu-item px-3">
                             <div class="menu-content d-flex align-items-center px-3">
-                                <!--begin::Avatar-->
                                 <div class="symbol symbol-50px me-5">
-                                    <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
+                                    <img alt="Logo" src="{{url('/')}}/assets/media/avatars/{{Auth::user()->avatar}}" />
                                 </div>
-                                <!--end::Avatar-->
-                                <!--begin::Username-->
                                 <div class="d-flex flex-column">
                                     <div class="fw-bolder d-flex align-items-center fs-5">
                                         {{ Auth::user()->name }}
@@ -421,16 +341,11 @@
                                     <a href="#"
                                         class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
                                 </div>
-                                <!--end::Username-->
                             </div>
                         </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu separator-->
                         <div class="separator my-2"></div>
-                        <!--end::Menu separator-->
-                        <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="" class="menu-link px-5">Thông tin</a>
+                            <a href="{{ route('admin.users.profile') }}" class="menu-link px-5">Thông tin</a>
                         </div>
                         <div class="menu-item px-5">
                             <form action="{{ route('auth.logout') }}" method="post">
@@ -439,15 +354,10 @@
                             </form>
                         </div>
                     </div>
-                    <!--end::User account menu-->
-                    <!--end::Menu wrapper-->
                 </div>
-                <!--end::User menu-->
-                <!--begin::Header menu toggle-->
                 <div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
                     <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
                         id="kt_header_menu_mobile_toggle">
-                        <!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none">
@@ -459,15 +369,9 @@
                                     fill="currentColor" />
                             </svg>
                         </span>
-                        <!--end::Svg Icon-->
                     </div>
                 </div>
-                <!--end::Header menu toggle-->
             </div>
-            <!--end::Toolbar wrapper-->
         </div>
-        <!--end::Wrapper-->
     </div>
-    <!--end::Container-->
 </div>
-<!--end::Header-->

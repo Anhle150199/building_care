@@ -12,8 +12,7 @@
 
                 <div class="fv-row mb-10">
                     <label class="form-label fs-6 fw-bolder text-dark">Email</label>
-                    <input class="form-control form-control-lg form-control-solid" type="text" name="email"
-                        autocomplete="off" />
+                    <input class="form-control form-control-lg form-control-solid" type="text" name="email" />
                 </div>
 
                 <div class="fv-row mb-10">
@@ -22,8 +21,7 @@
                         <a href="{{ route('auth.forgot-password') }}" class="link-primary fs-6 fw-bolder">Quên mật
                             khẩu?</a>
                     </div>
-                    <input class="form-control form-control-lg form-control-solid" type="password" name="password"
-                        autocomplete="off" />
+                    <input class="form-control form-control-lg form-control-solid" type="password" name="password"/>
                 </div>
 
                 <div class="text-center">

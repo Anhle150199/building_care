@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $data = [];
+        $data['menu'] = ["menu-dashboard"];
+        return view('home', $data);
     }
 }
