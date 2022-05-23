@@ -266,7 +266,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('admin.system.admin-list') }}" id="item-admins">
+                            <a class="menu-link" href="{{ route('admin.system.admins.admin-list') }}" id="item-admins">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

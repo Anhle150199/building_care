@@ -3,6 +3,11 @@ var KTUsersAddUser = (function () {
     const t = document.getElementById("kt_modal_add_user"),
         e = t.querySelector("#kt_modal_add_department_form"),
         n = new bootstrap.Modal(t);
+        var reloadDropdown = ()=>{
+            KTMenu.init();
+            KTMenu.updateDropdowns();
+            KTMenu.init();
+        }
     return {
         init: function () {
             (() => {
@@ -74,7 +79,7 @@ var KTUsersAddUser = (function () {
                                                 i.removeAttribute("data-kt-indicator"),
                                                     (i.disabled = !1),
                                                     Swal.fire({
-                                                        text: "Tạo tài khoản thành công!",
+                                                        text: "Thêm mới thành công!",
                                                         icon: "success",
                                                         buttonsStyling:!1,
                                                         confirmButtonText: "Chấp nhận!",

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'anhle150199@gmail.com',
             'password' => Hash::make('superAdmin'),
             'department_id' => '1',
+            'role' =>'super',
             "position" => "Nhân viên tiếp nhận",
             "avatar" => "avatar-1.png",
             "created_at"=>now(),

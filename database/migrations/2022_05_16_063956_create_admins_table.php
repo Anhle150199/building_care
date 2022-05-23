@@ -21,6 +21,7 @@ class CreateAdminsTable extends Migration
             $table->string('password');
             $table->string('phone', 11)->nullable();
             $table->enum('role', ['admin', 'super']);
+            $table->enum('status', ['activated', 'lock', 'verifying']);
             $table->string('position');
             $table->string('avatar');
             $table->timestamp('created_at');

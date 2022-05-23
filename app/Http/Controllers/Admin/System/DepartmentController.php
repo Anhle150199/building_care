@@ -108,6 +108,9 @@ class DepartmentController extends Controller
             }
             try {
                 Department::whereIn('id',$id)->delete();
+                $admins = Admin::whereIn('department_id',$id)->update([
+                    "department_id"=>0
+                ]);
             } catch (\Throwable $th) {
                 return new JsonResponse( ['errors'=> ''], 406);
             }

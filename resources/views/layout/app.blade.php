@@ -52,13 +52,7 @@
     </script>
     <script src="{{ url('/') }}/assets/plugins/global/plugins.bundle.js"></script>
     <script src="{{ url('/') }}/assets/js/scripts.bundle.js"></script>
-    <script>
-        var reloadDropdown = ()=>{
-            KTMenu.init();
-            KTMenu.updateDropdowns();
-            KTMenu.init();
-        }
-    </script>
+
     @stack('js')
     <script>
         $(function() {
@@ -71,7 +65,7 @@
     </script>
 
     <style>
-        .dt-buttons{
+        .dt-buttons, #kt_table_users_filter{
             display: none;
         }
     </style>

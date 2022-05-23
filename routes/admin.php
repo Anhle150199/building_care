@@ -22,7 +22,14 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('customers-list', [CustommerController::class, 'showCustomerList'])->name('customer-list');
     });
     Route::prefix('system')->name('system.')->group(function () {
-        Route::get('admins', [AdminController::class, 'showAdminList'])->name('admin-list');
+        Route::prefix('admins')->name('admins.')->group(function (){
+            Route::get('/', [AdminController::class, 'showAdminList'])->name('admin-list');
+            Route::post('/create', [AdminController::class, 'create'])->name('create');
+            Route::put('/update', [AdminController::class, 'update'])->name('update');
+            Route::delete('/delete', [AdminController::class, 'delete'])->name('delete');
+            Route::put('/update-status', [AdminController::class, 'updateStatus'])->name('updateStatus');
+        });
+
         Route::prefix('departments')->name('department.')->group(function ()
         {
             Route::get('/all', [DepartmentController::class, 'getAll']);
