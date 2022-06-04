@@ -26,6 +26,7 @@ class CreateAdminsTable extends Migration
             $table->string('avatar');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->softDeletes();
         });
     }
 

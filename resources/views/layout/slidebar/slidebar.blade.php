@@ -3,8 +3,8 @@
     data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
     data-kt-drawer-toggle="#kt_aside_mobile_toggle">
     <div class="aside-logo flex-column-auto" id="kt_aside_logo">
-        <a href="http://127.0.0.1:8000/admin" class="" style="display: flex;align-items: center;">
-            <img alt="Logo" src="http://127.0.0.1:8000/assets/media/logos/logo-siddebar.png" class="h-50px logo">
+        <a href="{{ route('admin.dashboard') }}" class="" style="display: flex;align-items: center;">
+            <img alt="Logo" src="{{url('/')}}/assets/media/logos/logo-siddebar.png" class="h-50px logo">
         </a>
         <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
             data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 {{-- Quản lý toà nhà --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="menu-toa-nha">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="menu-building">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -118,7 +118,7 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" id="item-tong-quan"
                                 href="../../demo1/dist/authentication/extended/two-factor-authentication.html">
                                 <span class="menu-bullet">
@@ -126,14 +126,23 @@
                                 </span>
                                 <span class="menu-title">Tổng quan toà nhà</span>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="menu-item">
-                            <a class="menu-link" id="item-list-toa-nha"
-                                href="../../demo1/dist/authentication/extended/free-trial-sign-up.html">
+                            <a class="menu-link" id="item-building-list"
+                                href="{{ route('admin.building.building-list') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Danh sách tòa nhà</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" id="item-building-new"
+                                href="{{ route('admin.building.new') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Thêm mới tòa nhà</span>
                             </a>
                         </div>
                         <div class="menu-item">
@@ -302,12 +311,16 @@
             </div>
         </div>
     </div>
-    {{-- <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
-                    <a href="../../demo1/dist/documentation/getting-started.html"
-                        class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                        data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
-                        <span class="btn-label">Docs &amp; Components</span>
-                    </a>
-                </div> --}}
-    <!--end::Footer-->
+    <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
+        {{-- <a href="../../demo1/dist/documentation/getting-started.html"
+            class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip" data-bs-trigger="hover"
+            data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
+            <span class="btn-label">Docs &amp; Components</span>
+        </a> --}}
+        <select data-control="select2" data-placeholder="Chọn định dạng"
+            data-hide-search="true" name="building_active" class="btn btn-custom btn-primary w-100 form-select form-select-solid">
+            <option value="">Excel</option>
+        </select>
+        <span class="text-white">{{Cache::get('active')}}</span>
+    </div>
 </div>

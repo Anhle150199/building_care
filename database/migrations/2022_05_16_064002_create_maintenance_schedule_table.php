@@ -21,6 +21,7 @@ class CreateMaintenanceScheduleTable extends Migration
             $table->dateTime('end_at');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->softDeletes();
         });
     }
 

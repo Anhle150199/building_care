@@ -17,14 +17,15 @@ class CreateCustomersTable extends Migration
             $table->increments('id');
             $table->integer('apartment_id');
             $table->string('name');
-            $table->string('email');
-            $table->string('password');
+            $table->string('email')->nullable();
+            $table->string('password')->nullable();
             $table->string('phone', 11)->nullable();
             $table->date('birthday');
             $table->enum('status', ['stay', 'absent', 'leave']);
             $table->string('avartar');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->softDeletes();
         });
     }
 

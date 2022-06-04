@@ -18,6 +18,7 @@ class CreateEquipmentRelationshipTable extends Migration
             $table->integer('equipment_id');
             $table->integer('building_id');
             $table->integer('quantity');
+            $table->softDeletes();
         });
     }
 

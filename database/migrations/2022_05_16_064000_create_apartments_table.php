@@ -16,13 +16,14 @@ class CreateApartmentsTable extends Migration
         Schema::create('apartments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('building_id');
-            $table->integer('owner_id');
+            $table->integer('owner_id')->nullable();
             $table->string('apartment_code');
             $table->text('description')->nullable();
             $table->integer('floor');
             $table->enum('status', ['using', 'empty']);
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->softDeletes();
         });
     }
 

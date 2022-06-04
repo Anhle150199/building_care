@@ -18,6 +18,7 @@ class CreateEquipmentTable extends Migration
             $table->string('name');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->softDeletes();
         });
     }
 

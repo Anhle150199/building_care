@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\Admin\BuildingController;
 use App\Http\Controllers\Admin\CustommerController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\System\AdminController;
@@ -18,6 +19,17 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('profile', [UserController::class, 'showProfile'])->name('profile');
     });
+
+    //Building-manage
+    Route::prefix('building')->name('building.')->group(function () {
+        Route::get('building-list', [BuildingController::class, 'showBuildingList'])->name('building-list');
+        Route::get('building-new', [BuildingController::class, 'showNewBuilding'])->name('new');
+        Route::post('create', [BuildingController::class, 'create'])->name('create');
+        Route::get('update/{id}', [BuildingController::class, 'showUpdate'])->name('show-update');
+        Route::put('update', [BuildingController::class, 'update'])->name('update');
+        Route::delete('delete', [BuildingController::class, 'delete'])->name('delete');
+    });
+
     Route::prefix('customers')->name('customers.')->group(function () {
         Route::get('customers-list', [CustommerController::class, 'showCustomerList'])->name('customer-list');
     });

@@ -25,6 +25,7 @@ class CreateFeedbackTable extends Migration
             $table->integer('customer_id');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->softDeletes();
         });
     }
 

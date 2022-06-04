@@ -23,6 +23,7 @@ class CreateVehicleTable extends Migration
             $table->enum('status', ['request', 'accept']);
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->softDeletes();
         });
     }
 

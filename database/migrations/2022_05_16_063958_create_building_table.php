@@ -16,17 +16,18 @@ class CreateBuildingTable extends Migration
         Schema::create('building', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->text('address');
             $table->string('phone', 11)->nullable();
             $table->string('email')->nullable();
-            $table->enum('status', array('active', 'lock', 'delete'));
-            $table->integer('height');
-            $table->integer('acreage')->comment("diện tích");
+            $table->enum('status', array('active', 'lock', 'prepare'));
+            $table->integer('height')->nullable();
+            $table->integer('acreage')->comment("diện tích")->nullable();
             $table->integer('floors_number');
             $table->integer('apartment_number');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->softDeletes();
         });
     }
 
