@@ -8,7 +8,7 @@
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         {{-- Header --}}
-        <div class="toolbar" id="kt_toolbar" data-route-delete="{{route('admin.building.delete')}}">
+        <div class="toolbar" id="kt_toolbar" data-route-delete="{{route('admin.customers.apartment-delete')}}">
             <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
@@ -113,11 +113,11 @@
                                                 value="1" />
                                         </div>
                                     </th>
-                                    <th class="min-w-125px">Căn hộ</th>
-                                    <th class="min-w-125px">Chủ hộ</th>
-                                    <th class="min-w-125px">Trạng thái</th>
-                                    <th class="min-w-125px">Số người</th>
-                                    <th class="min-w-125px">Số phương tiện</th>
+                                    <th class="min-w-100px">Căn hộ</th>
+                                    <th class="min-w-75px">Chủ hộ</th>
+                                    <th class="min-w-100px">Trạng thái</th>
+                                    <th class="min-w-100px">Số người</th>
+                                    <th class="min-w-100px">Số phương tiện</th>
                                     <th class="text-center min-w-70px">Thao tác</th>
                                 </tr>
                             </thead>
@@ -130,7 +130,7 @@
                                         </div>
                                     </td>
                                     <td data-order="{{$item->floor}}">
-                                        <a href="{{ route('admin.building.show-update', ['id'=>$item->id]) }}"
+                                        <a href="{{ route('admin.customers.show-apartment-update', ['id'=>$item->id]) }}"
                                             class="text-gray-800 text-hover-primary mb-1">{{$item->name}}</a>
                                             <span class="text-muted fw-bold text-muted d-block fs-7">{{$item->apartment_code}}</span>
                                     </td>
@@ -164,7 +164,7 @@
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                             data-kt-menu="true">
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('admin.building.show-update', ['id'=>$item->id]) }}"
+                                                <a href="{{ route('admin.customers.show-apartment-update', ['id'=>$item->id]) }}"
                                                     class="menu-link px-3">Chỉnh sửa</a>
                                             </div>
                                             <div class="menu-item px-3">

@@ -68,7 +68,12 @@
                                 <div class="mb-10 fv-row">
                                     <label class="required form-label">Mã căn hộ</label>
                                     <input type="text" name="apartment_code" class="form-control mb-2"
-                                        placeholder="Mã căn hộ" value="{{$buildingActiveInfo->building_code.'-'}}" />
+                                        placeholder="Mã căn hộ"
+                                        @if (@$typePage == 'new')
+                                        value="{{$buildingActiveInfo->building_code.'-'}}"
+                                        @else
+                                        value="{{$apartment->apartment_code}}"
+                                        @endif/>
                                 </div>
                                 <div class="mb-10 fv-row">
                                     <label class="required form-label">Toà nhà</label>
@@ -88,6 +93,7 @@
                                         <option value="empty" @if (@$apartment->status == 'empty') selected="selected" @endif> Để trống</option>
                                     </select>
                                 </div>
+
                                 <div class="mb-10 fv-row">
                                     <label class="required form-label">Chủ hộ </label>
                                     <select class="form-select mb-2" data-control="select2" name = "owner" id="owner_select"
@@ -123,7 +129,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
                                     <div class="d-flex flex-column gap-7 gap-lg-10">
-                                        <div class="card card-xl-stretch mb-5 mb-xl-8">
+                                        <div class="card card-xl-stretch mb-5 ">
                                             <div class="card-header border-0 pt-5">
                                                 <h3 class="card-title align-items-start flex-column">
                                                     <span class="card-label fw-bolder fs-3 mb-1">Cư dân</span>
@@ -144,24 +150,24 @@
                                                     <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                                         <thead>
                                                             <tr class="fw-bolder text-muted">
-                                                                <th class="min-w-200px">Họ tên</th>
-                                                                {{-- <th class="min-w-150px">Progress</th> --}}
-                                                                <th class="min-w-150px">Liên hệ</th>
+                                                                <th class="min-w-100px">Họ tên</th>
+                                                                <th class="min-w-100px">Liên hệ</th>
                                                                 <th class="min-w-100px text-end">Thao tác</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            @foreach ( @$apartmentCustomer as $item )
                                                             <tr>
                                                                 <td>
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="d-flex justify-content-start flex-column">
-                                                                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Ana Simmons</a>
+                                                                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{$item->name}}</a>
                                                                         </div>
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                                    <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">Intertico</a>
-                                                                    <span class="text-muted fw-bold text-muted d-block fs-7">Web, UI/UX Design</span>
+                                                                    <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{$item->phone}}</a>
+                                                                    <span class="text-muted fw-bold text-muted d-block fs-7">{{$item->email}}</span>
                                                                 </td>
                                                                 <td>
                                                                     <div class="d-flex justify-content-end flex-shrink-0">
@@ -185,33 +191,71 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card card-xl-stretch mb-5 mb-xl-8">
+                                            <div class="card-header border-0 pt-5">
+                                                <h3 class="card-title align-items-start flex-column">
+                                                    <span class="card-label fw-bolder fs-3 mb-1">Phương tiện</span>
+                                                </h3>
+                                                <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
+                                                    <a href="#" class="btn btn-sm btn-light btn-active-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">
+                                                    <span class="svg-icon svg-icon-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    Thêm mới</a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body py-3">
+                                                <div class="table-responsive">
+                                                    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                                        <thead>
+                                                            <tr class="fw-bolder text-muted">
+                                                                <th class="min-w-100px">Phương tiện</th>
+                                                                <th class="min-w-100px">Trạng thái</th>
+                                                                <th class="min-w-100px text-end">Thao tác</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ( @$apartmentVehicle as $item )
                                                             <tr>
                                                                 <td>
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="d-flex justify-content-start flex-column">
-                                                                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Jessie Clarcson</a>
-                                                                            <span class="text-muted fw-bold text-muted d-block fs-7">C#, ASP.NET, MS SQL</span>
+                                                                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">
+                                                                                @if ($item->category == 'motorbike')
+                                                                                    {{"Xe máy"}}
+                                                                                @elseif ($item->category == 'car')
+                                                                                    {{"Ô tô "}}
+                                                                                @else
+                                                                                    {{"Xe máy điện "}}
+                                                                                @endif
+                                                                                {{$item->model}}</a>
+                                                                                <span class="text-muted fw-bold text-muted d-block fs-7">{{$item->license_plate_number}}</span>
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                <td>
-                                                                    <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">Agoda</a>
-                                                                    <span class="text-muted fw-bold text-muted d-block fs-7">Houses &amp; Hotels</span>
-                                                                </td>
+                                                                <td>{{$item->status}}</td>
                                                                 <td>
                                                                     <div class="d-flex justify-content-end flex-shrink-0">
                                                                         <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                                            <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                                             <span class="svg-icon svg-icon-3">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                                     <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor" />
                                                                                     <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor" />
                                                                                 </svg>
                                                                             </span>
-                                                                            <!--end::Svg Icon-->
                                                                         </a>
                                                                         <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                                             <span class="svg-icon svg-icon-3">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                                     <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor" />
@@ -219,11 +263,12 @@
                                                                                     <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor" />
                                                                                 </svg>
                                                                             </span>
-                                                                            <!--end::Svg Icon-->
-                                                                        </a>
+                                                                            </a>
                                                                     </div>
                                                                 </td>
                                                             </tr>
+                                                            @endforeach
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -251,6 +296,9 @@
         let quill = new Quill("#kt_ecommerce_add_product_description", {});
         quill.root.innerHTML = description;
         $(function(){
+            if($('#status_select').val() == 'empty'){
+                $('#owner_select').parent().hide();
+            }
             $('#status_select').change(function(){
                 if($('#status_select').val()=='empty'){
                     $('#owner_select').parent().hide();

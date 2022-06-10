@@ -40,7 +40,10 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('apartments', [ApartmentController::class, 'showApartmentList'])->name('apartment-list');
         Route::get('apartments/new', [ApartmentController::class, 'showNewApartment'])->name('show-apartment-new');
         Route::post('apartments/create', [ApartmentController::class, 'create'])->name('apartment-create');
-        
+        Route::get('apartments/{id}', [ApartmentController::class, 'showUpdate'])->name('show-apartment-update');
+        Route::put('apartments/update', [ApartmentController::class, 'update'])->name('apartment-update');
+        Route::delete('apartments/delete', [ApartmentController::class, 'delete'])->name('apartment-delete');
+
         Route::get('customers-list', [CustommerController::class, 'showCustomerList'])->name('customer-list');
     });
     Route::prefix('system')->name('system.')->group(function () {

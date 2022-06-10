@@ -46,7 +46,7 @@ class ApartmentController extends BaseBuildingController
     public function showNewApartment(Request $request)
     {
         $data = [];
-        $data['menu'] = ["menu-building", "item-apartment"];
+        $data['menu'] = ["menu-customers", "item-apartment"];
         $data['typePage'] = 'new';
         $data['title'] = 'Thêm mới căn hộ';
         $data['routeAjax'] = route('admin.customers.apartment-create');
@@ -87,7 +87,45 @@ class ApartmentController extends BaseBuildingController
         return new JsonResponse(['success'], 200);
     }
 
-    
+    public function showUpdate($id)
+    {
+        $apartment = Apartment::find($id);
+        $data = [];
+        $data['menu'] = ["menu-customers", "item-apartment"];
+        $data['typePage'] = 'edit';
+        $data['title'] = 'Chi tiết căn hộ';
+        $data['routeAjax'] = route('admin.customers.apartment-update');
+        $data['methodAjax'] = 'put';
+        $data['apartment'] = $apartment;
+        $data['buildingActive'] = $this->getBuildingActive();
+        $data['buildingActiveInfo'] = $this->buildingModel->find($data['buildingActive']);
+        $data['buildingList'] = $this->buildingList;
+        $customers = Customer::all();
+        $data['customers']= $customers;
+        $apartmentCustomer = Customer::where("apartment_id", $apartment->owner_id)->get();
+        $apartmentVehicle = Vehicle::where("apartment_id", $apartment->owner_id)->get();
+        $data['apartmentCustomer'] = $apartmentCustomer;
+        $data['apartmentVehicle'] = $apartmentVehicle;
+        return view('customer.apartment-detail', $data);
+
+    }
+
+    public function delete(Request $request)
+    {
+        if ($request->has('id')) {
+            $id = $request->id;
+            if (sizeof($id) == 0) {
+                return new JsonResponse(['errors' => 'input rỗng'], 406);
+            }
+            try {
+                Apartment::whereIn('id', $id)->delete();
+            } catch (\Throwable $th) {
+                return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
+            }
+            return new JsonResponse(['deleted'], 200);
+        }
+        return new JsonResponse(['errors' => 'không có id'], 406);
+    }
 
     public function saveDataApartment($apartment, $request)
     {

@@ -91,7 +91,7 @@ var KTAppEcommerceSaveProduct = (function () {
                                                   setTimeout(() => {
                                                     let quill = new Quill("#kt_ecommerce_add_product_description", {});
                                                     let token = $('input[name=_token]').val();
-
+                                                    let ok = true;
                                                     let id = $(t).data('id');
                                                     let name = $('input[name=product_name]').val();
                                                     let apartment_code = $('input[name=apartment_code]').val();
@@ -135,68 +135,72 @@ var KTAppEcommerceSaveProduct = (function () {
                                                                     "btn btn-primary",
                                                             },
                                                         });
+                                                        ok = false;
+                                                    }
+                                                    if(ok == true){
+
+                                                        let data ={
+                                                            _token: token,
+                                                            id: id,
+                                                            name: name,
+                                                            apartment_code:apartment_code,
+                                                            building_id: building_id,
+                                                            owner_id: owner_id,
+                                                            description: description,
+                                                            status: status,
+                                                            floor: floor,
+                                                        };
+                                                        console.log(data);
+                                                        $.ajax({
+                                                            url: $(t).data('action'),
+                                                            type: $(t).data('method'),
+                                                            data: data,
+                                                            dataType: 'json',
+                                                            success: function (response) {
+                                                            console.log(response);
+                                                            o.removeAttribute(
+                                                                "data-kt-indicator"
+                                                            ),
+                                                                Swal.fire({
+                                                                    text: "Đã xong!",
+                                                                    icon: "success",
+                                                                    buttonsStyling: !1,
+                                                                    confirmButtonText: "Chấp nhận!",
+                                                                    customClass: {
+                                                                        confirmButton: "btn btn-primary",
+                                                                    },
+                                                                }).then(function (e) {
+                                                                    e.isConfirmed &&
+                                                                        ((o.disabled = !1),
+                                                                        (window.location =
+                                                                            t.getAttribute(
+                                                                                "data-kt-redirect"
+                                                                            )));
+                                                                });
+                                                            },
+                                                            error: function (response) {
+                                                                console.log(response);
+                                                            const errors = response.responseJSON.errors;
+                                                            console.log(errors);
+                                                            o.removeAttribute(
+                                                                "data-kt-indicator"
+                                                            ),o.disabled = !1,
+                                                            Swal.fire({
+                                                                html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.",
+                                                                icon: "error",
+                                                                buttonsStyling: !1,
+                                                                confirmButtonText:
+                                                                    "Chấp nhận",
+                                                                customClass: {
+                                                                    confirmButton:
+                                                                        "btn btn-primary",
+                                                                },
+                                                            });
+                                                            }
+
+                                                        });
                                                     }
 
-                                                    let data ={
-                                                        _token: token,
-                                                        id: id,
-                                                        name: name,
-                                                        apartment_code:apartment_code,
-                                                        building_id: building_id,
-                                                        owner_id: owner_id,
-                                                        description: description,
-                                                        status: status,
-                                                        floor: floor,
-                                                    };
-                                                    console.log(data);
-                                                    $.ajax({
-                                                        url: $(t).data('action'),
-                                                        type: $(t).data('method'),
-                                                        data: data,
-                                                        dataType: 'json',
-                                                        success: function (response) {
-                                                          console.log(response);
-                                                          o.removeAttribute(
-                                                              "data-kt-indicator"
-                                                          ),
-                                                              Swal.fire({
-                                                                  text: "Đã xong!",
-                                                                  icon: "success",
-                                                                  buttonsStyling: !1,
-                                                                  confirmButtonText: "Chấp nhận!",
-                                                                  customClass: {
-                                                                      confirmButton: "btn btn-primary",
-                                                                  },
-                                                              }).then(function (e) {
-                                                                  e.isConfirmed &&
-                                                                      ((o.disabled = !1),
-                                                                      (window.location =
-                                                                          t.getAttribute(
-                                                                              "data-kt-redirect"
-                                                                          )));
-                                                              });
-                                                        },
-                                                        error: function (response) {
-                                                            console.log(response);
-                                                          const errors = response.responseJSON.errors;
-                                                          console.log(errors);
-                                                          o.removeAttribute(
-                                                            "data-kt-indicator"
-                                                        ),o.disabled = !1,
-                                                          Swal.fire({
-                                                              html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.",
-                                                              icon: "error",
-                                                              buttonsStyling: !1,
-                                                              confirmButtonText:
-                                                                  "Chấp nhận",
-                                                              customClass: {
-                                                                  confirmButton:
-                                                                      "btn btn-primary",
-                                                              },
-                                                          });
-                                                        }
-
-                                                    });
                                                   }, 0)
                                                 )
                                                 : Swal.fire({
