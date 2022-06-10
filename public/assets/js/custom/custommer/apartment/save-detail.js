@@ -1,6 +1,8 @@
 "use strict";
 
 var KTAppEcommerceSaveProduct = (function () {
+    const messageNotEmpty = "Trường này không được để trống";
+    const messageInteger = "Giá trị không phải là một số lớn hơn 0.";
     return {
         init: function () {
             var o, a;
@@ -17,38 +19,11 @@ var KTAppEcommerceSaveProduct = (function () {
                                 [ "code-block"],
                             ],
                         },
-                        placeholder: "Viết mô tả cho toà nhà...",
+                        placeholder: "Viết mô tả cho căn hộ...",
                         theme: "snow",
                     }));
 
             }),
-                (() => {
-                    const e = document.getElementById(
-                            "kt_ecommerce_add_product_status"
-                        ),
-                        t = document.getElementById(
-                            "kt_ecommerce_add_product_status_select"
-                        ),
-                        o = ["bg-success", "bg-warning", "bg-danger"];
-                    $(t).on("change", function (t) {
-                        switch (t.target.value) {
-                            case "active":
-                                e.classList.remove(...o),
-                                    e.classList.add("bg-success");
-
-                                break;
-                            case "prepare":
-                                e.classList.remove(...o),
-                                    e.classList.add("bg-warning");
-
-                                break;
-                            case "lock":
-                                e.classList.remove(...o),
-                                    e.classList.add("bg-danger");
-                                break;
-                        }
-                    });
-                })(),
                 (() => {
                     let e;
                     const t = document.getElementById(
@@ -62,63 +37,33 @@ var KTAppEcommerceSaveProduct = (function () {
                             product_name: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Tên không được để trống.",
+                                        message: messageNotEmpty,
                                     },
                                 },
                             },
-                            address: {
+                            apartment_code: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Địa chỉ không được để trống.",
+                                        message: messageNotEmpty,
                                     },
                                 },
                             },
-
-                            email: {
+                            floor: {
                                 validators: {
-                                    emailAddress: {
-                                        message: "Giá trị không hợp lệ.",
-                                    },
-                                },
-                            },
-                            phone: {
-                                validators: {
-                                    regexp: {
-                                        regexp: /^\d{10,11}$/i,
-                                        message: 'Giá trị không hợp lệ.',
-                                    },
-                                },
-                            },
-                            height:{
-                                validators: {
-                                    integer: { message:"Giá trị không phải là một số lớn hơn 0."},
-                                    greaterThan: {
-                                        message: 'Giá trị không phải là một số lớn hơn 0.',
+                                    notEmpty: { message: messageNotEmpty },
+                                    integer: { message:messageInteger},
+                                    between: {
                                         min: 1,
+                                        max: $('input[name=floor]').data('floor'),
+                                        message: 'Số tầng phải lớn hơn 0 và nhở hơn '+$('input[name=floor]').data('floor'),
                                     },
                                 },
                             },
-                            floors_number: {
-                                validators: {
-                                    notEmpty: { message: "Số tầng không được để trống." },
-                                    integer: { message:"Giá trị không phải là một số lớn hơn 0."},
-                                    greaterThan: {
-                                        message: 'Giá trị không phải là một số lớn hơn 0.',
-                                        min: 1,
-                                    },
-                                },
-                            },
-                            apartment_number: {
+                            status: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Số phòng không được để trống.",
+                                        message: messageNotEmpty,
                                     },
-                                    integer: { message:"Giá trị không phải là một số lớn hơn 0."},
-                                    greaterThan: {
-                                        message: 'Giá trị không phải là một số lớn hơn 0.',
-                                        min: 1,
-                                    },
-
                                 },
                             },
                         },
@@ -131,15 +76,16 @@ var KTAppEcommerceSaveProduct = (function () {
                             }),
                         },
                     })),
+                    console.log('bat dau lang nghe');
                         o.addEventListener("click", (a) => {
+                            console.log('nghe duoc');
                             a.preventDefault(),
                                 e &&
                                     e.validate().then(function (e) {
                                         console.log("validated!"),
                                             "Valid" == e
                                                 ? (o.setAttribute(
-                                                      "data-kt-indicator",
-                                                      "on"
+                                                      "data-kt-indicator","on"
                                                   ),
                                                   (o.disabled = !0),
                                                   setTimeout(() => {
@@ -147,30 +93,60 @@ var KTAppEcommerceSaveProduct = (function () {
                                                     let token = $('input[name=_token]').val();
 
                                                     let id = $(t).data('id');
-                                                    let status = $('#kt_ecommerce_add_product_status_select').val();
-                                                    let height = $('input[name=height]').val();
-                                                    let acreage = $('input[name=acreage]').val();
-                                                    let floors_number = $('input[name=floors_number]').val();
-                                                    let apartment_number = $('input[name=apartment_number]').val();
                                                     let name = $('input[name=product_name]').val();
-                                                    let address = $('input[name=address]').val();
-                                                    let email = $('input[name=email]').val();
-                                                    let phone = $('input[name=phone]').val();
+                                                    let apartment_code = $('input[name=apartment_code]').val();
+                                                    let building_id = $('input[name=building]').data('id');
+                                                    let status = $('select[name=status]').val();
+                                                    let owner_id = $('select[name=owner]').val();
+                                                    let floor = $('input[name=floor]').val();
                                                     let description = quill.root.innerHTML;
+                                                    if (status == 'empty') {
+                                                        owner_id = null;
+                                                    } else if(owner_id == ""){
+                                                        let check = FormValidation.formValidation(t, {
+                                                            fields: {
+                                                                owner: {
+                                                                    validators: {
+                                                                        notEmpty: {
+                                                                            message: messageNotEmpty,
+                                                                        },
+                                                                    },
+                                                                },
+                                                            },
+                                                            plugins: {
+                                                                trigger: new FormValidation.plugins.Trigger(),
+                                                                bootstrap: new FormValidation.plugins.Bootstrap5({
+                                                                    rowSelector: ".fv-row",
+                                                                    eleInvalidClass: "",
+                                                                    eleValidClass: "",
+                                                                }),
+                                                            },
+                                                        });
+                                                        check.validate();
+                                                        o.removeAttribute("data-kt-indicator"),o.disabled = !1,
+                                                        Swal.fire({
+                                                            html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.",
+                                                            icon: "error",
+                                                            buttonsStyling: !1,
+                                                            confirmButtonText:
+                                                                "Chấp nhận",
+                                                            customClass: {
+                                                                confirmButton:
+                                                                    "btn btn-primary",
+                                                            },
+                                                        });
+                                                    }
 
                                                     let data ={
                                                         _token: token,
                                                         id: id,
                                                         name: name,
+                                                        apartment_code:apartment_code,
+                                                        building_id: building_id,
+                                                        owner_id: owner_id,
                                                         description: description,
-                                                        address: address,
-                                                        phone: phone,
-                                                        email: email,
                                                         status: status,
-                                                        height: height,
-                                                        acreage: acreage,
-                                                        floors_number: floors_number,
-                                                        apartment_number: apartment_number
+                                                        floor: floor,
                                                     };
                                                     console.log(data);
                                                     $.ajax({
@@ -186,18 +162,14 @@ var KTAppEcommerceSaveProduct = (function () {
                                                               Swal.fire({
                                                                   text: "Đã xong!",
                                                                   icon: "success",
-                                                                  buttonsStyling:
-                                                                      !1,
-                                                                  confirmButtonText:
-                                                                      "Chấp nhận!",
+                                                                  buttonsStyling: !1,
+                                                                  confirmButtonText: "Chấp nhận!",
                                                                   customClass: {
-                                                                      confirmButton:
-                                                                          "btn btn-primary",
+                                                                      confirmButton: "btn btn-primary",
                                                                   },
                                                               }).then(function (e) {
                                                                   e.isConfirmed &&
-                                                                      ((o.disabled =
-                                                                          !1),
+                                                                      ((o.disabled = !1),
                                                                       (window.location =
                                                                           t.getAttribute(
                                                                               "data-kt-redirect"
@@ -205,16 +177,9 @@ var KTAppEcommerceSaveProduct = (function () {
                                                               });
                                                         },
                                                         error: function (response) {
-                                                            let messageErr = (mess)=>{return `<div class="fv-plugins-message-container invalid-feedback"><div data-field="address" data-validator="notEmpty">${mess}</div></div>`}
                                                             console.log(response);
                                                           const errors = response.responseJSON.errors;
                                                           console.log(errors);
-                                                          if(errors.name){
-                                                            $('input[name=product_name]').parent().append(messageErr(errors.name))
-                                                          }
-                                                          setTimeout(() => {
-                                                            $('.invalid-feedback').remove();
-                                                          }, 7000);
                                                           o.removeAttribute(
                                                             "data-kt-indicator"
                                                         ),o.disabled = !1,
@@ -235,7 +200,7 @@ var KTAppEcommerceSaveProduct = (function () {
                                                   }, 0)
                                                 )
                                                 : Swal.fire({
-                                                      html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.",
+                                                      html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.xxx",
                                                       icon: "error",
                                                       buttonsStyling: !1,
                                                       confirmButtonText:

@@ -93,7 +93,7 @@
                                         </div>
                                         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                             <form id="kt_modal_export_users_form" class="form" action="#">
-                                                
+
                                                 <div class="fv-row mb-10">
                                                     <label class="required fs-6 fw-bold form-label mb-2">Chọn định
                                                         dạng:</label>
@@ -103,7 +103,7 @@
                                                         <option></option>
                                                         <option value="excel">Excel</option>
                                                         <option value="pdf">PDF</option>
-                                                        <option value="cvs">CVS</option>
+                                                        <option value="csv">CSV</option>
                                                     </select>
                                                 </div>
                                                 <div class="text-center">
@@ -322,13 +322,13 @@
                                                         <a class="menu-link px-3 btn-edit"
                                                             onclick="showEditModal('{{ $admin->id }}')">Chỉnh sửa</a>
                                                     </div>
-                                                    @if ($admin->status == 'activated')
+                                                    @if ($admin->status == 'activated' && $admin->id != Auth::user()->id)
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3" onclick="lockAcc('{{$admin->id}}')">Khoá</a>
                                                         </div>
                                                     @endif
 
-                                                    @if ($admin->status == 'lock')
+                                                    @if ($admin->status == 'lock' && $admin->id != Auth::user()->id)
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3" onclick="activeAcc('{{$admin->id}}')">Kích hoạt</a>
                                                         </div>
@@ -403,13 +403,13 @@
                                                         <a onclick="showEditModal('{{ $admin->id }}')"
                                                             class="menu-link px-3 btn-edit">Chỉnh sửa</a>
                                                     </div>
-                                                    @if ($admin->status == 'activated')
+                                                    @if ($admin->status == 'activated' && $admin->id != Auth::user()->id)
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3" onclick="lockAcc('{{$admin->id}}')">Khoá</a>
                                                         </div>
                                                     @endif
 
-                                                    @if ($admin->status == 'lock')
+                                                    @if ($admin->status == 'lock' && $admin->id != Auth::user()->id)
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3" onclick="activeAcc('{{$admin->id}}')">Kích hoạt</a>
                                                         </div>

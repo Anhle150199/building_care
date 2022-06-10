@@ -2,20 +2,25 @@
 
 namespace App;
 
-use App\Http\Controllers\Admin\BuildingController;
-use App\Http\Controllers\Admin\CustommerController;
+use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Http\Controllers\Admin\Building\BuildingController;
+use App\Http\Controllers\Admin\Custommer\ApartmentController;
+use App\Http\Controllers\Admin\Custommer\CustommerController;
+use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\System\AdminController;
 use App\Http\Controllers\Admin\System\DepartmentController;
 use App\Http\Controllers\Auth\Admin\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Admin\LoginController;
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
 
 Route::middleware('auth:admin')->name('admin.')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/', [AdminHomeController::class, 'index'])->name('dashboard');
+    Route::post('/update-building-active', [BaseBuildingController::class, 'updateBuildingActive'])->name('update_building_active');
+
+    // User manage(for admin login)
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('profile', [UserController::class, 'showProfile'])->name('profile');
     });
@@ -30,7 +35,12 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::delete('delete', [BuildingController::class, 'delete'])->name('delete');
     });
 
+    // Department and customer Manage
     Route::prefix('customers')->name('customers.')->group(function () {
+        Route::get('apartments', [ApartmentController::class, 'showApartmentList'])->name('apartment-list');
+        Route::get('apartments/new', [ApartmentController::class, 'showNewApartment'])->name('show-apartment-new');
+        Route::post('apartments/create', [ApartmentController::class, 'create'])->name('apartment-create');
+        
         Route::get('customers-list', [CustommerController::class, 'showCustomerList'])->name('customer-list');
     });
     Route::prefix('system')->name('system.')->group(function () {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\System;
 
+use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Department;
@@ -9,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AdminController extends Controller
+class AdminController extends BaseBuildingController
 {
     public function showAdminList()
     {
@@ -24,6 +25,9 @@ class AdminController extends Controller
         $data['admins2'] = $admins2;
         $data['departments'] = $departments;
         $data['menu'] = ["menu-setting", "item-admins"];
+        $data['buildingActive'] = $this->getBuildingActive();
+        $data['buildingList'] = $this->buildingList;
+
         return view('setting.admins', $data);
     }
 

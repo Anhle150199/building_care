@@ -61,6 +61,25 @@
                     $("#{{ $item }}").addClass(" show active");
                 @endforeach
             @endisset
+
+            $('select[name=building_active]').on('change',function () {
+                let url = $('select[name=building_active]').data('submit');
+                let id = $('select[name=building_active]').val();
+                let token = $('input[name=_token]').val();
+                console.log(token);
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data:{
+                        _token: token,
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function(){
+                        location.reload();
+                    }
+                })
+            })
         })
     </script>
 

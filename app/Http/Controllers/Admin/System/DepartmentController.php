@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\System;
 
+use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Department;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
-class DepartmentController extends Controller
+class DepartmentController extends BaseBuildingController
 {
     public function showDepartmentList()
     {
@@ -23,6 +24,9 @@ class DepartmentController extends Controller
         }
         $data['departments'] = $departments;
         $data['menu'] = ["menu-setting", "item-departments"];
+        $data['buildingActive'] = $this->getBuildingActive();
+        $data['buildingList'] = $this->buildingList;
+
         return view('setting.departments', $data);
     }
 
@@ -108,7 +112,7 @@ class DepartmentController extends Controller
             }
             try {
                 Department::whereIn('id',$id)->delete();
-                $admins = Admin::whereIn('department_id',$id)->update([
+                $admins = Admin::whereIn('department_id',$id)->update([ 
                     "department_id"=>0
                 ]);
             } catch (\Throwable $th) {

@@ -3,7 +3,8 @@
     <link href="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
         type="text/css" />
 @endpush
-@section('title', 'Danh sách toà nhà')
+
+@section('title', 'Danh sách căn hộ toà nhà ')
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         {{-- Header --}}
@@ -12,7 +13,7 @@
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Danh sách toà nhà</h1>
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Quản lý căn hộ</h1>
 
                     <span class="h-20px border-gray-300 border-start mx-4"></span>
 
@@ -25,11 +26,11 @@
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-muted">Quản lý toà nhà</li>
+                        <li class="breadcrumb-item text-muted">Căn hộ, cư dân</li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-dark">Danh sách toà nhà</li>
+                        <li class="breadcrumb-item text-dark">Quản lý căn hộ</li>
                     </ul>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
@@ -79,7 +80,7 @@
                                 </button>
 
                                 {{-- Thêm mới --}}
-                                <a href="{{ route('admin.building.new') }}" class="btn btn-primary">
+                                <a href="{{ route('admin.customers.show-apartment-new') }}" class="btn btn-primary">
                                     <span class="svg-icon svg-icon-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none">
@@ -112,40 +113,43 @@
                                                 value="1" />
                                         </div>
                                     </th>
-                                    <th class="min-w-125px">Tên toà nhà</th>
-                                    <th class="min-w-125px">Trạng thái</th>
-                                    <th class="min-w-125px">Địa chỉ</th>
                                     <th class="min-w-125px">Căn hộ</th>
-                                    <th class="min-w-125px">Ngày tạo</th>
+                                    <th class="min-w-125px">Chủ hộ</th>
+                                    <th class="min-w-125px">Trạng thái</th>
+                                    <th class="min-w-125px">Số người</th>
+                                    <th class="min-w-125px">Số phương tiện</th>
                                     <th class="text-center min-w-70px">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-bold">
-                                @foreach ($building as $item )
+                                @foreach ($apartmentList as $item )
                                 <tr data-id={{$item->id}} id="row_{{$item->id}}">
                                     <td>
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
                                             <input class="form-check-input" type="checkbox" value="{{$item->id}}" />
                                         </div>
                                     </td>
-                                    <td>
+                                    <td data-order="{{$item->floor}}">
                                         <a href="{{ route('admin.building.show-update', ['id'=>$item->id]) }}"
                                             class="text-gray-800 text-hover-primary mb-1">{{$item->name}}</a>
+                                            <span class="text-muted fw-bold text-muted d-block fs-7">{{$item->apartment_code}}</span>
                                     </td>
                                     <td>
-                                        @if ($item->status == 'active')
-                                        <div class="badge badge-light-success">Kích hoạt</div>
-                                        @elseif ($item->status == 'lock')
-                                        <div class="badge badge-light-danger">Khoá</div>
-                                        @elseif ($item->status == 'prepare')
-                                        <div class="badge badge-light-warning">Chuẩn bị</div>
+                                        @isset($item->owner)
+
+                                        @endisset()
+                                    </td>
+                                    <td>
+                                        @if ($item->status == 'using')
+                                        <div class="badge badge-light-success">Đang ở</div>
+                                        @elseif ($item->status == 'empty')
+                                        <div class="badge badge-light-danger">Để trống</div>
+                                        @elseif ($item->status == 'absent')
+                                        <div class="badge badge-light-warning">Vắng</div>
                                         @endif
                                     </td>
-                                    <td>
-                                        {{$item->address}}
-                                    </td>
-                                    <td>{{$item->apartment_active}}/{{$item->apartment_number}}</td>
-                                    <td>{{ $item->created_at->format('d M Y, h:i a') }}</td>
+                                    <td>{{$item->number}}</td>
+                                    <td>{{ $item->vehicle_number }}</td>
                                     <td class="text-center">
                                         <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
                                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -231,7 +235,7 @@
     <script src="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script src="{{ url('/') }}/assets/js/custom/building/list/export.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/building/list/list.js"></script>
+    <script src="{{ url('/') }}/assets/js/custom/custommer/apartment/list.js"></script>
     <style>
         #kt_table_filter{
             display:none;

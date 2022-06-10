@@ -175,7 +175,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <div class="menu-item">
-                            <a class="menu-link" href="../../demo1/dist/account/overview.html">
+                            <a class="menu-link" id="item-apartment" href="{{ route('admin.customers.apartment-list') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -195,17 +195,17 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Quản lý phương tiện</span>
+                                <span class="menu-title">Đăng ký phương tiện</span>
                             </a>
                         </div>
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="../../demo1/dist/account/settings.html">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Lịch sử cư dân</span>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 {{-- Ý kiến cư dân --}}
@@ -317,10 +317,14 @@
             data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
             <span class="btn-label">Docs &amp; Components</span>
         </a> --}}
-        <select data-control="select2" data-placeholder="Chọn định dạng"
+        <select data-control="select2" data-placeholder="Chọn định dạng" data-submit="{{ route('admin.update_building_active') }}"
             data-hide-search="true" name="building_active" class="btn btn-custom btn-primary w-100 form-select form-select-solid">
-            <option value="">Excel</option>
+            @foreach ($buildingList as $value)
+                <option value="{{$value->id}}" @if ($value->id == $buildingActive)
+                    selected=true
+                @endif>{{$value->name}}</option>
+            @endforeach
+            @csrf
         </select>
-        <span class="text-white">{{Cache::get('active')}}</span>
     </div>
 </div>

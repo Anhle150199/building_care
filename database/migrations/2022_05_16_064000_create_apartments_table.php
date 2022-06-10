@@ -17,10 +17,11 @@ class CreateApartmentsTable extends Migration
             $table->increments('id');
             $table->integer('building_id');
             $table->integer('owner_id')->nullable();
+            $table->string('name');
             $table->string('apartment_code');
             $table->text('description')->nullable();
             $table->integer('floor');
-            $table->enum('status', ['using', 'empty']);
+            $table->enum('status', ['using', 'empty', 'absent']);
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->softDeletes();

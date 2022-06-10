@@ -1,21 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Building;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Models\Apartment;
 use App\Models\Building;
+use App\Repositories\Eloquent\BuildingRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
-class BuildingController extends Controller
+class BuildingController extends BaseBuildingController
 {
+
     public function showBuildingList(Request $request)
     {
         $data = [];
         $data['menu'] = ["menu-building", "item-building-list"];
-        $building = Building::all();
+        $building = Building::orderBy('name', 'asc')->get();
         $list = [];
         foreach ($building as $value) {
             $apartmentActive = Apartment::where('building_id', $value->id)->count();
@@ -23,6 +27,8 @@ class BuildingController extends Controller
             array_push($list, $value);
         }
         $data['building'] = $list;
+        $data['buildingActive'] = $this->getBuildingActive();
+        $data['buildingList'] = $this->buildingList;
         return view('building-manage.building', $data);
     }
 
@@ -34,6 +40,9 @@ class BuildingController extends Controller
         $data['title'] = 'Thêm mới toà nhà';
         $data['routeAjax'] = route('admin.building.create');
         $data['methodAjax'] = 'post';
+        $data['buildingActive'] = $this->getBuildingActive();
+        $data['buildingList'] = $this->buildingList;
+
         return view('building-manage.detail', $data);
     }
 
@@ -58,6 +67,8 @@ class BuildingController extends Controller
         try {
             $new = new Building();
             $new = $this->saveDataBuilding($new, $request);
+            $this->buildingModel->updateBuildingList();
+
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
         }
@@ -74,6 +85,9 @@ class BuildingController extends Controller
         $data['routeAjax'] = route('admin.building.update');
         $data['methodAjax'] = 'put';
         $data['building'] = $building;
+        $data['buildingActive'] = $this->getBuildingActive();
+        $data['buildingList'] = $this->buildingList;
+
         return view('building-manage.detail', $data);
     }
 
@@ -105,6 +119,11 @@ class BuildingController extends Controller
         }
         try {
             $building = $this->saveDataBuilding($building, $request);
+            $this->buildingModel->updateBuildingList();
+            $buildingActive = $this->getBuildingActive();
+            if ($request->status != 'active' && $request->id == $buildingActive) {
+                Cache::flush('building_active_'.Auth::user()->id);
+            }
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
         }
@@ -120,6 +139,11 @@ class BuildingController extends Controller
             }
             try {
                 Building::whereIn('id', $id)->delete();
+                $this->buildingModel->updateBuildingList();
+                $buildingActive = $this->getBuildingActive();
+                if (in_array($buildingActive, $request->id)) {
+                    Cache::flush('building_active_'.Auth::user()->id);
+                }
             } catch (\Throwable $th) {
                 return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
             }

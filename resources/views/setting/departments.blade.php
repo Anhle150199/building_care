@@ -117,7 +117,7 @@
                                                         <option></option>
                                                         <option value="excel">Excel</option>
                                                         <option value="pdf">PDF</option>
-                                                        <option value="cvs">CVS</option>
+                                                        <option value="csv">CSV</option>
                                                     </select>
                                                 </div>
                                                 <div class="text-center">
