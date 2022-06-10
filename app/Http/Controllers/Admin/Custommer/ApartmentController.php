@@ -76,11 +76,13 @@ class ApartmentController extends BaseBuildingController
         if ($validate->fails()) {
             return new JsonResponse(['errors' => $validate->getMessageBag()->toArray()], 406);
         }
-
+        $check = Apartment::where('building_id', $this->getBuildingActive())->where('apartment_code', $request->apartment_code)->first();
+        if ($check != null) {
+            return new JsonResponse(['errors' => ['apartment_code'=>'Mã căn hộ bị trùng']], 406);
+        }
         try {
             $new = new Apartment();
             $new = $this->saveDataApartment($new, $request);
-            $this->buildingModel->updateBuildingList();
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
         }
@@ -108,6 +110,39 @@ class ApartmentController extends BaseBuildingController
         $data['apartmentVehicle'] = $apartmentVehicle;
         return view('customer.apartment-detail', $data);
 
+    }
+
+    public function update(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'id' => 'required|integer',
+                'name' => ['string', 'required', 'max:50'],
+                'apartment_code'=>'string|required',
+                'building_id' => 'integer|required',
+                'description' => ['string'],
+                'status' => ['string', 'in:using,empty,absent', 'required'],
+                'floor' => 'integer|required',
+            ]
+        );
+
+        if ($validate->fails()) {
+            return new JsonResponse(['errors' => $validate->getMessageBag()->toArray()], 406);
+        }
+        $edit = Apartment::find($request->id);
+        if($edit->apartment_code != $request->apartment_code){
+        $check = Apartment::where('building_id', $this->getBuildingActive())->where('apartment_code', $request->apartment_code)->count();
+        if ($check >0) {
+            return new JsonResponse(['errors' => ['apartment_code'=>'Mã căn hộ bị trùng']], 406);
+        }
+        }
+        try {
+            $edit = $this->saveDataApartment($edit, $request);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
+        }
+        return new JsonResponse(['success'], 200);
     }
 
     public function delete(Request $request)

@@ -179,25 +179,30 @@ var KTAppEcommerceSaveProduct = (function () {
                                                                 });
                                                             },
                                                             error: function (response) {
-                                                                console.log(response);
-                                                            const errors = response.responseJSON.errors;
-                                                            console.log(errors);
-                                                            o.removeAttribute(
-                                                                "data-kt-indicator"
-                                                            ),o.disabled = !1,
-                                                            Swal.fire({
-                                                                html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.",
-                                                                icon: "error",
-                                                                buttonsStyling: !1,
-                                                                confirmButtonText:
-                                                                    "Chấp nhận",
-                                                                customClass: {
-                                                                    confirmButton:
-                                                                        "btn btn-primary",
-                                                                },
-                                                            });
+                                                                let messageErr = (mess)=>{return `<div class="fv-plugins-message-container invalid-feedback"><div data-field="address" data-validator="notEmpty">${mess}</div></div>`}
+                                                                const errors = response.responseJSON.errors;
+                                                                console.log(errors);
+                                                                if(errors.apartment_code){
+                                                                    $('input[name=apartment_code]').parent().append(messageErr(errors.apartment_code))
+                                                                }
+                                                                setTimeout(() => {
+                                                                    $('.invalid-feedback').remove();
+                                                                }, 7000);
+                                                                o.removeAttribute(
+                                                                    "data-kt-indicator"
+                                                                ),o.disabled = !1,
+                                                                Swal.fire({
+                                                                    html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.",
+                                                                    icon: "error",
+                                                                    buttonsStyling: !1,
+                                                                    confirmButtonText:
+                                                                        "Chấp nhận",
+                                                                    customClass: {
+                                                                        confirmButton:
+                                                                            "btn btn-primary",
+                                                                    },
+                                                                });
                                                             }
-
                                                         });
                                                     }
 
