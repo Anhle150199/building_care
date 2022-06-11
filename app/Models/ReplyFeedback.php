@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ReplyFeedback extends Model
 {
     use HasFactory;
+    public $table = 'reply_feedback';
+
 }

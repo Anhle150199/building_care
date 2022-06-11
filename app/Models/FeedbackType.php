@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class FeedbackType extends Model
 {
     use HasFactory;
+    public $table = 'feedback_type';
+
 }

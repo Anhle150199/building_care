@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class NotifyRelationship extends Model
 {
     use HasFactory;
+    public $table = 'notify_relationship';
+
 }

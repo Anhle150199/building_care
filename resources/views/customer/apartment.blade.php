@@ -136,7 +136,7 @@
                                     </td>
                                     <td>
                                         @isset($item->owner)
-
+                                        {{$item->owner}}
                                         @endisset()
                                     </td>
                                     <td>
@@ -186,7 +186,7 @@
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h2 class="fw-bolder">Export Subscriptions</h2>
+                                <h2 class="fw-bolder">Xuất danh sách</h2>
                                 <div id="kt_export_close"
                                     class="btn btn-icon btn-sm btn-active-icon-primary">
                                     <span class="svg-icon svg-icon-1">

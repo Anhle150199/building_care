@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\System\AdminController;
 use App\Http\Controllers\Admin\System\DepartmentController;
+use App\Http\Controllers\Admin\System\EquipmentController;
 use App\Http\Controllers\Auth\Admin\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Admin\LoginController;
@@ -45,6 +46,12 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::delete('apartments/delete', [ApartmentController::class, 'delete'])->name('apartment-delete');
 
         Route::get('customers-list', [CustommerController::class, 'showCustomerList'])->name('customer-list');
+        Route::get('customer/new', [CustommerController::class, 'showCreate'])->name('show-customer-create');
+        Route::post('customer/create', [CustommerController::class, 'create'])->name('customer-create');
+        Route::get('customer/{id}', [CustommerController::class, 'showUpdate'])->name('show-customer-update');
+        Route::put('customer/update', [CustommerController::class, 'update'])->name('customer-update');
+        Route::delete('customer/delete', [CustommerController::class, 'delete'])->name('customer-delete');
+
     });
     Route::prefix('system')->name('system.')->group(function () {
         Route::prefix('admins')->name('admins.')->group(function (){
@@ -64,5 +71,12 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
             Route::delete('/delete', [DepartmentController::class, 'deleteDepartment'])->name('delete');
         });
 
+        Route::prefix('equipments')->name('equipment.')->group(function ()
+        {
+            Route::get('/', [EquipmentController::class, 'showList'])->name('list');
+            Route::post('/new', [EquipmentController::class, 'create'])->name('new');
+            Route::put('/edit', [EquipmentController::class, 'update'])->name('edit');
+            Route::delete('/delete', [EquipmentController::class, 'delete'])->name('delete');
+        });
     });
 });

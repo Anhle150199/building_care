@@ -7,17 +7,20 @@
         }
     </style>
 @endpush
-@section('title', 'Danh sách bộ phận')
+@section('title', 'Danh sách thiết bị')
 @section('content')
 
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         {{-- Start page: path page --}}
         <div class="toolbar" id="kt_toolbar">
-            <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+            <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack"
+            data-route-delete="{{ route('admin.system.equipment.delete') }}"
+            data-route-edit = "{{ route('admin.system.equipment.edit') }}"
+            data-route-new = "{{ route('admin.system.equipment.new') }}">
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Danh sách bộ phận</h1>
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Danh sách thiết bị</h1>
                     <span class="h-20px border-gray-300 border-start mx-4"></span>
                     <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                         <li class="breadcrumb-item text-muted">
@@ -30,7 +33,7 @@
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-muted">Danh sách bộ phận</li>
+                        <li class="breadcrumb-item text-muted">Danh sách thiết bị</li>
                     </ul>
                 </div>
             </div>
@@ -136,7 +139,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- Modal thêm bộ phận --}}
+                            {{-- Modal thêm thiết bị --}}
                             <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                     <div class="modal-content">
@@ -170,10 +173,10 @@
                                                     <div class="fv-row mb-7">
                                                         <input type="hidden" id="add_department_form_type">
                                                         <input type="hidden" id="add_department_form_id">
-                                                        <label class="required fw-bold fs-6 mb-2">Phòng: </label>
+                                                        <label class="required fw-bold fs-6 mb-2">Tên thiết bị: </label>
                                                         <input type="text" name="department_name" id="department_name"
                                                             class="form-control form-control-solid mb-3 mb-lg-0"
-                                                            placeholder="Nhập tên phòng" />
+                                                            placeholder="Nhập tên thiết bị" />
                                                     </div>
                                                 </div>
                                                 <div class="text-center pt-15">
@@ -206,26 +209,22 @@
                                         </div>
                                     </th>
                                     {{-- <th></th> --}}
-                                    <th class="min-w-125px">Bộ phận </th>
+                                    <th class="min-w-125px">Tên thiết bị </th>
                                     {{-- <th></th> --}}
-                                    <th class="min-w-125px">Nhân sự</th>
                                     <th class="min-w-125px">Ngày tạo</th>
                                     <th class="text-center min-w-100px">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-bold">
-                                @foreach ($departments as $department)
-                                    <tr id="row_{{$department->id}}" data-id="{{$department->id}}">
+                                @foreach ($equipments as $item)
+                                    <tr id="row_{{$item->id}}" data-id="{{$item->id}}">
                                         <td>
                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="{{$department->id}}" />
+                                                <input class="form-check-input" type="checkbox" value="{{$item->id}}" />
                                             </div>
                                         </td>
-                                        {{-- <td></td> --}}
-                                        <td>{{ $department->name }} </td>
-                                        {{-- <td></td> --}}
-                                        <td>{{ Cache::get('department_count_' . $department->id) }}</td>
-                                        <td>{{ $department->created_at->format('d M Y, h:i a') }}</td>
+                                        <td>{{ $item->name }} </td>
+                                        <td>{{ $item->created_at->format('d M Y, h:i a') }}</td>
                                         <td class="text-center">
                                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
                                                 data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -245,7 +244,7 @@
                                                 data-kt-menu="true">
                                                 <div class="menu-item px-3">
                                                     <a href="#"
-                                                        onclick="showEditModal('{{ $department->id }}', '{{ $department->name }}')"
+                                                        onclick="showEditModal('{{ $item->id }}', '{{ $item->name }}')"
                                                         class="menu-link px-3">Chỉnh sửa</a>
                                                 </div>
                                                 <div class="menu-item px-3">
@@ -267,10 +266,10 @@
 
 @push('js')
     <script src="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/system/department/table.js"></script>
+    <script src="{{ url('/') }}/assets/js/custom/system/equipment/table.js"></script>
 
-    <script src="{{ url('/') }}/assets/js/custom/system/department/export.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/system/department/add.js"></script>
+    <script src="{{ url('/') }}/assets/js/custom/system/equipment/export.js"></script>
+    <script src="{{ url('/') }}/assets/js/custom/system/equipment/add.js"></script>
     <script>
         $(function() {
             $('#btn-add-new').click(function() {

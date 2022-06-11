@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class MaintenanceSchedule extends Model
 {
     use HasFactory;
+    public $table = 'maintenance_schedule';
 }

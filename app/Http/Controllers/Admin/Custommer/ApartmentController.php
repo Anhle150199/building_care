@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Custommer;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Models\Apartment;
+use App\Models\ApartmentsRelationship;
 use App\Models\Customer;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -104,8 +105,8 @@ class ApartmentController extends BaseBuildingController
         $data['buildingList'] = $this->buildingList;
         $customers = Customer::all();
         $data['customers']= $customers;
-        $apartmentCustomer = Customer::where("apartment_id", $apartment->owner_id)->get();
-        $apartmentVehicle = Vehicle::where("apartment_id", $apartment->owner_id)->get();
+        $apartmentCustomer = Customer::where('apartment_id', $id)->get();
+        $apartmentVehicle = Vehicle::where("apartment_id", $apartment->id)->get();
         $data['apartmentCustomer'] = $apartmentCustomer;
         $data['apartmentVehicle'] = $apartmentVehicle;
         return view('customer.apartment-detail', $data);
