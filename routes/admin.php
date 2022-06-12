@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\System\AdminController;
 use App\Http\Controllers\Admin\System\DepartmentController;
 use App\Http\Controllers\Admin\System\EquipmentController;
+use App\Http\Controllers\Admin\System\FeedbackTypeController;
 use App\Http\Controllers\Auth\Admin\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Admin\LoginController;
@@ -77,6 +78,14 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
             Route::post('/new', [EquipmentController::class, 'create'])->name('new');
             Route::put('/edit', [EquipmentController::class, 'update'])->name('edit');
             Route::delete('/delete', [EquipmentController::class, 'delete'])->name('delete');
+        });
+
+        Route::prefix('feedback-type')->name('feedback-type.')->group(function ()
+        {
+            Route::get('/', [FeedbackTypeController::class, 'showList'])->name('list');
+            Route::post('/new', [FeedbackTypeController::class, 'create'])->name('new');
+            Route::put('/edit', [FeedbackTypeController::class, 'update'])->name('edit');
+            Route::delete('/delete', [FeedbackTypeController::class, 'delete'])->name('delete');
         });
     });
 });

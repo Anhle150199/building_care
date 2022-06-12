@@ -15,7 +15,7 @@ var KTUsersAddUser = (function () {
                     fields: {
                         department_name: {
                             validators: {
-                                notEmpty: { message: "Tên phòng là bắt buộc " },
+                                notEmpty: { message: "Trường này không được để trống " },
                             },
                         },
                     },

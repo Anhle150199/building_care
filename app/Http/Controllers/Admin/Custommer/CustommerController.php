@@ -71,13 +71,13 @@ class CustommerController extends BaseBuildingController
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data cu dan']], 406);
         }
-        if ($request->status != 'leave') {
-            $apartment = Apartment::where('id', $request->apartment_id)->first();
-            if ($apartment->status == 'empty') {
-                $apartment->status = 'using';
-                $apartment->save();
-            }
-        }
+        // if ($request->status != 'leave') {
+        //     $apartment = Apartment::where('id', $request->apartment_id)->first();
+        //     if ($apartment->status == 'empty') {
+        //         $apartment->status = 'using';
+        //         $apartment->save();
+        //     }
+        // }
         return new JsonResponse(['success'], 200);
     }
 
@@ -127,7 +127,7 @@ class CustommerController extends BaseBuildingController
         if ($edit->apartment_id != null) {
             $countCustomerApartment = Customer::where('apartment_id', $edit->apartment_id)->count();
 
-            if ($edit->apartment_id != $request->apartment_id && $countCustomerApartment <= 1) {
+            if ($edit->apartment_id != $request->apartment_id && $countCustomerApartment == 1) {
                     $oldApartmnet = Apartment::where('id', $edit->apartment_id)->first();
                     $oldApartmnet->status = 'absent';
                     $oldApartmnet->save();
@@ -138,13 +138,13 @@ class CustommerController extends BaseBuildingController
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
         }
-        if ($request->status != 'leave') {
-            $apartment = Apartment::where('id', $request->apartment_id)->first();
-            if ($apartment->status == 'empty') {
-                $apartment->status = 'using';
-                $apartment->save();
-            }
-        }
+        // if ($request->status != 'leave') {
+        //     $apartment = Apartment::where('id', $request->apartment_id)->first();
+        //     if ($apartment->status == 'empty') {
+        //         $apartment->status = 'using';
+        //         $apartment->save();
+        //     }
+        // }
 
         return new JsonResponse(['success'], 200);
     }

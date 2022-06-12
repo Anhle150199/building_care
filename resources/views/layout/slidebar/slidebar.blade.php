@@ -299,7 +299,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="../../demo1/dist/account/overview.html">
+                            <a class="menu-link" href="{{ route('admin.system.feedback-type.list') }}" id="item-feedback-type">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
