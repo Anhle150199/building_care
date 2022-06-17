@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Http\Controllers\Admin\Building\BuildingController;
 use App\Http\Controllers\Admin\Custommer\ApartmentController;
 use App\Http\Controllers\Admin\Custommer\CustommerController;
+use App\Http\Controllers\Admin\Custommer\VehicleController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\System\AdminController;
@@ -53,6 +54,14 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::put('customer/update', [CustommerController::class, 'update'])->name('customer-update');
         Route::delete('customer/delete', [CustommerController::class, 'delete'])->name('customer-delete');
 
+        Route::get('vehicle', [VehicleController::class, 'showList'])->name('vehicle-list');
+        Route::get('vehicle/request', [VehicleController::class, 'showRequest'])->name('vehicle-request');
+        Route::get('vehicle/new', [VehicleController::class, 'showCreate'])->name('show-vehicle-create');
+        Route::post('vehicle/create', [VehicleController::class, 'create'])->name('vehicle-create');
+        Route::get('vehicle/{id}', [VehicleController::class, 'showUpdate'])->name('show-vehicle-update');
+        Route::put('vehicle/update', [VehicleController::class, 'update'])->name('vehicle-update');
+        Route::put('vehicle/accept-request', [VehicleController::class, 'acceptRequest'])->name('vehicle-accept');
+        Route::delete('vehicle/delete', [VehicleController::class, 'delete'])->name('vehicle-delete');
     });
     Route::prefix('system')->name('system.')->group(function () {
         Route::prefix('admins')->name('admins.')->group(function (){

@@ -11,4 +11,9 @@ class ApartmentRepository extends EloquentRepository
         return Apartment::class;
     }
 
+    public function getApartmentList($buildingId)
+    {
+        $list = $this->_model->where('building_id', $buildingId)->get('id');
+        return $list->toArray();
+    }
 }

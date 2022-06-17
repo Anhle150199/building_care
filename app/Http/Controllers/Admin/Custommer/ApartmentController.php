@@ -36,7 +36,6 @@ class ApartmentController extends BaseBuildingController
             if($value->owner_id != null){
                 $value->owner = Customer::find($value->owner_id)->name;
             }
-            $value->number = Customer::where('apartment_id', $value->id)->count();
             $value->vehicle_number = Vehicle::where('apartment_id', $value->id)->count();
         }
         $data['apartmentList'] = $apartmentList;

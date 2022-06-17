@@ -116,7 +116,7 @@
                                     <th class="min-w-100px">Căn hộ</th>
                                     <th class="min-w-75px">Chủ hộ</th>
                                     <th class="min-w-100px">Trạng thái</th>
-                                    <th class="min-w-100px">Số người</th>
+                                    <th></th>
                                     <th class="min-w-100px">Số phương tiện</th>
                                     <th class="text-center min-w-70px">Thao tác</th>
                                 </tr>
@@ -148,7 +148,7 @@
                                         <div class="badge badge-light-warning">Vắng</div>
                                         @endif
                                     </td>
-                                    <td>{{$item->number}}</td>
+                                    <td></td>
                                     <td>{{ $item->vehicle_number }}</td>
                                     <td class="text-center">
                                         <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"

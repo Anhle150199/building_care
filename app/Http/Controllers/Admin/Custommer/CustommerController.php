@@ -157,7 +157,8 @@ class CustommerController extends BaseBuildingController
                 return new JsonResponse(['errors' => 'input rỗng'], 406);
             }
             try {
-                Apartment::whereIn('id', $id)->delete();
+                Customer::whereIn('id', $id)->delete();
+                Apartment::whereIn('owner_id', $id)->update(['owner_id'=>null, 'status'=>'empty']);
             } catch (\Throwable $th) {
                 return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
             }

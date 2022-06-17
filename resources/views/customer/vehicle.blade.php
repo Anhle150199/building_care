@@ -4,16 +4,16 @@
         type="text/css" />
 @endpush
 
-@section('title', 'Danh sách căn hộ toà nhà ')
+@section('title', $title)
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         {{-- Header --}}
-        <div class="toolbar" id="kt_toolbar" data-route-delete="{{route('admin.customers.customer-delete')}}">
+        <div class="toolbar" id="kt_toolbar" data-route-delete="{{route('admin.customers.vehicle-delete')}}">
             <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Quản lý căn hộ</h1>
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">{{$title}}</h1>
 
                     <span class="h-20px border-gray-300 border-start mx-4"></span>
 
@@ -30,7 +30,7 @@
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-dark">Quản lý căn hộ</li>
+                        <li class="breadcrumb-item text-dark">{{$title}}</li>
                     </ul>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
@@ -38,8 +38,17 @@
             </div>
         </div>
         {{-- Body List --}}
-        <div class="post d-flex flex-column-fluid" id="kt_post">
+        <div class="post d-flex flex-column-fluid" id="kt_post" data-delete="{{ route('admin.customers.vehicle-delete') }}">
             <div id="kt_content_container" class="container-xxl">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link @if ($typePage == 'accept') active @endif" aria-current="page" href="{{ route('admin.customers.vehicle-list') }}">Danh sách</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if ($typePage == 'request') active @endif" href="{{ route('admin.customers.vehicle-request') }}">Yên cầu</a>
+                    </li>
+                </ul>
+
                 <div class="card">
                     <div class="card-header border-0 pt-6">
                         <div class="card-title">
@@ -80,7 +89,7 @@
                                 </button>
 
                                 {{-- Thêm mới --}}
-                                <a href="{{ route('admin.customers.show-customer-create') }}" class="btn btn-primary">
+                                <a href="{{ route('admin.customers.show-vehicle-create') }}" class="btn btn-primary">
                                     <span class="svg-icon svg-icon-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none">
@@ -97,8 +106,14 @@
                                 <div class="fw-bolder me-5">Đã chọn
                                     <span class="me-2" data-kt-table-select="selected_count"></span>
                                 </div>
-                                <button type="button" class="btn btn-danger"
+                                <button type="button" class="btn btn-danger mx-2"
                                     data-kt-table-select="delete_selected">Xoá</button>
+                                @if ($typePage == 'request')
+                                <button type="button" class="btn btn-success mx-2"
+                                    data-kt-table-select="accept_selected">Chấp nhận</button>
+
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -113,47 +128,43 @@
                                                 value="1" />
                                         </div>
                                     </th>
-                                    <th class="min-w-100px">Họ tên</th>
-                                    <th class="min-w-75px">Căn hộ</th>
-                                    <th class="min-w-100px">Liên hệ</th>
-                                    <th class="min-w-100px">Ngày sinh</th>
-                                    <th class="min-w-100px">Tài khoản</th>
+                                    <th class="min-w-200px">Phương tiện</th>
+                                    <th class="min-w-100px">Biển số</th>
+                                    <th class="min-w-100px">Căn hộ</th>
+                                    <th class="min-w-100px">Mô tả</th>
                                     <th class="text-center min-w-70px">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-bold">
-                                @foreach ($customersList as $item )
+                                @foreach ($list as $item )
                                 <tr data-id={{$item->id}} id="row_{{$item->id}}">
                                     <td>
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
                                             <input class="form-check-input" type="checkbox" value="{{$item->id}}" />
                                         </div>
                                     </td>
-                                    <td>
-                                        <a href="{{ route('admin.customers.show-customer-update', ['id'=>$item->id]) }}"
-                                            class="text-gray-800 text-hover-primary mb-1">{{$item->name}}</a>
-                                            <span class="text-muted fw-bold text-muted d-block fs-7">{{$item->customer_code}}</span>
+                                    <td >
+                                        <span class="text-muted fw-bold text-muted d-block fs-7">
+                                            @if($item->category=='motorbike')
+                                            Xe máy
+                                            @elseif ($item->category=='electric_motorbike')
+                                            Xe đạp điện
+                                            @else
+                                            Ô tô
+                                            @endif
+                                        </span>
+                                        <a href="{{ route('admin.customers.show-vehicle-update', ['id'=>$item->id]) }}"
+                                            class="text-gray-800 text-hover-primary mb-1">{{$item->model}}</a>
                                     </td>
                                     <td>
-                                        <span class=" fw-bold  d-block fs-7">{{$item->apartment}}</span>
-                                        @if ($item->status == 'stay')
-                                        <div class="badge badge-light-success">Đang ở</div>
-                                        @elseif ($item->status == 'absent')
-                                        <div class="badge badge-light-warning">Vắng</div>
-                                        @else
-                                        <div class="badge badge-light-danger">Bên ngoài</div>
-                                        @endif
+                                        {{$item->license_plate_number}}
                                     </td>
                                     <td>
-                                        <span class=" fw-bold  d-block fs-7">{{$item->phone}}</span>
-                                        <span class="text-muted fw-bold text-muted d-block fs-7">{{$item->email}}</span>
-                                    </td>
-                                    <td>{{$item->birthday}}</td>
-                                    <td>@if($item->pasword != null)
-                                        <div class="badge badge-light-success">Kích hoạt</div>
+                                        <span class="fw-bold text-dark d-block fs-7">{{$item->apartment->name}}</span>
+                                        <span class="fw-bold text-muted d-block fs-7">{{$item->apartment->apartment_code}}</span>
 
-                                        @endif
                                     </td>
+                                    <td><?php echo $item->description; ?></td>
                                     <td class="text-center">
                                         <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
                                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -165,26 +176,22 @@
                                                 </svg>
                                             </span>
                                         </a>
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-150px py-4"
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                             data-kt-menu="true">
-                                            <div class="menu-item px-3">
-                                                <a href="{{ route('admin.customers.show-customer-update', ['id'=>$item->id]) }}"
-                                                    class="menu-link px-3">Chỉnh sửa</a>
-                                            </div>
+                                            @if ($typePage == 'accept')
+                                                <div class="menu-item px-3">
+                                                    <a href="{{ route('admin.customers.show-vehicle-update', ['id'=>$item->id]) }}"
+                                                        class="menu-link px-3">Chỉnh sửa</a>
+                                                </div>
+                                            @else
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">Chấp nhận</a>
+                                                </div>
+                                            @endif
                                             <div class="menu-item px-3">
                                                 <a href="#" data-kt-table-filter="delete_row"
                                                     class="menu-link px-3">Xoá</a>
                                             </div>
-
-                                            @if($item->pasword != null)
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Reset password</a>
-                                            </div>
-                                            @elseif ($item->pasword == null && $item->email != null)
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Tạo tài khoản</a>
-                                            </div>
-                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -200,7 +207,7 @@
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h2 class="fw-bolder">Export Subscriptions</h2>
+                                <h2 class="fw-bolder">Xuất danh sách</h2>
                                 <div id="kt_export_close"
                                     class="btn btn-icon btn-sm btn-active-icon-primary">
                                     <span class="svg-icon svg-icon-1">
@@ -249,7 +256,7 @@
     <script src="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <script src="{{ url('/') }}/assets/js/custom/building/list/export.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/custommer/customer/list.js"></script>
+    <script src="{{ url('/') }}/assets/js/custom/custommer/vehicle/list.js"></script>
     <style>
         #kt_table_filter{
             display:none;

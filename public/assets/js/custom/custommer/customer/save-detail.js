@@ -189,7 +189,7 @@ var KTAppEcommerceSaveProduct = (function () {
                                                 }, 0)
                                             )
                                             : Swal.fire({
-                                                    html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.xxx",
+                                                    html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.",
                                                     icon: "error",
                                                     buttonsStyling: !1,
                                                     confirmButtonText:

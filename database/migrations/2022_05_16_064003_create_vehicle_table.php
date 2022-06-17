@@ -19,7 +19,7 @@ class CreateVehicleTable extends Migration
             $table->enum('category', ['motorbike', 'electric_motorbike', 'car']);
             $table->string('model');
             $table->string('license_plate_number')->comment("biển số xe");
-            $table->text('desciption')->nullable();
+            $table->text('description')->nullable();
             $table->enum('status', ['request', 'accept']);
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
