@@ -116,6 +116,8 @@ class VehicleController extends BaseBuildingController
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data cu dan']], 406);
         }
+        // Todo push notification "Phương tiện đã được thêm"
+
         return new JsonResponse(['success'], 200);
     }
     public function update(Request $request)
@@ -123,7 +125,7 @@ class VehicleController extends BaseBuildingController
         $validate = Validator::make(
             $request->all(),
             [
-                'id' => 'required|integer',
+                'id' => 'required|integer|exists:vehicle,id',
                 'apartment_id' => [ 'required', 'exists:apartments,id'],
                 'license_plate_number' => 'string|required',
                 'model' => 'string|required',
@@ -144,8 +146,48 @@ class VehicleController extends BaseBuildingController
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data phuong tien']], 406);
         }
+
+        // Todo push notification "Phương tiện đã được cập nhật"
+
         return new JsonResponse(['success'], 200);
     }
+
+    public function accept(Request $request)
+    {
+        if ($request->has('id')) {
+            $id = $request->id;
+            if (sizeof($id) == 0) {
+                return new JsonResponse(['errors' => 'input rỗng'], 406);
+            }
+            try {
+                Vehicle::whereIn('id', $id)->update([
+                    'status'=>'accept'
+                ]);
+            } catch (\Throwable $th) {
+                return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
+            }
+            return new JsonResponse(['accepted'], 200);
+        }
+        return new JsonResponse(['errors' => 'không có id'], 406);
+    }
+
+    public function delete(Request $request)
+    {
+        if ($request->has('id')) {
+            $id = $request->id;
+            if (sizeof($id) == 0) {
+                return new JsonResponse(['errors' => 'input rỗng'], 406);
+            }
+            try {
+                Vehicle::whereIn('id', $id)->delete();
+            } catch (\Throwable $th) {
+                return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
+            }
+            return new JsonResponse(['deleted'], 200);
+        }
+        return new JsonResponse(['errors' => 'không có id'], 406);
+    }
+
     public function saveData($model, $request)
     {
         $model->apartment_id = $request->apartment_id;

@@ -60,7 +60,7 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::post('vehicle/create', [VehicleController::class, 'create'])->name('vehicle-create');
         Route::get('vehicle/{id}', [VehicleController::class, 'showUpdate'])->name('show-vehicle-update');
         Route::put('vehicle/update', [VehicleController::class, 'update'])->name('vehicle-update');
-        Route::put('vehicle/accept-request', [VehicleController::class, 'acceptRequest'])->name('vehicle-accept');
+        Route::put('vehicle/accept-request', [VehicleController::class, 'accept'])->name('vehicle-accept');
         Route::delete('vehicle/delete', [VehicleController::class, 'delete'])->name('vehicle-delete');
     });
     Route::prefix('system')->name('system.')->group(function () {

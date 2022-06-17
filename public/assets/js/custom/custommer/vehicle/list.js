@@ -6,6 +6,7 @@ var KTSubscriptionsList = (function () {
         n,
         o,
         c,
+        // Delete
         r = function () {
             t.querySelectorAll(
                 '[data-kt-table-filter="delete_row"]'
@@ -168,6 +169,171 @@ var KTSubscriptionsList = (function () {
                     });
                 });
         };
+        if($('#kt_post').data('type-page') == 'request'){
+            // Accept
+            var r2 = function () {
+                t.querySelectorAll(
+                    '[data-kt-table-filter="accept_row"]'
+                ).forEach((t) => {
+                    t.addEventListener("click", function (t) {
+                        t.preventDefault();
+                        const n = t.target.closest("tr"),
+                            o = n.querySelectorAll("td")[1].innerText;
+                        Swal.fire({
+                            text: "Bạn có muốn chấp nhận " + o + "?",
+                            icon: "warning",
+                            showCancelButton: !0,
+                            buttonsStyling: !1,
+                            confirmButtonText: "Chấp nhận!",
+                            cancelButtonText: "Trở lại",
+                            customClass: {
+                                confirmButton: "btn fw-bold btn-success",
+                                cancelButton:
+                                    "btn fw-bold btn-active-light-primary",
+                            },
+                        }).then(function (t) {
+                            t.value
+                                ? setTimeout(() => {
+                                    let id = [$(e.row($(n)).selector.rows[0]).attr('data-id')];
+                                    console.log(id);
+                                    $.ajax({
+                                        url: $('#kt_toolbar').data('route-accept'),
+                                        type: 'put',
+                                        data: {
+                                            '_token': token,
+                                            id: id
+                                        },
+                                        dataType: "json",
+                                        success: function (data) {
+                                            console.log(data);
+                                            Swal.fire({
+                                                text: "Hoàn thành!.",
+                                                icon: "success",
+                                                buttonsStyling: !1,
+                                                confirmButtonText: "Chấp nhận!",
+                                                customClass: {
+                                                    confirmButton:
+                                                        "btn fw-bold btn-primary",
+                                                },
+                                            })
+                                                .then(function () {
+                                                    e.row($(n)).remove().draw();
+                                                })
+                                                .then(function () {
+                                                    i();
+                                                });
+                                        },
+                                        error: function (data) {
+                                            console.log(data.responseJSON.errors);
+
+                                            Swal.fire({
+                                                text: "Có lỗi xảy ra.",
+                                                icon: "error",
+                                                buttonsStyling: !1,
+                                                confirmButtonText: "Chấp nhận!",
+                                                customClass: {
+                                                    confirmButton: "btn fw-bold btn-primary",
+                                                },
+                                            });
+                                        },
+                                    })
+                                }, 0)
+                                : "cancel" === t.dismiss
+                        });
+                    });
+                });
+            },
+            l2 = () => {
+                const r = t.querySelectorAll('[type="checkbox"]');
+                (n = document.querySelector(
+                    '[data-kt-table-toolbar="base"]'
+                )),
+                    (o = document.querySelector(
+                        '[data-kt-table-toolbar="selected"]'
+                    )),
+                    (c = document.querySelector(
+                        '[data-kt-table-select="selected_count"]'
+                    ));
+                const a = document.querySelector(
+                    '[data-kt-table-select="accept_selected"]'
+                );
+                r.forEach((t) => {
+                    t.addEventListener("click", function () {
+                        setTimeout(function () {
+                            i();
+                        }, 50);
+                    });
+                }),
+                    a.addEventListener("click", function () {
+                        Swal.fire({
+                            text: "Bạn có muốn chấp nhận các phương tiện đã chọn?",
+                            icon: "warning",
+                            showCancelButton: !0,
+                            buttonsStyling: !1,
+                            confirmButtonText: "Chấp nhận",
+                            cancelButtonText: "Trở lại",
+                            customClass: {
+                                confirmButton: "btn fw-bold btn-success",
+                                cancelButton:
+                                    "btn fw-bold btn-active-light-primary",
+                            },
+                        }).then(function (n) {
+                            let idAccept = [];
+                            r.forEach((t) => {
+                                t.checked && idAccept.push($(t.closest("tbody tr")).attr('data-id'));
+                            });
+                            idAccept = idAccept.filter((item)=>item!=undefined)
+                            console.log(idAccept);
+                            n.value ? $.ajax({
+                                url: $('#kt_toolbar').data('route-accept'),
+                                type: "put",
+                                data: {
+                                    '_token': token,
+                                    id: idAccept
+                                },
+                                dataType: "json",
+                                success: function (data) {
+                                    Swal.fire({
+                                        text: "Hoàn thành!.",
+                                        icon: "success",
+                                        buttonsStyling: !1,
+                                        confirmButtonText: "Chấp nhận",
+                                        customClass: {
+                                            confirmButton: "btn fw-bold btn-primary",
+                                        },
+                                    })
+                                        .then(function () {
+                                            r.forEach((t) => {
+                                                t.checked &&
+                                                    e
+                                                        .row($(t.closest("tbody tr")))
+                                                        .remove()
+                                                        .draw();
+                                            });
+                                            t.querySelectorAll(
+                                                '[type="checkbox"]'
+                                            )[0].checked = !1;
+                                        })
+                                        .then(function () {
+                                            i(), l();
+                                        })
+                                },
+                                error:function () {
+                                    Swal.fire({
+                                        text: "Có lỗi xảy ra.",
+                                        icon: "error",
+                                        buttonsStyling: !1,
+                                        confirmButtonText: "Chấp nhận",
+                                        customClass: { confirmButton: "btn fw-bold btn-primary"},
+                                    });
+                                }
+                            })
+
+                                : "cancel" === n.dismiss;
+                        });
+                    });
+            };
+        }
     const i = () => {
         const e = t.querySelectorAll('tbody [type="checkbox"]');
         let r = !1,
@@ -214,6 +380,9 @@ var KTSubscriptionsList = (function () {
                         e.search(t.target.value).draw();
                     }),
                 r());
+                if($('#kt_post').data('type-page') == 'request'){
+                    l2(),r2();
+                }
                 // ,
                 // (function () {
                 //     const t = document.querySelector(

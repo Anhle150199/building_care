@@ -8,7 +8,8 @@
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         {{-- Header --}}
-        <div class="toolbar" id="kt_toolbar" data-route-delete="{{route('admin.customers.vehicle-delete')}}">
+        <div class="toolbar" id="kt_toolbar" data-route-delete="{{route('admin.customers.vehicle-delete')}}"
+            data-route-accept ="{{ route('admin.customers.vehicle-accept') }}">
             <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
@@ -38,7 +39,7 @@
             </div>
         </div>
         {{-- Body List --}}
-        <div class="post d-flex flex-column-fluid" id="kt_post" data-delete="{{ route('admin.customers.vehicle-delete') }}">
+        <div class="post d-flex flex-column-fluid" id="kt_post" data-delete="{{ route('admin.customers.vehicle-delete') }}" data-type-page="{{$typePage}}">
             <div id="kt_content_container" class="container-xxl">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -128,9 +129,9 @@
                                                 value="1" />
                                         </div>
                                     </th>
+                                    <th class="min-w-100px">Căn hộ</th>
                                     <th class="min-w-200px">Phương tiện</th>
                                     <th class="min-w-100px">Biển số</th>
-                                    <th class="min-w-100px">Căn hộ</th>
                                     <th class="min-w-100px">Mô tả</th>
                                     <th class="text-center min-w-70px">Thao tác</th>
                                 </tr>
@@ -142,6 +143,11 @@
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
                                             <input class="form-check-input" type="checkbox" value="{{$item->id}}" />
                                         </div>
+                                    </td>
+                                    <td>
+                                        <span class="fw-bold text-dark d-block fs-7">{{$item->apartment->name}}</span>
+                                        <span class="fw-bold text-muted d-block fs-7">{{$item->apartment->apartment_code}}</span>
+
                                     </td>
                                     <td >
                                         <span class="text-muted fw-bold text-muted d-block fs-7">
@@ -158,11 +164,6 @@
                                     </td>
                                     <td>
                                         {{$item->license_plate_number}}
-                                    </td>
-                                    <td>
-                                        <span class="fw-bold text-dark d-block fs-7">{{$item->apartment->name}}</span>
-                                        <span class="fw-bold text-muted d-block fs-7">{{$item->apartment->apartment_code}}</span>
-
                                     </td>
                                     <td><?php echo $item->description; ?></td>
                                     <td class="text-center">
@@ -185,7 +186,7 @@
                                                 </div>
                                             @else
                                                 <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Chấp nhận</a>
+                                                    <a href="#" onclick="accept({{$item->id}})" data-kt-table-filter="accept_row" class="menu-link px-3">Chấp nhận</a>
                                                 </div>
                                             @endif
                                             <div class="menu-item px-3">
@@ -262,4 +263,10 @@
             display:none;
         }
     </style>
+
+    <script>
+        function accept(param) {
+
+        }
+    </script>
 @endpush
