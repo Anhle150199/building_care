@@ -4,6 +4,7 @@ namespace App;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Http\Controllers\Admin\Building\BuildingController;
+use App\Http\Controllers\Admin\Building\MaintenanceController;
 use App\Http\Controllers\Admin\Custommer\ApartmentController;
 use App\Http\Controllers\Admin\Custommer\CustommerController;
 use App\Http\Controllers\Admin\Custommer\VehicleController;
@@ -36,6 +37,15 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('update/{id}', [BuildingController::class, 'showUpdate'])->name('show-update');
         Route::put('update', [BuildingController::class, 'update'])->name('update');
         Route::delete('delete', [BuildingController::class, 'delete'])->name('delete');
+
+        Route::prefix('maintenance_schedule')->name('maintenance_schedule.')->group(function () {
+            Route::get('/', [MaintenanceController::class, 'show'])->name('show');
+            Route::get('/get/{id}', [MaintenanceController::class, 'getCalendarList'])->name('get-list');
+            Route::post('/create', [MaintenanceController::class, 'create'])->name('create');
+            Route::put('/update', [MaintenanceController::class, 'update'])->name('update');
+            Route::delete('/delete', [MaintenanceController::class, 'delete'])->name('delete');
+        });
+
     });
 
     // Department and customer Manage

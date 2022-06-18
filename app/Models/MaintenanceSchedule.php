@@ -10,4 +10,5 @@ class MaintenanceSchedule extends Model
 {
     use HasFactory,SoftDeletes;
     public $table = 'maintenance_schedule';
+    
 }

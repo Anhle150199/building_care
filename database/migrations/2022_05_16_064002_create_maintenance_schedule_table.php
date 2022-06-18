@@ -16,7 +16,10 @@ class CreateMaintenanceScheduleTable extends Migration
         Schema::create('maintenance_schedule', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('building_id');
-            $table->integer('equipment_id');
+            $table->string('title');
+            $table->string('location');
+            $table->tinyInteger('all_day');
+            $table->text('description')->nullable();
             $table->dateTime('start_at');
             $table->dateTime('end_at');
             $table->timestamp('created_at');

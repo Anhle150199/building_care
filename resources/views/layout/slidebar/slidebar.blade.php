@@ -146,7 +146,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" id="item-maintain" href="../../demo1/dist/authentication/extended/coming-soon.html">
+                            <a class="menu-link" id="item-maintain" href="{{ route('admin.building.maintenance_schedule.show') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
