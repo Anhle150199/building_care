@@ -40,7 +40,7 @@ var KTAppCalendar = (function () {
             }
         }
     };
-
+    var countAjax = 0;
     const q = (e) => {
         C();
         const n = x.allDay
@@ -81,7 +81,7 @@ var KTAppCalendar = (function () {
         _.addEventListener("click", function (t) {
             t.preventDefault(),
             y && y.validate().then(function (t) {
-                console.log("validated!"),
+                console.log("validated1!"),
                 "Valid" == t
                     ? (_.setAttribute("data-kt-indicator","on"),
                         (_.disabled = !0),
@@ -111,64 +111,84 @@ var KTAppCalendar = (function () {
                                 all_day: all_day,
                                 start_at: start_at,
                                 end_at: end_at
-                            }
-                            console.log(data);
-                            $.ajax({
-                                url:$("#kt_post").data('create'),
-                                type: 'post',
-                                data: data,
-                                dataType: 'json',
-                                success: function(response){
-                                    console.log(response);
-                                    _.removeAttribute("data-kt-indicator"),
-                                    Swal.fire({
-                                        text: "Đã thêm lịch bảo trì mới!",
-                                        icon: "success",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Chấp nhận!",
-                                        customClass: { confirmButton: "btn btn-primary",},
-                                    }).then(function (t) {
-                                        if (t.isConfirmed) {
-                                            v.hide(),(_.disabled = !1);
-                                            let t = !1;
-                                            r.checked && (t = !0), 0 === c.selectedDates.length &&(t = !0);
-                                            var l = moment(i.selectedDates[0]).format(),
-                                                s = moment(d.selectedDates[d.selectedDates.length - 1]).format();
-                                            if (!t) {
-                                                const e = moment(i.selectedDates[0]).format("YYYY-MM-DD"),
-                                                    t = e;
-                                                (l = e + "T" + moment(c.selectedDates[0]).format("HH:mm:ss")),
-                                                (s =t + "T" + moment(u.selectedDates[0]).format("HH:mm:ss"));
-                                            }
-                                            let newEvent = {
-                                                id: response[0].id,
-                                                title: n.value,
-                                                description:a.value,
-                                                location: o.value,
-                                                start: l,
-                                                end: s,
-                                                allDay: t,
-                                            };
-                                            e.addEvent(newEvent),
-                                            e.render(),
-                                            p.reset();
+                            };
+                            _.removeAttribute("data-kt-indicator"),_.disabled = !1,
+                            Swal.fire({
+                                title: '<strong> Kiểm tra thông tin </strong>',
+                                text: "New event added to calendar!",
+                                icon: "success",
+                                showCancelButton: !0,
+                                buttonsStyling: !1,
+                                confirmButtonText: "Tiếp tục",
+                                cancelButtonText: "Trở lại",
+                                customClass: {
+                                    confirmButton: "btn btn-primary",
+                                    cancelButton: "btn btn-active-light",
+                                },
+                                html:`<div><p class="w-100 text-start"><span class="fw-bold">Tiêu đề: </span>${data.title}</p>
+                                <p class="w-100 text-start"><span class="fw-bold">Chi tiết: </span>${data.description}</p>
+                                <p class="w-100 text-start"><span class="fw-bold">Địa điểm: </span>${data.location}</p>
+                                <p class="w-100 text-start"><span class="fw-bold">Bắt đầu: </span>${data.start_at}</p>
+                                <p class="w-100 text-start"><span class="fw-bold">Kết thúc: </span>${data.end_at}</p></div>`
+                            }).then(function (t) {
+                                if (t.isConfirmed) {
+                                    console.log(data);
+                                    $.ajax({
+                                        url:$("#kt_post").data('create'),
+                                        type: 'post',
+                                        data: data,
+                                        dataType: 'json',
+                                        success: function(response){
+                                            console.log(response);
+                                            Swal.fire({
+                                                text: "Đã thêm lịch bảo trì mới!",
+                                                icon: "success",
+                                                buttonsStyling: !1,
+                                                confirmButtonText: "Chấp nhận!",
+                                                customClass: { confirmButton: "btn btn-primary",},
+                                            }).then(function (t) {
+                                                if (t.isConfirmed) {
+                                                    v.hide(),(_.disabled = !1);
+                                                    let t = !1;
+                                                    r.checked && (t = !0), 0 === c.selectedDates.length &&(t = !0);
+                                                    var l = moment(i.selectedDates[0]).format(),
+                                                        s = moment(d.selectedDates[d.selectedDates.length - 1]).format();
+                                                    if (!t) {
+                                                        const e = moment(i.selectedDates[0]).format("YYYY-MM-DD"),
+                                                            t = e;
+                                                        (l = e + "T" + moment(c.selectedDates[0]).format("HH:mm:ss")),
+                                                        (s =t + "T" + moment(u.selectedDates[0]).format("HH:mm:ss"));
+                                                    }
+                                                    let newEvent = {
+                                                        id: response[0].id,
+                                                        title: n.value,
+                                                        description:a.value,
+                                                        location: o.value,
+                                                        start: l,
+                                                        end: s,
+                                                        allDay: t,
+                                                    };
+                                                    e.addEvent(newEvent),
+                                                    e.render(),
+                                                    p.reset();
+                                                }
+                                            });
+                                        },
+                                        error: function(response){
+                                            console.log(response);
+                                            let errors = response.responseJSON.errors;
+                                            console.log(errors);
+                                            Swal.fire({
+                                                text: "Có lỗi xảy ra, xin thử lại sau.",
+                                                icon: "error",
+                                                buttonsStyling: !1,
+                                                confirmButtonText: "Chấp nhận",
+                                                customClass: {confirmButton: "btn btn-primary",},
+                                            });
+                                            (_.setAttribute("data-kt-indicator","off"),_.disabled = !1)
                                         }
                                     });
-                                },
-                                error: function(response){
-                                    console.log(response);
-                                    let errors = response.responseJSON.errors;
-                                    console.log(errors);
-                                    Swal.fire({
-                                        text: "Có lỗi xảy ra, xin thử lại sau.",
-                                        icon: "error",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Chấp nhận",
-                                        customClass: {confirmButton: "btn btn-primary",},
-                                    });
-                                    (_.setAttribute("data-kt-indicator","off"),_.disabled = !1)
-                                }
-                            });
+                            }});
                         }, 0))
                     : Swal.fire({
                         text: "Có lỗi xảy ra, xin thử lại sau.",
@@ -218,48 +238,121 @@ var KTAppCalendar = (function () {
                     y && y.validate().then(function (t) {
                         console.log("validated!"),
                         "Valid" == t ? (_.setAttribute("data-kt-indicator", "on"),
-                        (_.disabled = !0),
+                        // (_.disabled = !0),
                         setTimeout(function () {
-                            
+                            let building_id=$('select[name=building_active]').val(),
+                            title = $('#title').val(),
+                            description = $('#description').val(),
+                            location = $('#location').val(),
+                            all_day, start_at, end_at, data;
+
+                            if($('#kt_calendar_datepicker_allday').is(':checked')){
+                                all_day = 1;
+                                start_at = $('#kt_calendar_datepicker_start_date').val()+" "+"00:00:00";
+                                end_at = $('#kt_calendar_datepicker_end_date').val()+" "+"00:00:00";
+                            } else {
+                                all_day = 0;
+                                start_at = $('#kt_calendar_datepicker_start_date').val() + ' ' + $('#kt_calendar_datepicker_start_time').val();
+                                end_at = $('#kt_calendar_datepicker_end_date').val()+ ' ' + $('#kt_calendar_datepicker_end_time').val();
+                            }
+                            if(description=="") description=null;
+                            data = {
+                                _token: token,
+                                id: x.id,
+                                building_id: building_id,
+                                title: title,
+                                description: description,
+                                location:location,
+                                all_day: all_day,
+                                start_at: start_at,
+                                end_at: end_at
+                            };
                             _.removeAttribute( "data-kt-indicator"),
                                 Swal.fire({
-                                    text: "Đã cập nhật lịch bảo trì!",
+                                    title: '<strong> Kiểm tra thông tin </strong>',
+                                    text: "New event added to calendar!",
                                     icon: "success",
+                                    showCancelButton: !0,
                                     buttonsStyling: !1,
-                                    confirmButtonText:"Chấp nhận!",
-                                    customClass: {confirmButton:"btn btn-primary",},
-                                }).then(function (t) {
+                                    confirmButtonText: "Tiếp tục",
+                                    cancelButtonText: "Trở lại",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary",
+                                        cancelButton: "btn btn-active-light",
+                                    },
+                                    html:`<div><p class="w-100 text-start"><span class="fw-bold">Tiêu đề: </span>${data.title}</p>
+                                    <p class="w-100 text-start"><span class="fw-bold">Chi tiết: </span>${data.description}</p>
+                                    <p class="w-100 text-start"><span class="fw-bold">Địa điểm: </span>${data.location}</p>
+                                    <p class="w-100 text-start"><span class="fw-bold">Bắt đầu: </span>${data.start_at}</p>
+                                    <p class="w-100 text-start"><span class="fw-bold">Kết thúc: </span>${data.end_at}</p></div>`
+                                    }).then(function (t) {
                                     if (t.isConfirmed) {
-                                        v.hide(),
-                                        (_.disabled =!1),
-                                        e.getEventById(x.id).remove();
-                                        let t =!1;
-                                        r.checked && (t = !0),
-                                            0 ===c.selectedDates.length && (t = !0);
-                                        var l = moment(i.selectedDates[0]).format(),
-                                            s = moment(d.selectedDates[d.selectedDates.length - 1]).format();
-                                        if (!t) {
-                                            const e = moment(i.selectedDates[0]).format("YYYY-MM-DD"),
-                                                t = e;
-                                            (l = e + "T" + moment(c.selectedDates[0]).format("HH:mm:ss")),
-                                            (s =t +"T" + moment( u.selectedDates[0]).format("HH:mm:ss"));
+                                        console.log(data);
+                                    $.ajax({
+                                        url:$("#kt_post").data('update'),
+                                        type: 'put',
+                                        data: data,
+                                        dataType: 'json',
+                                        success: function(response){
+                                            console.log(response);
+                                            Swal.fire({
+                                                text: "Đã cập nhật lịch bảo trì!",
+                                                icon: "success",
+                                                buttonsStyling: !1,
+                                                confirmButtonText:"Chấp nhận!",
+                                                customClass: {confirmButton:"btn btn-primary",},
+                                            }).then(function (t) {
+                                                if (t.isConfirmed) {
+                                                    v.hide(),
+                                                    (_.disabled =!1),
+                                                    e.getEventById(x.id).remove();
+                                                    console.log(x.id);
+                                                    let t =!1;
+                                                    r.checked && (t = !0),
+                                                        0 ===c.selectedDates.length && (t = !0);
+                                                    var l = moment(i.selectedDates[0]).format(),
+                                                        s = moment(d.selectedDates[d.selectedDates.length - 1]).format();
+                                                    if (!t) {
+                                                        const e = moment(i.selectedDates[0]).format("YYYY-MM-DD"),
+                                                            t = e;
+                                                        (l = e + "T" + moment(c.selectedDates[0]).format("HH:mm:ss")),
+                                                        (s =t +"T" + moment( u.selectedDates[0]).format("HH:mm:ss"));
+                                                    }
+                                                    e.addEvent(
+                                                        {
+                                                            id: V(),
+                                                            title: n.value,
+                                                            description:a.value,
+                                                            location:o.value,
+                                                            start: l,
+                                                            end: s,
+                                                            allDay: t,
+                                                        }
+                                                    ),
+                                                    e.render(),
+                                                    p.reset();
+
+                                                }
+                                            });
+                                        },
+                                        error: function(response){
+                                            console.log(response);
+                                            let errors = response.responseJSON.errors;
+                                            console.log(errors);
+                                            Swal.fire({
+                                                text: "Có lỗi xảy ra, xin thử lại sau.",
+                                                icon: "error",
+                                                buttonsStyling: !1,
+                                                confirmButtonText: "Chấp nhận",
+                                                customClass: {confirmButton: "btn btn-primary",},
+                                            });
+                                            (_.setAttribute("data-kt-indicator","off"),_.disabled = !1)
                                         }
-                                        e.addEvent(
-                                            {
-                                                id: V(),
-                                                title: n.value,
-                                                description:a.value,
-                                                location:o.value,
-                                                start: l,
-                                                end: s,
-                                                allDay: t,
-                                            }
-                                        ),
-                                        e.render(),
-                                        p.reset();
+                                    });
+
                                     }
                                 });
-                        }, 2e3))
+                        }, 0))
                         : Swal.fire({
                             text: "Đã xảy ra lỗi, vui lòng thử lại sau.",
                             icon: "error",
@@ -471,7 +564,29 @@ var KTAppCalendar = (function () {
                             cancelButton: "btn btn-active-light",
                         },
                     }).then(function (t) {
-                        t.value ? (e.getEventById(x.id).remove(), w.hide()) : "cancel" === t.dismiss;
+                        t.value ? (
+                            $.ajax({
+                                url:$("#kt_post").data('delete'),
+                                type: 'delete',
+                                data: {
+                                    _token: token,
+                                    id: x.id
+                                },
+                                dataType: 'json',
+                                success: function(response){
+                                    e.getEventById(x.id).remove(), w.hide()
+                                },
+                                error:function(){
+                                    Swal.fire({
+                                        text: "Có lỗi xảy ra, xin thử lại sau.",
+                                        icon: "error",
+                                        buttonsStyling: !1,
+                                        confirmButtonText: "Chấp nhận",
+                                        customClass: {confirmButton: "btn btn-primary",},
+                                    });
+                                }
+                            })
+                        ) : "cancel" === t.dismiss;
                     });
                 }),
                 b.addEventListener("click", function (e) {

@@ -84,10 +84,45 @@ class MaintenanceController extends BaseBuildingController
 
     public function update(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id'=>'integer|required|exists:maintenance_schedule,id',
+                'building_id' => 'required|integer|exists:building,id',
+                'title' => 'required|string|',
+                'all_day' => 'required|integer|in:1,0',
+                'start_at' => 'required',
+                'end_at' => 'required',
+                'location' => 'required|string'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return new JsonResponse(['errors' => $validator->getMessageBag()->toArray()], 406);
+        }
+
+        $edit = MaintenanceSchedule::find($request->id);
+        try {
+            $edit = $this->saveData($edit, $request);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['errors' => ['Lỗi cập nhật data']], 406);
+        }
+
+        return new JsonResponse([$edit], 200);
     }
 
     public function delete(Request $request)
     {
+        if ($request->has('id')) {
+            $id = $request->id;
+            try {
+                MaintenanceSchedule::where('id', $id)->delete();
+            } catch (\Throwable $th) {
+                return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
+            }
+            return new JsonResponse(['deleted'], 200);
+        }
+        return new JsonResponse(['errors' => 'không có id'], 406);
     }
 
     public function saveData($model, $request)

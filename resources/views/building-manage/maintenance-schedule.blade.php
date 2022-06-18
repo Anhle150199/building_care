@@ -157,7 +157,7 @@
                                     </svg>
                                 </span>
                             </div>
-                            <div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary" data-bs-toggle="tooltip" title="Hide Event" data-bs-dismiss="modal">
+                            <div class="btn btn-icon btn-sm btn-color-gray-500 btn-active-icon-primary" data-bs-toggle="tooltip" title="Ản" data-bs-dismiss="modal">
                                 <span class="svg-icon svg-icon-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                         <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
@@ -233,15 +233,15 @@
     <script src="{{ url('/') }}/assets/js/custom/building/maintenance/calendar.js"></script>
     <script>
         $(function () {
-            $('input[name=calendar_event_name]').change(function(){
-                let text = $('input[name=calendar_event_name]').val().trim();
-                console.log(text);
-                $('#equipment_select  option').each(function(){
-                    if($(this).text().trim() == text) {
-                        $(this).prop("selected", true).trigger('change');
-                    }
-                });
-            })
+            // $('input[name=calendar_event_name]').change(function(){
+            //     let text = $('input[name=calendar_event_name]').val().trim();
+            //     console.log(text);
+            //     $('#equipment_select  option').each(function(){
+            //         if($(this).text().trim() == text) {
+            //             $(this).prop("selected", true).trigger('change');
+            //         }
+            //     });
+            // })
             // $('#equipment_select').change(function(){
             //     $(this).val();
             // })
