@@ -59,7 +59,7 @@ class NotifyController extends BaseBuildingController
         if ($validate->fails()) {
             return new JsonResponse(['errors' => $validate->getMessageBag()->toArray()], 406);
         }
-        // try {
+        try {
             $request->admin_id = Auth::user()->id;
             $request->image_name = $this->saveImage($request->image);
             // $request->image_name = 'xxx';
@@ -72,16 +72,13 @@ class NotifyController extends BaseBuildingController
                     array_push($list,$value->id);
                 }
                 $building = $list;
-                // dd($building);
             } else{
                 $building = json_decode($request->building_select);
             }
-            // dd($building);
-            // return new JsonResponse(['errors' => ['Lỗi insert data.', $building ]], 406);
             $this->saveRelation($new->id, $building);
-        // } catch (\Throwable $th) {
-        //     return new JsonResponse(['errors' => ['Lỗi insert data.']], 406);
-        // }
+        } catch (\Throwable $th) {
+            return new JsonResponse(['errors' => ['Lỗi insert data.']], 406);
+        }
         // Todo push notification "Có thông báo mới"
 
         return new JsonResponse(['success'], 200);

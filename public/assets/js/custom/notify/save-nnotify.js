@@ -32,7 +32,7 @@ var KTAppEcommerceSaveProduct = (function () {
                         modules: {
                             toolbar:toolbarOptions
                         },
-                        placeholder: "Viết mô tả cho toà nhà...",
+                        placeholder: "Viết thông báo, tin tức...",
                         theme: "snow",
                     }));
 
@@ -192,15 +192,9 @@ var KTAppEcommerceSaveProduct = (function () {
                                                             console.log(response);
                                                             const errors = response.responseJSON.errors;
                                                             console.log(errors);
-                                                            // if(errors.name){
-                                                            // $('input[name=product_name]').parent().append(messageErr(errors.name))
-                                                            // }
-                                                            // setTimeout(() => {
-                                                            // $('.invalid-feedback').remove();
-                                                            // }, 7000);
                                                             o.removeAttribute("data-kt-indicator"),o.disabled = !1,
                                                             Swal.fire({
-                                                                html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.",
+                                                                html: "Có lỗi xảy ra. <br/>Hãy thử lại sau.",
                                                                 icon: "error",
                                                                 buttonsStyling: !1,
                                                                 confirmButtonText:
@@ -217,7 +211,7 @@ var KTAppEcommerceSaveProduct = (function () {
                                             }, 0)
                                             )
                                             : Swal.fire({
-                                                html: "Xin lỗi,có một số vấn đề cần phải giải quyết trước khi gửi. <br/>Hãy thử lại sau.",
+                                                html: "Có lỗi xảy ra. <br/>Hãy thử lại sau.",
                                                 icon: "error",
                                                 buttonsStyling: !1,
                                                 confirmButtonText:"Chấp nhận",
