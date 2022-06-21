@@ -73,27 +73,27 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <div class="menu-item">
-                            <a class="menu-link " href="../../demo1/dist/pages/contact.html" id="item-notify">
+                            <a class="menu-link " href="{{ route('admin.notification.show-create') }}" id="item-notify">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Thông báo</span>
+                                <span class="menu-title">Quản lý thông báo</span>
                             </a>
                         </div>
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="../../demo1/dist/pages/team.html" id="item-event">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Sự kiện</span>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="menu-item">
                             <a class="menu-link" href="../../demo1/dist/pages/licenses.html" id="item-mail">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Gửi email</span>
+                                <span class="menu-title">Quản lý email</span>
                             </a>
                         </div>
                     </div>
@@ -290,14 +290,14 @@
                                 <span class="menu-title">Danh sách bộ phận </span>
                             </a>
                         </div>
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="{{ route('admin.system.equipment.list') }}" id="item-equipments">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Danh sách thiết bị </span>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('admin.system.feedback-type.list') }}" id="item-feedback-type">
                                 <span class="menu-bullet">

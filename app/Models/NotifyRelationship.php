@@ -10,5 +10,11 @@ class NotifyRelationship extends Model
 {
     use HasFactory,SoftDeletes;
     public $table = 'notify_relationship';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'building_id',
+        'notify_id'
+    ];
 
 }

@@ -1,98 +1,112 @@
 @extends('layout.app')
 @push('css')
-    <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-    <!--end::Page Vendor Stylesheets-->
 @endpush
 @section('title', 'Dashboard')
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-        <!--begin::Toolbar-->
         <div class="toolbar" id="kt_toolbar">
-            <!--begin::Container-->
             <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-                <!--begin::Page title-->
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                    <!--begin::Title-->
                     <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Trang chủ
-                        <!--begin::Separator-->
                         <span class="h-20px border-1 border-gray-200 border-start ms-3 mx-2 me-1"></span>
-                        <!--end::Separator-->
-                        <!--begin::Description-->
                         <span class="text-muted fs-7 fw-bold mt-2"></span>
-                        <!--end::Description-->
                     </h1>
-                    <!--end::Title-->
                 </div>
-                <!--end::Page title-->
-                <!--begin::Actions-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <div class="m-0">
                     </div>
                 </div>
-                <!--end::Actions-->
             </div>
-            <!--end::Container-->
         </div>
-        <!--end::Toolbar-->
-        <!--begin::Post-->
         <div class="post d-flex flex-column-fluid" id="kt_post">
-            <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
+                <div class="row g-5 g-xl-10">
+                    <div class="col-xl-12 mb-xl-12">
+                        <div class="card card-flush h-xl-100">
+                            <div class="card-header rounded bgi-no-repeat bgi-size-cover bgi-position-y-top bgi-position-x-center align-items-start h-200px" style="background-color:#ee4957">
+                                <h3 class="card-title align-items-start flex-column text-white pt-15">
+                                    <span class="fw-bolder fs-2x mb-3">Thống kê {{$buildingActiveInfo->name}}</span>
+                                    {{-- <div class="fs-4 text-white mb-3">
+                                        <span class="opacity-75">You have</span>
+                                    </div> --}}
+                                </h3>
 
-                <!--begin::Mixed Widget 10-->
-
-                <div class="card card-xl-stretch-50 mb-5 mb-xl-8">
-                    <!--begin::Body-->
-                    <div class="card-body p-0 d-flex justify-content-between flex-column overflow-hidden">
-                        <!--begin::Hidden-->
-                        <div class="d-flex flex-stack flex-wrap flex-grow-1 px-9 pt-9 pb-3">
-                            <div class="me-2">
-                                <span class="fw-bolder text-gray-800 d-block fs-3">Trạng thái toà nhà</span>
                             </div>
-                            <div class="fw-bolder fs-3 text-primary"></div>
-                        </div>
-                        <!--end::Hidden-->
-                        <!--begin::Chart-->
-                        <div class="mixed-widget-10-chart" data-kt-color="primary" style="height: 350px;">
-                        </div>
-                        <!--end::Chart-->
-                    </div>
-                </div>
-                <!--end::Row-->
-                <!--begin::Row-->
-                <div class="row g-5 g-xl-8">
-                    <!--begin::Col-->
-                    <div class="col-xl-4">
-                        <div class="card card-xl-stretch mb-xl-8">
-                            <!--begin::Header-->
-                            <div class="card-header border-0">
-                                <h3 class="card-title fw-bolder text-dark">Lịch bảo trì</h3>
-                            </div>
-                            <!--end::Header-->
-                            <!--begin::Body-->
-                            <div class="card-body pt-2">
-                                <div class="d-flex align-items-center mb-8">
-                                    <div class="flex-grow-1">
-                                        <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">Bảo
-                                            trì thang máy</a>
-                                        <span class="text-muted fw-bold d-block">20/4</span>
+                            <div class="card-body mt-n20">
+                                <div class="mt-n20 position-relative">
+                                    <div class="row g-3 g-lg-6">
+                                        <div class="col-4">
+                                            <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                                                <div class="nav-icon mb-3">
+                                                    <i class="fonticon-home fs-1 p-0"></i>
+                                                </div>
+                                                <div class="m-0">
+                                                    <span class="text-gray-700 fw-boldest d-block fs-2qx lh-1 ls-n1 mb-1">{{$apartmentCount}}</span>
+                                                    <span class="text-gray-500 fw-bold fs-6">Căn hộ</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                                                <div class="nav-icon mb-3">
+                                                    <i class="fonticon-user fs-1 p-0"></i>
+                                                </div>
+                                                <div class="m-0">
+                                                    <span class="text-gray-700 fw-boldest d-block fs-2qx lh-1 ls-n1 mb-1">{{$customerCount}}</span>
+                                                    <span class="text-gray-500 fw-bold fs-6">Tài khoản</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                                                <div class="nav-icon mb-3">
+                                                    <i class="fonticon-bicycle fs-1 p-0"></i>
+                                                </div>
+                                                <div class="m-0">
+                                                    <span class="text-gray-700 fw-boldest d-block fs-2qx lh-1 ls-n1 mb-1">{{$vehicleCount}}</span>
+                                                    <span class="text-gray-500 fw-bold fs-6">Phương tiện</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <span class="badge badge-light-success fs-8 fw-bolder">Toà K park</span>
                                 </div>
                             </div>
-                            <!--end::Body-->
                         </div>
                     </div>
-                    <!--end::Col-->
-                    <!--begin::Col Thông báo cư dân-->
+                </div>
+                <div class="row g-5 g-xl-8">
+                    <div class="col-xl-4">
+                        <div class="card card-xl-stretch mb-xl-8">
+                            <div class="card-header border-0">
+                                <h3 class="card-title fw-bolder text-dark">Lịch bảo trì</h3>
+                                <div class="card-toolbar">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-secondary fw-bolder px-4 me-1 "
+                                                href="{{ route('admin.building.maintenance_schedule.show') }}">Tất cả</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="card-body pt-2">
+                                @foreach ($maintenance_schedule as $item)
+                                    <div class="d-flex align-items-center mb-5">
+                                        <div class="flex-grow-1 bg-gray-100 bg-opacity-60 rounded-2 px-6 py-5">
+                                            <a href="{{ route('admin.building.maintenance_schedule.show') }}" class="text-gray-800 text-hover-primary fw-bolder fs-6">{{$item->title}}</a>
+                                            <span class="text-muted fw-bold d-block">{{$item->start_at.' ~ '.$item->end_at}}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-xl-8">
-                        <!--begin::Tables Widget 5-->
                         <div class="card card-xxl-stretch mb-5 mb-xl-8">
-                            <!--begin::Header-->
                             <div class="card-header border-0 pt-5">
                                 <h3 class="card-title align-items-start flex-column">
                                     <span class="card-label fw-bolder fs-3 mb-1">Thông báo cư dân</span>
@@ -107,17 +121,11 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!--end::Header-->
-                            <!--begin::Body-->
                             <div class="card-body py-3">
                                 <div class="tab-content">
-                                    <!--begin::Tap pane-->
                                     <div class="tab-pane fade show active" id="kt_table_widget_5_tab_1">
-                                        <!--begin::Table container-->
                                         <div class="table-responsive">
-                                            <!--begin::Table-->
                                             <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-                                                <!--begin::Table head-->
                                                 <thead>
                                                     <tr class="border-0">
                                                         <th class="p-0 w-50px"></th>
@@ -127,8 +135,6 @@
                                                         <th class="p-0 min-w-50px"></th>
                                                     </tr>
                                                 </thead>
-                                                <!--end::Table head-->
-                                                <!--begin::Table body-->
                                                 <tbody>
                                                     <tr>
                                                         <td>
@@ -155,7 +161,6 @@
                                                         <td class="text-end">
                                                             <a href="#"
                                                                 class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
                                                                 <span class="svg-icon svg-icon-2">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none">
@@ -167,40 +172,29 @@
                                                                             fill="currentColor" />
                                                                     </svg>
                                                                 </span>
-                                                                <!--end::Svg Icon-->
                                                             </a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
-                                                <!--end::Table body-->
                                             </table>
                                         </div>
-                                        <!--end::Table-->
                                     </div>
                                 </div>
                             </div>
-                            <!--end::Body-->
                         </div>
-                        <!--end::Tables Widget 5-->
                     </div>
-                    <!--end::Col-->
                 </div>
             </div>
-            <!--end::Container-->
         </div>
     </div>
-    @endsection
-    @push('js')
-        <!--begin::Page Vendors Javascript(used by this page)-->
-        <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-        <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-        <!--end::Page Vendors Javascript-->
-        <!--begin::Page Custom Javascript(used by this page)-->
-        <script src="assets/js/widgets.bundle.js"></script>
-        <script src="assets/js/custom/widgets.js"></script>
-        <script src="assets/js/custom/apps/chat/chat.js"></script>
-        <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-        <script src="assets/js/custom/utilities/modals/create-app.js"></script>
-        <script src="assets/js/custom/utilities/modals/users-search.js"></script>
-        <!--end::Page Custom Javascript-->
-    @endpush
+@endsection
+@push('js')
+    <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="assets/js/widgets.bundle.js"></script>
+    <script src="assets/js/custom/widgets.js"></script>
+    <script src="assets/js/custom/apps/chat/chat.js"></script>
+    <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+    <script src="assets/js/custom/utilities/modals/create-app.js"></script>
+    <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+@endpush

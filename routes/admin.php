@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Custommer\ApartmentController;
 use App\Http\Controllers\Admin\Custommer\CustommerController;
 use App\Http\Controllers\Admin\Custommer\VehicleController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\Notification\NotifyController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\System\AdminController;
 use App\Http\Controllers\Admin\System\DepartmentController;
@@ -27,6 +28,15 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
     // User manage(for admin login)
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('profile', [UserController::class, 'showProfile'])->name('profile');
+    });
+    Route::prefix('notification')->name('notification.')->group(function ()
+    {
+        Route::get('list', [NotifyController::class, 'showList'])->name('show-list');
+        Route::get('new', [NotifyController::class, 'showCreate'])->name('show-create');
+        Route::post('create', [NotifyController::class, 'create'])->name('create');
+        Route::get('update/{id}', [NotifyController::class, 'showUpdate'])->name('show-update');
+        Route::put('update', [NotifyController::class, 'update'])->name('update');
+        Route::delete('delete', [NotifyController::class, 'delete'])->name('delete');
     });
 
     //Building-manage

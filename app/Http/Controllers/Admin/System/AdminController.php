@@ -65,12 +65,13 @@ class AdminController extends BaseBuildingController
             $new->position = $request->position;
             $new->avatar = 'avatar-1.png';
             $new->status = 'verifying';
+            // $new->password = 
             $new->save();
             $new->department = Department::find($request->department)->name;
             $new->time = $new->created_at->format('d M Y, h:i a');
             return new JsonResponse($new, 200);
         } catch (\Throwable $th) {
-            return new JsonResponse(['errors' => ['Có lỗi xảy ra']], 406);
+            return new JsonResponse(['errors' => ['Có lỗi xảy ra', $request->all()]], 406);
         }
     }
 
