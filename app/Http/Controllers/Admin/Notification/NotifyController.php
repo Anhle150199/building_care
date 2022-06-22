@@ -173,6 +173,21 @@ class NotifyController extends BaseBuildingController
 
     public function delete(Request $request)
     {
+        if ($request->has('id')) {
+            $id = $request->id;
+            if (sizeof($id) == 0) {
+                return new JsonResponse(['errors' => 'input rỗng'], 406);
+            }
+            try {
+                Notification::whereIn('id', $id)->delete();
+                NotifyRelationship::whereIn('notify_id', $id)->delete();
+            } catch (\Throwable $th) {
+                return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
+            }
+            return new JsonResponse(['deleted'], 200);
+        }
+        return new JsonResponse(['errors' => 'không có id'], 406);
+
     }
 
     public function saveData($model, $request)
