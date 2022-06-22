@@ -99,7 +99,6 @@ var KTAppEcommerceSaveProduct = (function () {
                                                     building_select = [];
                                                 } else {
                                                     building_select = $('#building_select').val();
-                                                    building_select = JSON.stringify(building_select);
                                                     // console.log(building_select);
                                                     if(building_select.length == 0){
                                                         let buildingCheck = FormValidation.formValidation(t, {
@@ -124,6 +123,8 @@ var KTAppEcommerceSaveProduct = (function () {
                                                         buildingCheck.validate();
                                                         ok = false;
                                                     }
+
+                                                    building_select = JSON.stringify(building_select);
                                                 }
                                                 let title = $('input[name=title]').val();
                                                 let image = $('input[name=image')[0].files[0];
