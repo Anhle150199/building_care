@@ -35,7 +35,7 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('new', [NotifyController::class, 'showCreate'])->name('show-create');
         Route::post('create', [NotifyController::class, 'create'])->name('create');
         Route::get('update/{id}', [NotifyController::class, 'showUpdate'])->name('show-update');
-        Route::put('update', [NotifyController::class, 'update'])->name('update');
+        Route::post('update', [NotifyController::class, 'update'])->name('update');
         Route::delete('delete', [NotifyController::class, 'delete'])->name('delete');
     });
 

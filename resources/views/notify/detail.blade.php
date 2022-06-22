@@ -43,7 +43,7 @@
             <div id="kt_content_container" class="container-xxl">
                 <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row"
                     data-action="{{ $routeAjax }}" data-method="{{ $methodAjax }}" data-id="{{ @$item->id }}"
-                    data-kt-redirect="{{ route('admin.building.building-list') }}">
+                    data-kt-redirect="{{ route('admin.notification.show-list') }}" data-type="{{$typePage}}">
                     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                         <div class="card card-flush py-4">
                             <div class="card-header">
@@ -74,8 +74,8 @@
                                     </select>
                                 </div>
                                 <label class="form-label required">Đối tượng</label>
-                                <div class="d-flex fv-row row mb-2">
-                                    <div class="form-check form-check-custom col-6 form-check-solid">
+                                <div class="d-flex fv-row row mb-5 mx-0">
+                                    <div class="form-check w-100 mb-3 form-check-custom col-6 form-check-solid">
                                         <input class="form-check-input me-3" name="sent_type" type="radio" value="1"
                                         @if ($typePage == 'new' || @$item->sent_type == 1)
                                             checked
@@ -85,7 +85,7 @@
                                             <div class="fw-bolder text-gray-800">Tất cả</div>
                                         </label>
                                     </div>
-                                    <div class="form-check form-check-custom form-check-solid col-6">
+                                    <div class="form-check w-100 form-check-custom form-check-solid col-6">
                                         <input class="form-check-input me-3" name="sent_type" type="radio" value="0"
                                         @isset($item->sent_type)
                                             @if ( @$item->sent_type == 0)
@@ -108,7 +108,7 @@
                                         name="building_select" id="building_select" data-placeholder="Chọn toà nhà">
                                         <option value=""></option>
                                         @foreach ($buildingList as $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            <option value="{{ $value->id }}" @if(in_array($value->id, @$buildingSelected)) selected @endif>{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -134,16 +134,19 @@
 
                                             <div class="mb-10 fv-row">
                                                 <label class="form-label required">Hình ảnh</label>
-                                                <input type="file" hidden name="image" onchange="loadFile(event)"  />
+                                                <input type="file" hidden name="image" onchange="loadFile(event)"  accept="image/*"/>
 
                                                 <div class="input-group mb-3" id='btn-image' style="cursor: pointer;">
                                                     <button class="input-group-text" type="button" id="inputGroup-sizing-default">Chọn file</button>
                                                     <span class="form-control" disabled aria-describedby="inputGroup-sizing-default" >
-                                                        @if ($typePage == 'new')
-                                                        Chấp nhận các file ảnh jpg, jpeg, png, gif, webp.
-                                                        @endif  {{@$item->image}}</span>
-                                                  </div>
-
+                                                    @if ($typePage == 'new')
+                                                    Chấp nhận các file ảnh jpg, jpeg, png, gif, webp.
+                                                    @endif  {{@$item->image}}</span>
+                                                </div>
+                                                <label class="form-label">Xem trước hình ảnh</label>
+                                                <div class="d-flex justify-content-center" >
+                                                    <img id="preview" src="{{url('').'/images/'.rawurlencode(@$item->image)}}" class="border rounded " style="max-width: 80%;max-height: 210px;@if ($typePage == 'new') display: none;@endif">
+                                                </div>
                                             </div>
                                             <div>
                                                 <label class="required form-label">Nội dung</label>
@@ -151,7 +154,7 @@
                                                     name="kt_description" class="min-h-200px mb-2">
                                                 </div>
                                                 <div class="d-none" id="descriptionBuilding">
-                                                    {{ @$item->description }}
+                                                    {{ @$item->content }}
                                                 </div>
                                             </div>
                                         </div>
@@ -195,6 +198,8 @@
         })
         var loadFile = function(event) {
             $('#btn-image span').text(event.target.files[0].name);
+            $('#preview').attr('src', URL.createObjectURL(event.target.files[0]));
+            $('#preview').show();
         };
 
     </script>

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EquipmentRelationship extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
     public $table = 'equipment_relationship';
 
 }

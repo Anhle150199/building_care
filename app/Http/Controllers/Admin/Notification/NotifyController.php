@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Notification;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Models\Admin;
 use App\Models\Building;
 use App\Models\Notification;
 use App\Models\NotifyRelationship;
@@ -26,21 +27,48 @@ class NotifyController extends BaseBuildingController
 
     public function showList()
     {
-
+        $data = $this->generalData();
+        $notifications = NotifyRelationship::where('building_id', $data['buildingActive'])->join('notifications', 'notify_id', 'notifications.id')
+            ->join('admins', 'admin_id', 'admins.id')->orderBy('id', 'desc')
+            ->select('notifications.id', 'notifications.title', 'notifications.status', 'notifications.category', 'notifications.created_at', 'admins.name', 'admins.id as adminId')->get();
+        // dd($notifications);
+        $data['notifications'] = $notifications;
+        return view('notify.notifications', $data);
     }
 
     public function showCreate()
     {
-        $data=$this->generalData();
+        $data = $this->generalData();
         $data['typePage'] = 'new';
         $data['title'] = 'Soạn thông báo';
         $data['routeAjax'] = route('admin.notification.create');
         $data['methodAjax'] = 'post';
+        $data['buildingSelected'] =[];
+
         return view('notify.detail', $data);
     }
     public function showUpdate($id)
     {
+        $notify = Notification::find($id);
+        if ($notify != null) {
+            $data = $this->generalData();
+            $data['typePage'] = 'edit';
+            $data['title'] = 'Chi tiết thông báo';
+            $data['routeAjax'] = route('admin.notification.update');
+            $data['methodAjax'] = 'put';
+            $data['buildingSelected'] =[];
+            if($notify->sent_type == 0){
+                $building = NotifyRelationship::where('notify_id', $id)->get();
+                $listId = [];
+                foreach ($building as $key => $value) {
+                    $listId[$key] = $value->building_id;
+                }
+            $data['buildingSelected'] = $listId;
 
+            }
+            $data['item'] = $notify;
+            return view('notify.detail', $data);
+        }
     }
 
     public function create(Request $request)
@@ -48,7 +76,7 @@ class NotifyController extends BaseBuildingController
         $validate = Validator::make(
             $request->all(),
             [
-                'title' => [ 'required', 'string'],
+                'title' => ['required', 'string'],
                 'content' => 'string|required',
                 'status' => 'string|required|in:public,private',
                 'category' => ['string', 'in:event,notify', 'required'],
@@ -69,10 +97,10 @@ class NotifyController extends BaseBuildingController
                 $building = $this->buildingList;
                 $list = [];
                 foreach ($building as $key => $value) {
-                    array_push($list,$value->id);
+                    array_push($list, $value->id);
                 }
                 $building = $list;
-            } else{
+            } else {
                 $building = json_decode($request->building_select);
             }
             $this->saveRelation($new->id, $building);
@@ -86,12 +114,65 @@ class NotifyController extends BaseBuildingController
 
     public function update(Request $request)
     {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'id'=>'required',
+                'title' => ['required', 'string'],
+                'content' => 'string|required',
+                'status' => 'string|required|in:public,private',
+                'category' => ['string', 'in:event,notify', 'required'],
+                'sent_type' => ['integer', 'in:0,1', 'required'],
+            ]
+        );
 
+        if ($validate->fails()) {
+            return new JsonResponse(['errors' => [$validate->getMessageBag()->toArray(), $request->all()]], 406);
+        }
+        try {
+            $edit = Notification::find($request->id);
+            $request->admin_id = $edit->admin_id;
+            if ($request->image == 'null') {
+                $request->image_name = $edit->image;
+            }else{
+                $request->image_name = $this->saveImage($request->image);
+            }
+            if ($request->sent_type == 1) {
+                $building = $this->buildingList;
+                $list = [];
+                foreach ($building as $key => $value) {
+                    array_push($list, $value->id);
+                }
+                $building = $list;
+            } else {
+                $building = json_decode($request->building_select);
+            }
+            if($request->sent_type == 1 && $edit->sent_type ==1){
+            }else{
+                $oldRelation = NotifyRelationship::where('notify_id', $request->id)->get();
+                foreach ($oldRelation as $key => $value) {
+                    if(in_array($value->building_id, $building)){
+                        $key = array_search($value->building_id, $building);
+                        if (false !== $key) {
+                            unset($building[$key]);
+                        }
+                    } else{
+                        $value->delete();
+                    }
+                }
+                $this->saveRelation($request->id, $building);
+            }
+            $edit = $this->saveData($edit, $request);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['errors' => ['Lỗi insert data.', $request->image]], 406);
+        }
+        // Todo push notification "Có thông báo mới"
+
+        return new JsonResponse(['success'], 200);
     }
 
     public function delete(Request $request)
     {
-
     }
 
     public function saveData($model, $request)
@@ -109,9 +190,11 @@ class NotifyController extends BaseBuildingController
 
     public function saveRelation($notifyId, $building)
     {
-        // NotifyRelationship::where('notify_id', $notifyId)->delete();
         foreach ($building as $value) {
-            $relation = new NotifyRelationship();
+            // $relation = NotifyRelationship::where(['notify_id'=> $notifyId,'building_id'=>$value])->first();
+            // if ($relation == null) {
+                $relation = new NotifyRelationship();
+            // }
             $relation->building_id = $value;
             $relation->notify_id = $notifyId;
             $relation->save();
@@ -124,7 +207,7 @@ class NotifyController extends BaseBuildingController
         $fileExt = $file->getClientOriginalExtension();
 
         while (file_exists("images/" . $fileName)) {
-            $fileName = strtotime("now") .'.'. $fileExt;
+            $fileName = strtotime("now") . '.' . $fileExt;
         }
         $file->move('images/', $fileName);
         return $fileName;

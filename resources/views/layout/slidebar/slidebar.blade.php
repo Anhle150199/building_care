@@ -73,7 +73,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <div class="menu-item">
-                            <a class="menu-link " href="{{ route('admin.notification.show-create') }}" id="item-notify">
+                            <a class="menu-link " href="{{ route('admin.notification.show-list') }}" id="item-notify">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

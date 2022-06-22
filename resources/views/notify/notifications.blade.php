@@ -3,16 +3,16 @@
     <link href="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
         type="text/css" />
 @endpush
-@section('title', 'Danh sách toà nhà')
+@section('title', 'Danh sách thông báo')
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         {{-- Header --}}
-        <div class="toolbar" id="kt_toolbar" data-route-delete="{{route('admin.building.delete')}}">
+        <div class="toolbar" id="kt_toolbar" data-route-delete="{{route('admin.notification.delete')}}">
             <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Danh sách toà nhà</h1>
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Quản lý thông báo</h1>
 
                     <span class="h-20px border-gray-300 border-start mx-4"></span>
 
@@ -25,11 +25,11 @@
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-muted">Quản lý toà nhà</li>
+                        <li class="breadcrumb-item text-muted">Thông báo, tin tức</li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-dark">Danh sách toà nhà</li>
+                        <li class="breadcrumb-item text-dark">Quản lý thông báo</li>
                     </ul>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
@@ -79,7 +79,7 @@
                                 </button>
 
                                 {{-- Thêm mới --}}
-                                <a href="{{ route('admin.building.new') }}" class="btn btn-primary">
+                                <a href="{{ route('admin.notification.show-create') }}" class="btn btn-primary">
                                     <span class="svg-icon svg-icon-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none">
@@ -112,16 +112,16 @@
                                                 value="1" />
                                         </div>
                                     </th>
-                                    <th class="min-w-125px">Tên toà nhà</th>
+                                    <th class="min-w-125px">Tiêu đề</th>
+                                    <th class="min-w-125px">Danh muc</th>
                                     <th class="min-w-125px">Trạng thái</th>
-                                    <th class="min-w-125px">Địa chỉ</th>
-                                    <th class="min-w-125px">Căn hộ</th>
+                                    <th class="min-w-125px">Người viết</th>
                                     <th class="min-w-125px">Ngày tạo</th>
                                     <th class="text-center min-w-70px">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-bold">
-                                @foreach ($building as $item )
+                                @foreach ($notifications as $item )
                                 <tr data-id={{$item->id}} id="row_{{$item->id}}">
                                     <td>
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -129,23 +129,25 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.building.show-update', ['id'=>$item->id]) }}"
-                                            class="text-gray-800 text-hover-primary mb-1">{{$item->name}}</a>
+                                        <a href="{{ route('admin.notification.show-update', ['id'=>$item->id]) }}"
+                                            class="text-gray-800 text-hover-primary mb-1">{{$item->title}}</a>
                                     </td>
                                     <td>
-                                        @if ($item->status == 'active')
-                                        <div class="badge badge-light-success">Kích hoạt</div>
-                                        @elseif ($item->status == 'lock')
-                                        <div class="badge badge-light-danger">Khoá</div>
-                                        @elseif ($item->status == 'prepare')
-                                        <div class="badge badge-light-warning">Chuẩn bị</div>
+                                        @if ($item->category == 'notify')
+                                        Thông báo
+                                        @elseif ($item->category == 'event')
+                                        Tin tức
                                         @endif
                                     </td>
                                     <td>
-                                        {{$item->address}}
+                                        @if ($item->status == 'public')
+                                        <div class="badge badge-light-success">Công khai</div>
+                                        @elseif ($item->status == 'private')
+                                        <div class="badge badge-light-danger">Riêng tư</div>
+                                        @endif
                                     </td>
-                                    <td>{{$item->apartment_active}}/{{$item->apartment_number}}</td>
-                                    <td>{{ $item->created_at->format('d M Y, h:i a') }}</td>
+                                    <td>{{$item->name}}</td>
+                                    <td>{{date("d M Y, h:i A", strtotime($item->created_at))}}</td>
                                     <td class="text-center">
                                         <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
                                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -160,7 +162,7 @@
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                             data-kt-menu="true">
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('admin.building.show-update', ['id'=>$item->id]) }}"
+                                                <a href="{{ route('admin.notification.show-update', ['id'=>$item->id]) }}"
                                                     class="menu-link px-3">Chỉnh sửa</a>
                                             </div>
                                             <div class="menu-item px-3">
@@ -182,7 +184,7 @@
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h2 class="fw-bolder">Export Subscriptions</h2>
+                                <h2 class="fw-bolder">Export danh sách</h2>
                                 <div id="kt_export_close"
                                     class="btn btn-icon btn-sm btn-active-icon-primary">
                                     <span class="svg-icon svg-icon-1">

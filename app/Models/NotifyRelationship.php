@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class NotifyRelationship extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
     public $table = 'notify_relationship';
     public $timestamps = false;
 

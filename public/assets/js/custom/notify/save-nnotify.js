@@ -54,19 +54,6 @@ var KTAppEcommerceSaveProduct = (function () {
                                 },
                             },
                         },
-                        image: {
-                            validators: {
-                                notEmpty: {
-                                    message: emptyMessage,
-                                },
-                                file: {
-                                    extension: 'jpeg,jpg,png',
-                                    type: 'image/jpeg,image/png',
-                                    maxSize: 2097152, // 2048 * 1024
-                                    message: 'Chấp nhận các file ảnh nhỏ hơn 2Mb có đuôi jpg, jpeg, png.',
-                                },
-                            },
-                        },
                     },
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
@@ -94,6 +81,7 @@ var KTAppEcommerceSaveProduct = (function () {
                                                 let id = $(t).data('id');
                                                 let status = $('#status_select').val();
                                                 let category = $('#category_select').val();
+
                                                 let sent_type = $('input[name=sent_type]:checked').val();
                                                 if(sent_type == '1'){
                                                     building_select = [];
@@ -121,13 +109,51 @@ var KTAppEcommerceSaveProduct = (function () {
                                                             },
                                                         });
                                                         buildingCheck.validate();
-                                                        ok = false;
+                                                        if("Valid" != buildingCheck)
+                                                            ok = false;
                                                     }
 
                                                     building_select = JSON.stringify(building_select);
                                                 }
+
                                                 let title = $('input[name=title]').val();
                                                 let image = $('input[name=image')[0].files[0];
+                                                if ($(t).data('type') == 'new' || image != undefined) {
+                                                    let imageCheck = FormValidation.formValidation(t, {
+                                                        fields: {
+                                                            image: {
+                                                                validators: {
+                                                                    notEmpty: {
+                                                                        message: emptyMessage,
+                                                                    },
+                                                                    file: {
+                                                                        extension: 'jpeg,jpg,png',
+                                                                        type: 'image/jpeg,image/png',
+                                                                        maxSize: 2097152, // 2048 * 1024
+                                                                        message: 'Chấp nhận các file ảnh nhỏ hơn 2Mb có đuôi jpg, jpeg, png.',
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                        plugins: {
+                                                            trigger: new FormValidation.plugins.Trigger(),
+                                                            bootstrap: new FormValidation.plugins.Bootstrap5({
+                                                                rowSelector: ".fv-row",
+                                                                eleInvalidClass: "",
+                                                                eleValidClass: "",
+                                                            }),
+                                                        },
+                                                    });
+                                                    imageCheck.validate().then(function (e) {
+                                                        if("Valid" != e){
+                                                            ok = false;
+                                                            mess = 'image không được để trống.'
+                                                            console.log(imageCheck);
+                                                        }
+                                                    });
+
+                                                }else image =null;
+
                                                 let description = quill.root.innerHTML;
                                                 if(description == '<p><br></p>'){
                                                     ok = false;
@@ -153,13 +179,17 @@ var KTAppEcommerceSaveProduct = (function () {
                                                     data.append('category', category);
                                                     data.append('sent_type', sent_type);
                                                     data.append('building_select', building_select);
-                                                    // for (const value of data.values()) {
-                                                    //     console.log(value);
-                                                    //   }
-
+                                                    for (const value of data.values()) {
+                                                        console.log(value);
+                                                    }
+                                                    $.ajaxSetup({
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': token
+                                                        }
+                                                     });
                                                     $.ajax({
                                                         url: $(t).data('action'),
-                                                        type: $(t).data('method'),
+                                                        type: 'post',
                                                         data: data,
                                                         enctype: 'multipart/form-data',
                                                         processData: false,  // tell jQuery not to process the data
@@ -182,10 +212,7 @@ var KTAppEcommerceSaveProduct = (function () {
                                                                 }).then(function (e) {
                                                                     e.isConfirmed &&
                                                                         (o.disabled =!1);
-                                                                        // (window.location =
-                                                                        //     t.getAttribute(
-                                                                        //         "data-kt-redirect"
-                                                                        //     )));
+                                                                        (window.location =t.getAttribute("data-kt-redirect"));
                                                                 });
                                                         },
                                                         error: function (response) {
