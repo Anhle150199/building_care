@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Models\Apartment;
 use App\Models\Customer;
 use App\Models\MaintenanceSchedule;
+use App\Models\Notification;
+use App\Models\NotifyRelationship;
 use App\Models\Vehicle;
 use App\Repositories\Eloquent\BuildingRepository;
 use Illuminate\Http\Request;
@@ -42,6 +44,10 @@ class HomeController extends BaseBuildingController
 
         $vehicleCount = Vehicle::whereIn('apartment_id', $apartment->toArray())->where('status', 'accept')->count();
         $data['vehicleCount'] = $vehicleCount;
+
+        $notifications = NotifyRelationship::where('building_id', $data['buildingActive'])->join('notifications', 'notify_id', 'notifications.id')
+        ->select('notifications.id', 'notifications.title', 'notifications.status', 'notifications.category')->orderBy('id', 'desc')->limit('5')->get();
+        $data['notifications'] = $notifications;
 
         return view('home', $data);
     }

@@ -116,7 +116,7 @@
                                     <ul class="nav">
                                         <li class="nav-item">
                                             <a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-secondary fw-bolder px-4 me-1 "
-                                                href="">Tất cả</a>
+                                                href="{{ route('admin.notification.show-list') }}">Tất cả</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -128,7 +128,6 @@
                                             <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
                                                 <thead>
                                                     <tr class="border-0">
-                                                        <th class="p-0 w-50px"></th>
                                                         <th class="p-0 min-w-150px"></th>
                                                         <th class="p-0 min-w-140px"></th>
                                                         <th class="p-0 min-w-110px"></th>
@@ -136,45 +135,44 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="symbol symbol-45px me-2">
-                                                                <span class="symbol-label">
-                                                                    <img src="assets/media/svg/brand-logos/plurk.svg"
-                                                                        class="h-50 align-self-center" alt="" />
-                                                                </span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#"
-                                                                class="text-dark fw-bolder text-hover-primary mb-1 fs-6">Brad
-                                                                Simmons</a>
-                                                            <span class="text-muted fw-bold d-block">Movie
-                                                                Creator</span>
-                                                        </td>
-                                                        <td class="text-end text-muted fw-bold">React,
-                                                            HTML
-                                                        </td>
-                                                        <td class="text-end">
-                                                            <span class="badge badge-light-success">Approved</span>
-                                                        </td>
-                                                        <td class="text-end">
-                                                            <a href="#"
-                                                                class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                                                <span class="svg-icon svg-icon-2">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                                        <rect opacity="0.5" x="18" y="13" width="13"
-                                                                            height="2" rx="1" transform="rotate(-180 18 13)"
-                                                                            fill="currentColor" />
-                                                                        <path
-                                                                            d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z"
-                                                                            fill="currentColor" />
-                                                                    </svg>
-                                                                </span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ( $notifications as $item )
+                                                        <tr>
+                                                            <td>
+                                                                <a href="{{ route('admin.notification.show-update', ['id'=>$item->id]) }}"
+                                                                    class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">{{$item->title}}</a>
+                                                            </td>
+                                                            <td class="text-end text-muted fw-bold">
+                                                                @if ($item->category == 'notify')
+                                                                Thông báo
+                                                                @elseif ($item->category == 'event')
+                                                                Tin tức
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-end">
+                                                                @if ($item->status == 'public')
+                                                                <div class="badge badge-light-success">Công khai</div>
+                                                                @elseif ($item->status == 'private')
+                                                                <div class="badge badge-light-danger">Riêng tư</div>
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-end">
+                                                                <a href="{{ route('admin.notification.show-update', ['id'=>$item->id]) }}"
+                                                                    class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                                                    <span class="svg-icon svg-icon-2">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                            height="24" viewBox="0 0 24 24" fill="none">
+                                                                            <rect opacity="0.5" x="18" y="13" width="13"
+                                                                                height="2" rx="1" transform="rotate(-180 18 13)"
+                                                                                fill="currentColor" />
+                                                                            <path
+                                                                                d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z"
+                                                                                fill="currentColor" />
+                                                                        </svg>
+                                                                    </span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
