@@ -89,7 +89,7 @@
                             </a>
                         </div> --}}
                         <div class="menu-item">
-                            <a class="menu-link" href="../../demo1/dist/pages/licenses.html" id="item-mail">
+                            <a class="menu-link" href="{{ route('admin.notification.email.show-list') }}" id="item-email">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

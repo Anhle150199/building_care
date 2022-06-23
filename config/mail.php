@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'mailgun'),
 
     /*
     |--------------------------------------------------------------------------
@@ -46,12 +46,25 @@ return [
         ],
 
         'ses' => [
-            'transport' => 'ses',
+            // 'transport' => 'ses',
+            'key' => env('SES_KEY'),
+            'secret' => env('SES_SECRET'),
+            'region' => 'us-east-1',
+
         ],
 
         'mailgun' => [
-            'transport' => 'mailgun',
+            // 'transport' => 'mailgun',
+            // start add config mailgun
+            'domain' => env('MAILGUN_DOMAIN'),
+            'secret' => env('MAILGUN_SECRET'),
+            // end add config mailgun
         ],
+
+        'sparkpost' => [
+            'secret' => env('SPARKPOST_SECRET'),
+        ],
+
 
         'postmark' => [
             'transport' => 'postmark',
@@ -92,8 +105,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'anhle150199@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Mega Care'),
     ],
 
     /*

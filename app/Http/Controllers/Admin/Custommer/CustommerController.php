@@ -178,4 +178,10 @@ class CustommerController extends BaseBuildingController
         $customer->save();
         return $customer;
     }
+
+    public function getUsers(Request $request)
+    {
+        $users = Customer::whereNotNull('email')->select('id as value', 'name', 'email')->get();
+        return new JsonResponse($users, 200);
+    }
 }

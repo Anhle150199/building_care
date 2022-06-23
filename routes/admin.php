@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Custommer\ApartmentController;
 use App\Http\Controllers\Admin\Custommer\CustommerController;
 use App\Http\Controllers\Admin\Custommer\VehicleController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\Notification\MailController;
 use App\Http\Controllers\Admin\Notification\NotifyController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\System\AdminController;
@@ -37,6 +38,13 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('update/{id}', [NotifyController::class, 'showUpdate'])->name('show-update');
         Route::post('update', [NotifyController::class, 'update'])->name('update');
         Route::delete('delete', [NotifyController::class, 'delete'])->name('delete');
+
+        Route::prefix('email')->name('email.')->group(function ()
+        {
+            Route::get('list', [MailController::class, 'showList'])->name('show-list');
+            Route::get('new-mail', [MailController::class, 'showCreate'])->name('show-create');
+            Route::post('create', [MailController::class, 'create'])->name('create');
+        });
     });
 
     //Building-manage
@@ -63,22 +71,24 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('apartments', [ApartmentController::class, 'showApartmentList'])->name('apartment-list');
         Route::get('apartments/new', [ApartmentController::class, 'showNewApartment'])->name('show-apartment-new');
         Route::post('apartments/create', [ApartmentController::class, 'create'])->name('apartment-create');
-        Route::get('apartments/{id}', [ApartmentController::class, 'showUpdate'])->name('show-apartment-update');
+        Route::get('apartments/detail-{id}', [ApartmentController::class, 'showUpdate'])->name('show-apartment-update');
         Route::put('apartments/update', [ApartmentController::class, 'update'])->name('apartment-update');
         Route::delete('apartments/delete', [ApartmentController::class, 'delete'])->name('apartment-delete');
 
         Route::get('customers-list', [CustommerController::class, 'showCustomerList'])->name('customer-list');
         Route::get('customer/new', [CustommerController::class, 'showCreate'])->name('show-customer-create');
         Route::post('customer/create', [CustommerController::class, 'create'])->name('customer-create');
-        Route::get('customer/{id}', [CustommerController::class, 'showUpdate'])->name('show-customer-update');
+        Route::get('customer/detail-{id}', [CustommerController::class, 'showUpdate'])->name('show-customer-update');
         Route::put('customer/update', [CustommerController::class, 'update'])->name('customer-update');
         Route::delete('customer/delete', [CustommerController::class, 'delete'])->name('customer-delete');
+
+        Route::post('customer/get-users', [CustommerController::class, 'getUsers'])->name('get-users');
 
         Route::get('vehicle', [VehicleController::class, 'showList'])->name('vehicle-list');
         Route::get('vehicle/request', [VehicleController::class, 'showRequest'])->name('vehicle-request');
         Route::get('vehicle/new', [VehicleController::class, 'showCreate'])->name('show-vehicle-create');
         Route::post('vehicle/create', [VehicleController::class, 'create'])->name('vehicle-create');
-        Route::get('vehicle/{id}', [VehicleController::class, 'showUpdate'])->name('show-vehicle-update');
+        Route::get('vehicle/detail-{id}', [VehicleController::class, 'showUpdate'])->name('show-vehicle-update');
         Route::put('vehicle/update', [VehicleController::class, 'update'])->name('vehicle-update');
         Route::put('vehicle/accept-request', [VehicleController::class, 'accept'])->name('vehicle-accept');
         Route::delete('vehicle/delete', [VehicleController::class, 'delete'])->name('vehicle-delete');
