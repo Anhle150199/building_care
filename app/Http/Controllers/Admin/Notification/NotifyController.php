@@ -136,6 +136,9 @@ class NotifyController extends BaseBuildingController
                 $request->image_name = $edit->image;
             }else{
                 $request->image_name = $this->saveImage($request->image);
+                if(file_exists(public_path('images/'.$edit->image))){
+                    unlink(public_path('images/'.$edit->image));
+                }
             }
             if ($request->sent_type == 1) {
                 $building = $this->buildingList;
