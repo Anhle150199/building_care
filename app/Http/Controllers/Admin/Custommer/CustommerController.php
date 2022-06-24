@@ -55,6 +55,7 @@ class CustommerController extends BaseBuildingController
                 'customer_code' => 'string|required|unique:customers,customer_code',
                 'birthday' => 'required',
                 'status' => ['string', 'in:stay,leave,absent', 'required'],
+                'email' => ['required', 'string', 'unique:customers,email']
             ]
         );
 
@@ -111,6 +112,7 @@ class CustommerController extends BaseBuildingController
                 'customer_code' => 'string|required',
                 'birthday' => 'required',
                 'status' => ['string', 'in:stay,leave,absent', 'required'],
+                'email' => ['required', 'string', 'unique:customers,email']
             ]
         );
 

@@ -29,6 +29,9 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
     // User manage(for admin login)
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('profile', [UserController::class, 'showProfile'])->name('profile');
+        Route::post('profile-detail', [UserController::class, 'profileDetail'])->name('profile-detail');
+        Route::post('update-email', [UserController::class, 'updateEmail'])->name('update-email');
+        Route::post('update-password', [UserController::class, 'updatePassword'])->name('update-password');
     });
     Route::prefix('notification')->name('notification.')->group(function ()
     {
@@ -45,7 +48,6 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
             Route::get('new-mail', [MailController::class, 'showCreate'])->name('show-create');
             Route::post('create', [MailController::class, 'create'])->name('create');
             Route::get('detail-{id}', [MailController::class, 'showDetail'])->name('show-detail');
-
         });
     });
 
