@@ -31,7 +31,7 @@ class MailController extends BaseBuildingController
     public function showList()
     {
         $data = $this->generalData();
-        $list = SentMail::all();
+        $list = SentMail::orderBy('id', 'desc')->get();
         foreach ($list as $key => $value) {
             $admin = Admin::find($value->admin_id);
             if ($admin != null)
@@ -44,12 +44,14 @@ class MailController extends BaseBuildingController
         }
         // dd($list);
         $data['list']= $list;
+        $data['type'] ='list';
         return view('notify.email.list', $data);
     }
 
     public function showCreate()
     {
         $data = $this->generalData();
+        $data['type'] ='new';
 
         return view('notify.email.create', $data);
     }
@@ -61,8 +63,11 @@ class MailController extends BaseBuildingController
         $email->cc =$request->cc;
         $email->bcc =$request->bcc;
         $email->subject =$request->subject;
+        if($email->subject == null){
+            $email->subject = "(Không có tiêu đề)";
+        }
         $email->content =$request->content;
-        $email->admin_id=Auth::user()->id;
+        $email->admin_id = Auth::user()->id;
         $email->save();
         $emailsTo =json_decode($request->to);
         $emailsCc =json_decode($request->cc);
@@ -87,8 +92,28 @@ class MailController extends BaseBuildingController
         return new JsonResponse(['success', $emailsCc], 200);
     }
 
-    public function update(Request $request)
+    public function showDetail($id)
     {
+        $email = SentMail::find($id);
+        if($email != null ){
+            $email->to = json_decode($email->to);
+            $email->cc = json_decode($email->cc);
+            $email->bcc = json_decode($email->bcc);
+            $data = $this->generalData();
+            $data['type'] ='list';
+            $data['item'] = $email;
+            $admin = Admin::find($email->admin_id);
+            if($admin == null){
+                
+                $admin = new Admin();
+                $admin->name ='noName';
+                $admin->avatar = "blank.png";
+            }
+            $data['admin'] = $admin;
+
+            return view('notify.email.detail', $data);
+
+        }
     }
 
     public function delete(Request $request)

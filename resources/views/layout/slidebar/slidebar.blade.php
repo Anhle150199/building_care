@@ -51,7 +51,7 @@
                         </span></a>
                 </div>
                 {{-- Thông báo tin tức --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="menu-notify">
+                <div data-kt-menu-trigger="click" class="menu-item  -accordion" id="menu-notify">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">

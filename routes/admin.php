@@ -44,6 +44,8 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
             Route::get('list', [MailController::class, 'showList'])->name('show-list');
             Route::get('new-mail', [MailController::class, 'showCreate'])->name('show-create');
             Route::post('create', [MailController::class, 'create'])->name('create');
+            Route::get('detail-{id}', [MailController::class, 'showDetail'])->name('show-detail');
+
         });
     });
 

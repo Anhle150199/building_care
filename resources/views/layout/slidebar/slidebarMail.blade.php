@@ -3,11 +3,11 @@
         data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto"
         data-kt-sticky-top="150px" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
         <div class="card-body">
-            <a href="{{ route('admin.notification.email.show-create') }}" class="btn btn-primary text-uppercase w-100 mb-10">Thư mới</a>
+            {{-- <a href="{{ route('admin.notification.email.show-create') }}" class="btn btn-primary text-uppercase w-100 mb-10">Thư mới</a> --}}
             <div
                 class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
-                {{-- <div class="menu-item mb-3">
-                    <span class="menu-link active">
+                <div class="menu-item mb-3">
+                    <a class="menu-link text-dark @if($type == 'new') active @endif" href="{{ route('admin.notification.email.show-create') }}">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2 me-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -21,10 +21,9 @@
                                 </svg>
                             </span>
                         </span>
-                        <span class="menu-title fw-bolder">Hộp thư đến</span>
-                        <span class="badge badge-light-success">3</span>
-                    </span>
-                </div> --}}
+                        <span class="menu-title fw-bolder">Thư mới</span>
+                    </a>
+                </div>
                 {{-- <div class="menu-item mb-3">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -63,7 +62,7 @@
                     </span>
                 </div> --}}
                 <div class="menu-item mb-3">
-                    <span class="menu-link">
+                    <a class="menu-link text-dark @if($type == 'list') active @endif" href="{{ route('admin.notification.email.show-list') }}">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2 me-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -78,9 +77,9 @@
                             </span>
                         </span>
                         <span class="menu-title fw-bolder">Thư đã gửi</span>
-                    </span>
+                    </a>
                 </div>
-                <div class="menu-item">
+                {{-- <div class="menu-item">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2 me-3">
@@ -100,7 +99,7 @@
                         </span>
                         <span class="menu-title fw-bolder">Thùng rác</span>
                     </span>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

@@ -87,6 +87,15 @@
         .dt-buttons, #kt_table_users_filter{
             display: none;
         }
+        .string-2 {
+            overflow: hidden;
+            line-height: 24px;
+            -webkit-line-clamp: 2;
+            height: 45px;
+            display: -webkit-box;
+            /* width: 136px; */
+            -webkit-box-orient: vertical;
+        }
     </style>
 </body>
 
