@@ -3,9 +3,8 @@
     <link href="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
         type="text/css" />
 @endpush
-@section('title', 'Danh sách tài khoản admin')
+@section('title', 'Danh sách admins')
 @section('content')
-
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         {{-- Start page: path page --}}
         <div class="toolbar" id="kt_toolbar">
@@ -13,7 +12,7 @@
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Danh sách tài khoản admin</h1>
+                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Danh sách admins</h1>
                     <span class="h-20px border-gray-300 border-start mx-4"></span>
                     <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                         <li class="breadcrumb-item text-muted">
@@ -22,7 +21,7 @@
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
-                        <li class="breadcrumb-item text-muted">Quản lý tài khoản</li>
+                        <li class="breadcrumb-item text-muted">Cài đặt hệ thống</li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
                         </li>
@@ -55,88 +54,13 @@
                         {{-- Option nâng cao --}}
                         <div class="card-toolbar">
                             <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                                {{-- Bộ lọc --}}
-                                <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
-                                    data-kt-menu-placement="bottom-end">
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
-                                            <path
-                                                d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
-                                                fill="currentColor" />
-                                        </svg>
-                                    </span>Bộ lọc</button>
-                                <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
-                                    <div class="px-7 py-5">
-                                        <div class="fs-5 text-dark fw-bolder">Tuỳ chọn</div>
-                                    </div>
-                                    <div class="separator border-gray-200"></div>
-                                    <div class="px-7 py-5" data-kt-user-table-filter="form">
-                                        {{-- Quyền --}}
-                                        <div class="mb-10">
-                                            <label class="form-label fs-6 fw-bold">Quyền:</label>
-                                            <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                                data-placeholder="Select option" data-allow-clear="true"
-                                                data-kt-user-table-filter="role" data-hide-search="true">
-                                                <option></option>
-                                                <option value="super_admin">Super Admin</option>
-                                                <option value="admin">Admin</option>
-                                            </select>
-                                        </div>
-                                        {{-- Phòng ban --}}
-                                        <div class="mb-10">
-                                            <label class="form-label fs-6 fw-bold">Phòng ban:</label>
-                                            <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
-                                                data-placeholder="Select option" data-allow-clear="true"
-                                                data-kt-user-table-filter="two-step" data-hide-search="true">
-                                                <option></option>
-                                                <option value="Enabled">Phòng tài chính</option>
-                                                <option value="Enabled">Phòng kinh doanh</option>
-                                                <option value="Enabled">Phòng kỹ thuật</option>
-                                            </select>
-                                        </div>
-                                        <div class="d-flex justify-content-end">
-                                            <button type="reset"
-                                                class="btn btn-light btn-active-light-primary fw-bold me-2 px-6"
-                                                data-kt-menu-dismiss="true" data-kt-user-table-filter="reset">Đặt
-                                                lại</button>
-                                            <button type="submit" class="btn btn-primary fw-bold px-6"
-                                                data-kt-menu-dismiss="true" data-kt-user-table-filter="filter">Áp
-                                                dụng</button>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 {{-- Export --}}
-                                <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_export_users">
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
-                                            <rect opacity="0.3" x="12.75" y="4.25" width="12" height="2" rx="1"
-                                                transform="rotate(90 12.75 4.25)" fill="currentColor" />
-                                            <path
-                                                d="M12.0573 6.11875L13.5203 7.87435C13.9121 8.34457 14.6232 8.37683 15.056 7.94401C15.4457 7.5543 15.4641 6.92836 15.0979 6.51643L12.4974 3.59084C12.0996 3.14332 11.4004 3.14332 11.0026 3.59084L8.40206 6.51643C8.0359 6.92836 8.0543 7.5543 8.44401 7.94401C8.87683 8.37683 9.58785 8.34458 9.9797 7.87435L11.4427 6.11875C11.6026 5.92684 11.8974 5.92684 12.0573 6.11875Z"
-                                                fill="currentColor" />
-                                            <path
-                                                d="M18.75 8.25H17.75C17.1977 8.25 16.75 8.69772 16.75 9.25C16.75 9.80228 17.1977 10.25 17.75 10.25C18.3023 10.25 18.75 10.6977 18.75 11.25V18.25C18.75 18.8023 18.3023 19.25 17.75 19.25H5.75C5.19772 19.25 4.75 18.8023 4.75 18.25V11.25C4.75 10.6977 5.19771 10.25 5.75 10.25C6.30229 10.25 6.75 9.80228 6.75 9.25C6.75 8.69772 6.30229 8.25 5.75 8.25H4.75C3.64543 8.25 2.75 9.14543 2.75 10.25V19.25C2.75 20.3546 3.64543 21.25 4.75 21.25H18.75C19.8546 21.25 20.75 20.3546 20.75 19.25V10.25C20.75 9.14543 19.8546 8.25 18.75 8.25Z"
-                                                fill="#C4C4C4" />
-                                        </svg>
-                                    </span>
-                                    Export
-                                </button>
-                                {{-- Thêm tài khoản --}}
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_add_user">
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
-                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                                transform="rotate(-90 11.364 20.364)" fill="currentColor" />
-                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
-                                        </svg>
-                                    </span>
-                                    Tạo tài khoản
-                                </button>
+                                @include('layout.datatable.btn-export')
+                                {{-- Thêm mới --}}
+                                @if (Auth::user()->role == 'super')
+                                    @include('layout.datatable.btn-add-new')
+                                @endif
                             </div>
                             {{-- Xoá khi chọn --}}
                             <div class="d-flex justify-content-end align-items-center d-none"
@@ -169,17 +93,7 @@
                                         </div>
                                         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                             <form id="kt_modal_export_users_form" class="form" action="#">
-                                                <div class="fv-row mb-10">
-                                                    <label class="fs-6 fw-bold form-label mb-2">Chọn phòng ban:</label>
-                                                    <select name="role" data-control="select2"
-                                                        data-placeholder="Select a role" data-hide-search="true"
-                                                        class="form-select form-select-solid fw-bolder">
-                                                        <option>Tất cả</option>
-                                                        <option value="Enabled">Phòng tài chính</option>
-                                                        <option value="Enabled">Phòng kinh doanh</option>
-                                                        <option value="Enabled">Phòng kỹ thuật</option>
-                                                    </select>
-                                                </div>
+
                                                 <div class="fv-row mb-10">
                                                     <label class="required fs-6 fw-bold form-label mb-2">Chọn định
                                                         dạng:</label>
@@ -189,7 +103,7 @@
                                                         <option></option>
                                                         <option value="excel">Excel</option>
                                                         <option value="pdf">PDF</option>
-                                                        <option value="cvs">CVS</option>
+                                                        <option value="csv">CSV</option>
                                                     </select>
                                                 </div>
                                                 <div class="text-center">
@@ -198,7 +112,8 @@
                                                     <button type="submit" class="btn btn-primary"
                                                         data-kt-users-modal-action="submit">
                                                         <span class="indicator-label">Xuất</span>
-                                                        <span class="indicator-progress">Đang xử lý...
+                                                        <span class="indicator-progress">
+                                                            Đang xử lý...
                                                             <span
                                                                 class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                     </button>
@@ -230,7 +145,10 @@
                                         </div>
                                         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                             {{-- Form thêm tài khoản --}}
+                                            <input type="hidden" value="new" id="add-form-type">
+                                            <input type="hidden"  id="id-user-edit">
                                             <form id="kt_modal_add_user_form" class="form" action="#">
+                                                @csrf
                                                 <div class="d-flex flex-column scroll-y me-n7 pe-7"
                                                     id="kt_modal_add_user_scroll" data-kt-scroll="true"
                                                     data-kt-scroll-activate="{default: false, lg: true}"
@@ -241,33 +159,33 @@
                                                     {{-- Họ tên --}}
                                                     <div class="fv-row mb-7">
                                                         <label class="required fw-bold fs-6 mb-2">Họ tên</label>
-                                                        <input type="text" name="user_name"
+                                                        <input type="text" name="user_name" id="name"
                                                             class="form-control form-control-solid mb-3 mb-lg-0"
                                                             placeholder="Nhập họ tên" />
                                                     </div>
                                                     {{-- Email --}}
                                                     <div class="fv-row mb-7">
                                                         <label class="required fw-bold fs-6 mb-2">Email</label>
-                                                        <input type="email" name="user_email"
+                                                        <input type="email" name="user_email" id="email"
                                                             class="form-control form-control-solid mb-3 mb-lg-0"
-                                                            placeholder="example@domain.com" value="smith@kpmg.com" />
+                                                            placeholder="example@domain.com" />
                                                     </div>
-                                                    {{-- Phòng ban --}}
+                                                    {{-- Bộ phận --}}
                                                     <div class="fv-row mb-7">
-                                                        <label class="required fw-bold fs-6 mb-2">Chọn phòng ban:</label>
-                                                        <select name="department" data-control="select2"
-                                                            data-placeholder="Chọn phòng ban" data-hide-search="true"
+                                                        <label class="required fw-bold fs-6 mb-2">Chọn bộ phận:</label>
+                                                        <select name="department" data-control="select2" id="department"
+                                                            data-placeholder="Chọn bộ phận" data-hide-search="true"
                                                             class="form-select form-select-solid fw-bolder">
                                                             <option></option>
-                                                            <option value="Enabled">Phòng tài chính</option>
-                                                            <option value="Enabled">Phòng kinh doanh</option>
-                                                            <option value="Enabled">Phòng kỹ thuật</option>
+                                                            @foreach ($departments as $department)
+                                                                <option value="{{ $department->id }}" data-name="{{ $department->name }}">{{ $department->name }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     {{-- Chức vụ --}}
                                                     <div class="fv-row mb-7">
                                                         <label class="required fw-bold fs-6 mb-2">Chức vụ</label>
-                                                        <input type="email" name="user_email"
+                                                        <input type="text" name="position" id="position"
                                                             class="form-control form-control-solid mb-3 mb-lg-0"
                                                             placeholder="Nhập chức vụ" />
                                                     </div>
@@ -277,14 +195,11 @@
                                                         <div class="d-flex fv-row">
                                                             <div class="form-check form-check-custom form-check-solid">
                                                                 <input class="form-check-input me-3" name="user_role"
-                                                                    type="radio" value="0"
-                                                                    id="kt_modal_update_role_option_0" checked='checked' />
+                                                                    type="radio" value="super"
+                                                                    id="kt_modal_update_role_option_0" />
                                                                 <label class="form-check-label"
                                                                     for="kt_modal_update_role_option_0">
-                                                                    <div class="fw-bolder text-gray-800">Super admin
-                                                                    </div>
-                                                                    <div class="text-gray-600">Tài khoản có quyền cao nhất.
-                                                                    </div>
+                                                                    <div class="fw-bolder text-gray-800">Super admin</div>
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -292,13 +207,11 @@
                                                         <div class="d-flex fv-row">
                                                             <div class="form-check form-check-custom form-check-solid">
                                                                 <input class="form-check-input me-3" name="user_role"
-                                                                    type="radio" value="1"
+                                                                    type="radio" value="admin" checked=true
                                                                     id="kt_modal_update_role_option_1" />
                                                                 <label class="form-check-label"
                                                                     for="kt_modal_update_role_option_1">
                                                                     <div class="fw-bolder text-gray-800">Admin</div>
-                                                                    <div class="text-gray-600">Tài khoản dành cho nhân
-                                                                        viên các phòng ban</div>
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -310,10 +223,12 @@
                                                         data-kt-users-modal-action="cancel">Huỷ</button>
                                                     <button type="submit" class="btn btn-primary"
                                                         data-kt-users-modal-action="submit">
-                                                        <span class="indicator-label">Tạo mới</span>
+                                                        <span class="indicator-label" id="btn-submit-form-create">Thêm
+                                                            mới</span>
                                                         <span class="indicator-progress">Đang xử lý...
                                                             <span
-                                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                        </span>
                                                     </button>
                                                 </div>
                                             </form>
@@ -336,109 +251,178 @@
                                     </th>
                                     <th class="min-w-125px">Tài khoản</th>
                                     <th class="min-w-125px">Quyền</th>
-                                    <th class="min-w-125px">Phòng ban</th>
-                                    <th class="min-w-125px">Chức vụ</th>
+                                    <th class="min-w-125px">Bộ phận</th>
+                                    <th class="min-w-125px">Trạng thái</th>
                                     <th class="min-w-125px">Ngày tạo</th>
-                                    <th class="text-center min-w-100px">Hành động</th>
+                                    <th class="text-center min-w-100px">
+                                        @if (Auth::user()->role == 'super')
+                                            Thao tác
+                                        @endif
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-bold">
-                                <tr>
-                                    <td>
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="1" />
-                                        </div>
-                                    </td>
-                                    <td class="d-flex align-items-center">
-                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                            <a href="../../demo1/dist/apps/user-management/users/view.html">
+                                @foreach ($admins1 as $admin)
+                                    <tr id="row_{{ $admin->id }}" data-id="{{ $admin->id }}">
+                                        <td>
+                                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $admin->id }}" />
+                                            </div>
+                                        </td>
+                                        <td class="d-flex align-items-center">
+                                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                                 <div class="symbol-label">
-                                                    <img src="{{ url('/') }}/assets/media/avatars/300-6.jpg"
-                                                        alt="Emma Smith" class="w-100" />
+                                                    <img src="{{ url('/') . '/assets/media/avatars/' . $admin->avatar }}"
+                                                        class="w-100" />
                                                 </div>
-                                            </a>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="../../demo1/dist/apps/user-management/users/view.html"
-                                                class="text-gray-800 text-hover-primary mb-1">Emma Smith</a>
-                                            <span>smith@kpmg.com</span>
-                                        </div>
-                                    </td>
-                                    <td>Super Admin</td>
-                                    <td>
-                                        Phòng Tài chính </td>
-                                    <td>Nhân viên</td>
-                                    <td>25 Jul 2022, 6:05 pm</td>
-                                    <td class="text-center">
-                                        <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
-                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                            <span class="svg-icon svg-icon-5 m-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                                    <rect x="17" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                                    <rect x="3" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
-                                            data-kt-menu="true">
-                                            <div class="menu-item px-3">
-                                                <a href="../../demo1/dist/apps/user-management/users/view.html"
-                                                    class="menu-link px-3">Chỉnh sửa</a>
                                             </div>
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3"
-                                                    data-kt-users-table-filter="delete_row">Xoá</a>
+                                            <div class="d-flex flex-column">
+                                                <a href="#" id="name_{{ $admin->id }}"
+                                                    class="text-gray-800 text-hover-primary mb-1">{{ $admin->name }}</a>
+                                                <span id="email_{{ $admin->id }}">{{ $admin->email }}</span>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="1" />
-                                        </div>
-                                    </td>
-                                    <td class="d-flex align-items-center">
-                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                            <a href="../../demo1/dist/apps/user-management/users/view.html">
-                                                <div class="symbol-label fs-3 bg-light-danger text-danger">M</div>
-                                            </a>
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="../../demo1/dist/apps/user-management/users/view.html"
-                                                class="text-gray-800 text-hover-primary mb-1">Melody Macy</a>
-                                            <span>melody@altbox.com</span>
-                                        </div>
-                                    </td>
-                                    <td>Admin</td>
-                                    <td> Phòng nhân sự </td>
-                                    <td> Nhân viên </td>
-                                    <td>21 Feb 2022, 10:30 am</td>
-                                    <td class="text-center">
-                                        <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
-                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                            <span class="svg-icon svg-icon-5 m-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                                    <rect x="17" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                                    <rect x="3" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
-                                            data-kt-menu="true">
-                                            <div class="menu-item px-3">
-                                                <a href="../../demo1/dist/apps/user-management/users/view.html"
-                                                    class="menu-link px-3">Edit</a>
+                                        </td>
+                                        <td id="role_{{ $admin->id }}">
+                                            @if ($admin->role == 'super')
+                                                Super Admin
+                                            @else
+                                                Admin
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <span id="department_{{ $admin->id }}"
+                                                    class="text-gray-800 text-hover-primary mb-1">{{ $admin->department }}</span>
+                                                <span id="position_{{ $admin->id }}">{{ $admin->position }}</span>
                                             </div>
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3"
-                                                    data-kt-users-table-filter="delete_row">Delete</a>
+                                        </td>
+                                        <td id="status_{{ $admin->id }}">{{ $admin->status }}</td>
+                                        <td id="time_{{ $admin->id }}">
+                                            {{ $admin->created_at->format('d M Y, h:i a') }}</td>
+                                        <td class="text-center">
+                                            @if (Auth::user()->role == 'super')
+                                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
+                                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                    <span class="svg-icon svg-icon-5 m-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none">
+                                                            <rect x="10" y="10" width="4" height="4" rx="2"
+                                                                fill="currentColor"></rect>
+                                                            <rect x="17" y="10" width="4" height="4" rx="2"
+                                                                fill="currentColor"></rect>
+                                                            <rect x="3" y="10" width="4" height="4" rx="2"
+                                                                fill="currentColor"></rect>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
+                                                    data-kt-menu="true">
+                                                    <div class="menu-item px-3">
+                                                        <a class="menu-link px-3 btn-edit"
+                                                            onclick="showEditModal('{{ $admin->id }}')">Chỉnh sửa</a>
+                                                    </div>
+                                                    @if ($admin->status == 'activated' && $admin->id != Auth::user()->id)
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3" onclick="lockAcc('{{$admin->id}}')">Khoá</a>
+                                                        </div>
+                                                    @endif
+
+                                                    @if ($admin->status == 'lock' && $admin->id != Auth::user()->id)
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3" onclick="activeAcc('{{$admin->id}}')">Kích hoạt</a>
+                                                        </div>
+                                                    @endif
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3"
+                                                            data-kt-users-table-filter="delete_row">Xoá</a>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                @foreach ($admins2 as $admin)
+                                    <tr id="row_{{ $admin->id }}" data-id="{{ $admin->id }}">
+                                        <td>
+                                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $admin->id }}" />
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="d-flex align-items-center">
+                                            <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                <div class="symbol-label">
+                                                    <img src="{{ url('/') . '/assets/media/avatars/' . $admin->avatar }}"
+                                                        class="w-100" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a href="#" id="name_{{ $admin->id }}"
+                                                    class="text-gray-800 text-hover-primary mb-1">{{ $admin->name }}</a>
+                                                <span id="email_{{ $admin->id }}">{{ $admin->email }}</span>
+                                            </div>
+                                        </td>
+                                        <td id="role_{{ $admin->id }}">
+                                            @if ($admin->role == 'super')
+                                                Super Admin
+                                            @else
+                                                Admin
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <span class="text-gray-800 text-hover-primary mb-1"
+                                                    id="department_{{ $admin->id }}">Không có</span>
+                                                <span id="position_{{ $admin->id }}">{{ $admin->position }}</span>
+                                            </div>
+                                        </td>
+                                        <td id="status_{{ $admin->id }}">{{ $admin->status }}</td>
+                                        <td id="time_{{ $admin->id }}">
+                                            {{ $admin->created_at->format('d M Y, h:i a') }}</td>
+                                        <td class="text-center">
+                                            @if (Auth::user()->role == 'super')
+                                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
+                                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                    <span class="svg-icon svg-icon-5 m-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none">
+                                                            <rect x="10" y="10" width="4" height="4" rx="2"
+                                                                fill="currentColor"></rect>
+                                                            <rect x="17" y="10" width="4" height="4" rx="2"
+                                                                fill="currentColor"></rect>
+                                                            <rect x="3" y="10" width="4" height="4" rx="2"
+                                                                fill="currentColor"></rect>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
+                                                    data-kt-menu="true">
+                                                    <div class="menu-item px-3">
+                                                        <a onclick="showEditModal('{{ $admin->id }}')"
+                                                            class="menu-link px-3 btn-edit">Chỉnh sửa</a>
+                                                    </div>
+                                                    @if ($admin->status == 'activated' && $admin->id != Auth::user()->id)
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3" onclick="lockAcc('{{$admin->id}}')">Khoá</a>
+                                                        </div>
+                                                    @endif
+
+                                                    @if ($admin->status == 'lock' && $admin->id != Auth::user()->id)
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3" onclick="activeAcc('{{$admin->id}}')">Kích hoạt</a>
+                                                        </div>
+                                                    @endif
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3"
+                                                            data-kt-users-table-filter="delete_row">Xoá</a>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -449,14 +433,152 @@
 @endsection
 
 @push('js')
+    <script>
+        function reloadDropdown(){
+            KTMenu.init();
+            KTMenu.updateDropdowns();
+            KTMenu.init();
+        };
+    </script>
     <script src="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/apps/user-management/users/list/table.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/apps/user-management/users/list/export-users.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/apps/user-management/users/list/add.js"></script>
-    {{-- <script src="{{ url('/') }}/assets/js/widgets.bundle.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/widgets.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/apps/chat/chat.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/utilities/modals/create-app.js"></script>
-    <script src="{{ url('/') }}/assets/js/custom/utilities/modals/users-search.js"></script> --}}
+    <script src="{{ url('/') }}/assets/js/custom/system/admin/table.js"></script>
+    <script src="{{ url('/') }}/assets/js/custom/system/admin/export-users.js"></script>
+    <script src="{{ url('/') }}/assets/js/custom/system/admin/add.js"></script>
+    <script>
+        const token = $('input[name="_token"]').val();
+        $(function() {
+            $('#btn-create').click(function() {
+                $('#btn-submit-form-create').text('Thêm mới');
+                $("#add-form-type").val('new')
+            });
+        })
+
+        function showEditModal(id) {
+            $('#id-user-edit').val(id);
+            $("#add-form-type").val('edit');
+            $('#btn-submit-form-create').text('Chỉnh sửa');
+            $("#name").val($('#name_' + id).text());
+            $('#email').val($('#email_' + id).text().trim());
+
+            let department = $('#department_' + id).text().trim();
+            if (department == "Không có") {
+                $('#department').val('');
+                $('#select2-department-container').text('Chọn bộ phận');
+            } else {
+                $('#department option[data-name="' + department + '"]').attr('selected', 'selected');
+                $('#select2-department-container').text(department);
+            }
+
+            $('#position').val($('#position_' + id).text().trim());
+            if ($('#role_' + id).text().trim() == 'Admin') {
+                $('#kt_modal_update_role_option_1').prop('checked', true);
+            } else {
+                $('#kt_modal_update_role_option_0').prop('checked', true);
+            }
+            $('#kt_modal_add_user').modal('show');
+        }
+        function lockAcc(id) {
+            Swal.fire({
+                text: "Bạn có chắc muốn khoá "+$('#name_'+id).text().trim()+"?",
+                icon: "warning",
+                showCancelButton: !0,
+                buttonsStyling: !1,
+                confirmButtonText: "Xoá!",
+                cancelButtonText: "Huỷ",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-danger",
+                    cancelButton: "btn fw-bold btn-active-light-primary",
+                }
+            }).then(function (t) {
+                ajaxFunc('/admin/system/admins/update-status', 'put', {_token: token, id: id, status: 'lock'})
+            })
+        }
+        function activeAcc(id) {
+            Swal.fire({
+                text: "Bạn có chắc muốn kích hoạt "+$('#name_'+id).text().trim()+"?",
+                icon: "warning",
+                showCancelButton: !0,
+                buttonsStyling: !1,
+                confirmButtonText: "Xoá!",
+                cancelButtonText: "Huỷ",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-danger",
+                    cancelButton: "btn fw-bold btn-active-light-primary",
+                }
+            }).then(function (t) {
+                ajaxFunc('/admin/system/admins/update-status', 'put', {_token: token, id: id, status: 'activated'})
+            })
+        }
+        function ajaxFunc(url, type, data) {
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                dataType: 'json',
+                success: function(data){
+                    var table = $('#kt_table_users').DataTable();
+
+                    const editRow = table.row('#row_'+data.id).node()
+                    table.row('#row_'+data.id).data( [colIndex(data.id), colName(data.id, data.name, data.email, data.avatar), colRole(data.role),colDepartment(data.id, $('#department_'+data.id).text(), data.position),data.status,  $('#time_'+data.id).text(), colEndStatus(data.id, data.status)] ).node()
+                    // $($(editRow).find('td')[4]).html(data.status);
+                    table.draw();
+                    reloadDropdown();
+                    Swal.fire({
+                        text: "Đã xong!",
+                        icon: "success",
+                        buttonsStyling: !1,
+                        confirmButtonText: "Chấp nhận!",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-primary",
+                        },
+                    });
+                },
+                error: function(data){
+                    const errors = data.responseJSON;
+                    console.log(errors);
+                    Swal.fire({
+                        text: "Có lỗi xảy ra. Thử lại sau!",
+                        icon: "error",
+                        buttonsStyling: !1,
+                        confirmButtonText: "Chấp nhận!",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-primary",
+                        },
+                    });
+                }
+            })
+        }
+        function colEndStatus  (id, status) {
+            let func, view;
+            if(status == 'lock'){
+                func = 'activeAcc';
+                view = 'Kích hoạt';
+            }
+            if(status == 'activated'){
+                func = 'lockAcc';
+                view = 'Khoá';
+            }
+            return `<a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                        <span class="svg-icon svg-icon-5 m-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
+                                <rect x="17" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
+                                <rect x="3" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
+                            </svg>
+                        </span>
+                    </a>
+
+                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                        <div class="menu-item px-3">
+                            <a class="menu-link px-3" onclick= "showEditModal('${id}')">Chỉnh sửa</a>
+                        </div>
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3" onclick="${func}('${id}')">${view}</a>
+                        </div>
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Xoá</a>
+                        </div>
+                    </div>`;
+        }
+    </script>
 @endpush

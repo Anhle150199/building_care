@@ -17,6 +17,7 @@ class CreateNotifyRelationshipTable extends Migration
             $table->increments('id');
             $table->integer('building_id');
             $table->integer('notify_id');
+            $table->softDeletes();
         });
     }
 

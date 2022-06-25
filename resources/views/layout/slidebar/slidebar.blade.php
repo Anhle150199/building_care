@@ -3,8 +3,8 @@
     data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
     data-kt-drawer-toggle="#kt_aside_mobile_toggle">
     <div class="aside-logo flex-column-auto" id="kt_aside_logo">
-        <a href="http://127.0.0.1:8000/admin" class="" style="display: flex;align-items: center;">
-            <img alt="Logo" src="http://127.0.0.1:8000/assets/media/logos/logo-siddebar.png" class="h-50px logo">
+        <a href="{{ route('admin.dashboard') }}" class="" style="display: flex;align-items: center;">
+            <img alt="Logo" src="{{url('/')}}/assets/media/logos/logo-siddebar.png" class="h-50px logo">
         </a>
         <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
             data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
@@ -51,7 +51,7 @@
                         </span></a>
                 </div>
                 {{-- Thông báo tin tức --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="menu-notify">
+                <div data-kt-menu-trigger="click" class="menu-item  -accordion" id="menu-notify">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -73,33 +73,33 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <div class="menu-item">
-                            <a class="menu-link " href="../../demo1/dist/pages/contact.html" id="item-notify">
+                            <a class="menu-link " href="{{ route('admin.notification.show-list') }}" id="item-notify">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Thông báo</span>
+                                <span class="menu-title">Quản lý thông báo</span>
                             </a>
                         </div>
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="../../demo1/dist/pages/team.html" id="item-event">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Sự kiện</span>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="menu-item">
-                            <a class="menu-link" href="../../demo1/dist/pages/licenses.html" id="item-mail">
+                            <a class="menu-link" href="{{ route('admin.notification.email.show-list') }}" id="item-email">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Gửi email</span>
+                                <span class="menu-title">Quản lý email</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 {{-- Quản lý toà nhà --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="menu-toa-nha">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="menu-building">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
@@ -118,7 +118,7 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" id="item-tong-quan"
                                 href="../../demo1/dist/authentication/extended/two-factor-authentication.html">
                                 <span class="menu-bullet">
@@ -126,10 +126,10 @@
                                 </span>
                                 <span class="menu-title">Tổng quan toà nhà</span>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="menu-item">
-                            <a class="menu-link" id="item-list-toa-nha"
-                                href="../../demo1/dist/authentication/extended/free-trial-sign-up.html">
+                            <a class="menu-link" id="item-building-list"
+                                href="{{ route('admin.building.building-list') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -137,7 +137,16 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" id="item-maintain" href="../../demo1/dist/authentication/extended/coming-soon.html">
+                            <a class="menu-link" id="item-building-new"
+                                href="{{ route('admin.building.new') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Thêm mới tòa nhà</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" id="item-maintain" href="{{ route('admin.building.maintenance_schedule.show') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -166,7 +175,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <div class="menu-item">
-                            <a class="menu-link" href="../../demo1/dist/account/overview.html">
+                            <a class="menu-link" id="item-apartment" href="{{ route('admin.customers.apartment-list') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -182,21 +191,21 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="../../demo1/dist/account/settings.html">
+                            <a class="menu-link" id="item-vehicle" href="{{ route('admin.customers.vehicle-list') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Quản lý phương tiện</span>
+                                <span class="menu-title">Đăng ký phương tiện</span>
                             </a>
                         </div>
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="../../demo1/dist/account/settings.html">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Lịch sử cư dân</span>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 {{-- Ý kiến cư dân --}}
@@ -266,7 +275,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('admin.system.admin-list') }}" id="item-admins">
+                            <a class="menu-link" href="{{ route('admin.system.admins.admin-list') }}" id="item-admins">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -281,16 +290,16 @@
                                 <span class="menu-title">Danh sách bộ phận </span>
                             </a>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="../../demo1/dist/account/overview.html">
+                        {{-- <div class="menu-item">
+                            <a class="menu-link" href="{{ route('admin.system.equipment.list') }}" id="item-equipments">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Danh sách thiết bị </span>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="menu-item">
-                            <a class="menu-link" href="../../demo1/dist/account/overview.html">
+                            <a class="menu-link" href="{{ route('admin.system.feedback-type.list') }}" id="item-feedback-type">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -302,12 +311,20 @@
             </div>
         </div>
     </div>
-    {{-- <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
-                    <a href="../../demo1/dist/documentation/getting-started.html"
-                        class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                        data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
-                        <span class="btn-label">Docs &amp; Components</span>
-                    </a>
-                </div> --}}
-    <!--end::Footer-->
+    <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
+        {{-- <a href="../../demo1/dist/documentation/getting-started.html"
+            class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip" data-bs-trigger="hover"
+            data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
+            <span class="btn-label">Docs &amp; Components</span>
+        </a> --}}
+        <select data-control="select2" data-placeholder="Chọn định dạng" data-submit="{{ route('admin.update_building_active') }}"
+            data-hide-search="true" name="building_active" class="btn btn-custom btn-primary w-100 form-select form-select-solid">
+            @foreach ($buildingList as $value)
+                <option value="{{$value->id}}" @if ($value->id == $buildingActive)
+                    selected=true
+                @endif>{{$value->name}}</option>
+            @endforeach
+            @csrf
+        </select>
+    </div>
 </div>

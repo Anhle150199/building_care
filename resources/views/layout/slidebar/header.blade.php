@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-            <a href=".{{ route('admin.dashboard') }}" class="d-lg-none">
+            <a href="{{ route('admin.dashboard') }}" class="d-lg-none">
                 <img alt="Logo" src="{{url('/')}}/assets/media/logos/logo-2.svg" class="h-30px" />
             </a>
         </div>
@@ -54,7 +54,6 @@
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-35px me-4">
                                                 <span class="symbol-label bg-light-primary">
-                                                    <!--begin::Svg Icon | path: icons/duotune/technology/teh008.svg-->
                                                     <span class="svg-icon svg-icon-2 svg-icon-primary">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             width="24" height="24" viewBox="0 0 24 24"

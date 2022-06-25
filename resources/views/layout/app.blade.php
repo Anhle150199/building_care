@@ -6,11 +6,18 @@
     <title>{{ config('app.name') }} | @yield('title')</title>
     <meta charset="utf-8" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+    <link rel="shortcut icon" href="{{ url('/') }}/assets/media/logos/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     @stack('css')
     <link href="{{ url('/') }}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="{{ url('/') }}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+    <!-- PWA  -->
+    {{-- <meta name="theme-color" content="#6777ef"/>
+    <link rel="apple-touch-icon" href="{{ asset('logo-3.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}"> --}}
+    @laravelPWA
+
 </head>
 
 <body id="kt_body"
@@ -52,13 +59,7 @@
     </script>
     <script src="{{ url('/') }}/assets/plugins/global/plugins.bundle.js"></script>
     <script src="{{ url('/') }}/assets/js/scripts.bundle.js"></script>
-    <script>
-        var reloadDropdown = ()=>{
-            KTMenu.init();
-            KTMenu.updateDropdowns();
-            KTMenu.init();
-        }
-    </script>
+
     @stack('js')
     <script>
         $(function() {
@@ -67,12 +68,47 @@
                     $("#{{ $item }}").addClass(" show active");
                 @endforeach
             @endisset
+
+            $('select[name=building_active]').on('change',function () {
+                let url = $('select[name=building_active]').data('submit');
+                let id = $('select[name=building_active]').val();
+                let token = $('input[name=_token]').val();
+                console.log(token);
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data:{
+                        _token: token,
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function(){
+                        location.reload();
+                    }
+                })
+            })
         })
     </script>
-
+    {{-- <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script> --}}
     <style>
-        .dt-buttons{
+        .dt-buttons, #kt_table_users_filter{
             display: none;
+        }
+        .string-2 {
+            overflow: hidden;
+            line-height: 24px;
+            -webkit-line-clamp: 2;
+            height: 45px;
+            display: -webkit-box;
+            /* width: 136px; */
+            -webkit-box-orient: vertical;
         }
     </style>
 </body>

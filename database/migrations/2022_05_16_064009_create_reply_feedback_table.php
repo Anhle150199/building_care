@@ -21,6 +21,7 @@ class CreateReplyFeedbackTable extends Migration
             $table->integer('user_type');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
+            $table->softDeletes();
         });
     }
 

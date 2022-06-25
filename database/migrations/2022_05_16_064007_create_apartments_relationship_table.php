@@ -17,6 +17,7 @@ class CreateApartmentsRelationshipTable extends Migration
             $table->increments('id');
             $table->integer('apartment_id');
             $table->integer('customer_id');
+            $table->softDeletes();
         });
     }
 

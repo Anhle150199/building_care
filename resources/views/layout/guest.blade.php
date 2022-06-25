@@ -13,6 +13,13 @@
 
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+        <!-- PWA  -->
+        {{-- <meta name="theme-color" content="#6777ef"/>
+        <link rel="apple-touch-icon" href="{{ asset('logo-3.png') }}">
+        <link rel="manifest" href="{{ asset('/manifest.json') }}"> --}}
+        @laravelPWA
+
 </head>
 
 <body id="kt_body" class="bg-dark">
@@ -29,6 +36,14 @@
     <script src="assets/plugins/global/plugins.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
     @stack('js')
+    {{-- <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script> --}}
 </body>
 
 </html>

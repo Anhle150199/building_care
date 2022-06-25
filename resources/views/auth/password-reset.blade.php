@@ -2,7 +2,8 @@
 @section('content')
     <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
         <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
-            <form class="form w-100" novalidate="novalidate" id="kt_password_reset_form">
+            <form class="form w-100" novalidate="novalidate" id="kt_password_reset_form" data-action="{{route('auth.sent-mail-reset-password')}}" >
+                @csrf
                 <div class="text-center mb-10">
                     <h1 class="text-dark mb-3">Quên mật khẩu ?</h1>
 

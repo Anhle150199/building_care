@@ -96,7 +96,8 @@ var KTUsersList = (function () {
                         });
                         idDel = idDel.filter((item)=>item!=undefined)
                         console.log(idDel);
-                        t.value ? $.ajax({
+                        t.value ?
+                        $.ajax({
                             url: "/admin/system/departments/delete",
                             type: "delete",
                             data: {

@@ -15,10 +15,11 @@ class CreateFeedbackTypeTable extends Migration
     {
         Schema::create('feedback_type', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('name');
+            $table->string('name');
             $table->enum('category', ['repair', 'feedback']);
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->softDeletes();
         });
     }
 

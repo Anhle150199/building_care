@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
@@ -59,8 +60,9 @@ class LoginController extends Controller
 
         // Check tài khoản
         $credentials = $request->only(['email', 'password']);
+        // array_push($credentials, ['status'=>'activated']);
         // if ($this->attemptLogin($request)) {
-        if (Auth::guard('admin')->attempt($credentials)) {
+        if (Auth::guard('admin')->attempt(['email'=>$request->email, 'password'=>$request->password, 'status'=> 'activated'])) {
 
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
