@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Customer\Auth\ForgotPasswordController as AuthForgotPasswordController;
+use App\Http\Controllers\Customer\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +39,7 @@ foreach(config('constants.urls') as $url) {
 //     return view('test');
 // })->name('yyy');
 
-Route::namespace('Auth\Admin')->name('auth.')->group(function () {
+Route::namespace('Admin\Auth')->name('auth.')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('form-login');
     Route::post('login', [LoginController::class, 'login'])->name('login');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
@@ -50,6 +52,10 @@ Route::namespace('Auth\Admin')->name('auth.')->group(function () {
     Route::post('sent-mail-reset',[ForgotPasswordController::class, 'sentToken'])->name('sent-mail-reset-password');
 });
 
-// Route::namespace()
+Route::prefix('user')->name('auth-user.')->group(function(){
+    Route::get('login', [AuthLoginController::class, 'showLoginForm'])->name('form-login');
+    Route::get('forgot-pasword', [AuthForgotPasswordController::class, 'showForgotPasswordForm'])->name('show-forgot-password');
+
+});
 
 
