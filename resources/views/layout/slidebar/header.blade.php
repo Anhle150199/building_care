@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-            <a href=".{{ route('admin.dashboard') }}" class="d-lg-none">
+            <a href="{{ route('admin.dashboard') }}" class="d-lg-none">
                 <img alt="Logo" src="{{url('/')}}/assets/media/logos/logo-2.svg" class="h-30px" />
             </a>
         </div>

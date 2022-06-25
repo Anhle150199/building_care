@@ -11,6 +11,13 @@
     @stack('css')
     <link href="{{ url('/') }}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="{{ url('/') }}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+    <!-- PWA  -->
+    {{-- <meta name="theme-color" content="#6777ef"/>
+    <link rel="apple-touch-icon" href="{{ asset('logo-3.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}"> --}}
+    @laravelPWA
+
 </head>
 
 <body id="kt_body"
@@ -82,7 +89,14 @@
             })
         })
     </script>
-
+    {{-- <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script> --}}
     <style>
         .dt-buttons, #kt_table_users_filter{
             display: none;
