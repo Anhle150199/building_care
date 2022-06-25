@@ -57,9 +57,8 @@ class UserController extends BaseBuildingController
         $admin->name = $request->name;
         $admin->department_id = $request->department_id;
         $admin->position = $request->position;
-        if($request->has('avatar') && $admin->avatar != "avatar-1.png"){
-
-            if(file_exists(public_path('assets/media/avatars/'.$admin->avatar))){
+        if($request->has('avatar') ){
+            if(file_exists(public_path('assets/media/avatars/'.$admin->avatar)) && $admin->avatar != "avatar-1.png"){
                 unlink(public_path('assets/media/avatars/'.$admin->avatar));
             }
             $admin->avatar = $this->saveImage($request->avatar);

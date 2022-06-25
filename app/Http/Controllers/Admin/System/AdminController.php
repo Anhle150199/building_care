@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin\System;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Http\Controllers\Controller;
+use App\Mail\VerifyMail;
+use App\Models\AccessToken;
 use App\Models\Admin;
 use App\Models\Department;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends BaseBuildingController
@@ -56,7 +59,7 @@ class AdminController extends BaseBuildingController
         if ($validate->fails()) {
             return new JsonResponse(['errors' => $validate->getMessageBag()->toArray()], 406);
         }
-        try {
+        // try {
             $new = new Admin();
             $new->name = $request->name;
             $new->email = $request->email;
@@ -65,14 +68,19 @@ class AdminController extends BaseBuildingController
             $new->position = $request->position;
             $new->avatar = 'avatar-1.png';
             $new->status = 'verifying';
-            // $new->password = 
             $new->save();
             $new->department = Department::find($request->department)->name;
             $new->time = $new->created_at->format('d M Y, h:i a');
+            // $this->sentMailCreate($new);
+
+            $token = AccessToken::createToken($new->id, 'verify-email','admin');
+            $link = route('auth.verify-email', ['token'=>$token]); //1: admin, 0: user
+            $mailable = new VerifyMail($new->name, $link);
+            Mail::to($new->email)->send($mailable);
             return new JsonResponse($new, 200);
-        } catch (\Throwable $th) {
-            return new JsonResponse(['errors' => ['Có lỗi xảy ra', $request->all()]], 406);
-        }
+        // } catch (\Throwable $th) {
+        //     return new JsonResponse(['errors' => ['Có lỗi xảy ra', $request->all()]], 406);
+        // }
     }
 
     public function update(Request $request)
@@ -161,5 +169,12 @@ class AdminController extends BaseBuildingController
         }
         return new JsonResponse($admin, 200);
 
+    }
+    public function sentMailCreate($user)
+    {
+        $token = AccessToken::createToken($user->id, 'verify-email','admin');
+        $link = route('auth.verify-email', ['token'=>$token, 'type'=>'admin']);
+        $mailable = new VerifyMail($user->name, $link);
+        Mail::to($user->email)->send($mailable);
     }
 }

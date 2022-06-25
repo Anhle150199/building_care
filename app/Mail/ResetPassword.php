@@ -2,34 +2,30 @@
 
 namespace App\Mail;
 
-use App\Models\Customer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotifyEmail extends Mailable
+class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
-
     /**
      * The order instance.
      *
      * @var Order
      */
-    public $subject, $content;
+    public $name, $link;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($subject, $content)
+    public function __construct($link)
     {
-        $this->subject = $subject;
-        $this->content = $content;
+        $this->link = $link;
     }
-
 
     /**
      * Build the message.
@@ -38,7 +34,6 @@ class NotifyEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.notify')->subject($this->subject)->with('content', $this->content);
-
+        return $this->view('emails.reset-password')->subject('Quên mật khẩu')->with( 'link', $this->link);
     }
 }

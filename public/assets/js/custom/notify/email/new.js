@@ -114,6 +114,7 @@ var KTAppInboxCompose = (function () {
                                 confirmButton: "btn btn-primary"
                             }
                         })
+                        submitButton.removeAttribute("data-kt-indicator");
                     },
                     error: function(error){
                         console.log(error);
@@ -126,6 +127,8 @@ var KTAppInboxCompose = (function () {
                                 confirmButton: "btn btn-primary"
                             }
                         });
+                        submitButton.removeAttribute("data-kt-indicator");
+
                     }
                 });
 
@@ -139,9 +142,9 @@ var KTAppInboxCompose = (function () {
                         confirmButton: "btn btn-primary"
                     }
                 });
+                submitButton.removeAttribute("data-kt-indicator");
             }
 
-            submitButton.removeAttribute("data-kt-indicator");
         });
     };
     const getUers = async () =>{

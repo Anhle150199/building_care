@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\Admin\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
@@ -43,6 +44,11 @@ Route::namespace('Auth\Admin')->name('auth.')->group(function () {
 
     Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
     Route::get('new-password', [ForgotPasswordController::class, 'showNewPasswordForm'])->name('new-password');
+    //type: 1: admin, 0: user
+    Route::get('users/verify/{token}', [ForgotPasswordController::class, 'showCreatePassword'])->name('verify-email');
+
+    Route::post('reset-password',[ForgotPasswordController::class, 'resetPassword'])->name('reset-password');
+    Route::post('sent-mail-reset',[ForgotPasswordController::class, 'sentToken'])->name('sent-mail-reset-password');
 });
 
 

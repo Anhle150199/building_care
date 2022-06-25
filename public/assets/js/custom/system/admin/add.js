@@ -149,6 +149,7 @@ var KTUsersAddUser = (function () {
                                                         });
                                                 },
                                                 error: function (data) {
+                                                    console.log(data);
                                                     const errors = data.responseJSON.errors;
                                                     console.log(errors);
 
