@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin\Custommer;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Mail\VerifyMail;
+use App\Models\AccessToken;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
 use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class CustommerController extends BaseBuildingController
@@ -69,6 +72,11 @@ class CustommerController extends BaseBuildingController
         try {
             $customer = new Customer();
             $new = $this->saveDataCustomer($customer, $request);
+            // Gửi mail
+            $token = AccessToken::createToken($new->id, 'verify-email','customer');
+            $link = route('auth.verify-email', ['token'=>$token]); //1: admin, 0: user
+            $mailable = new VerifyMail($new->name, $link);
+            Mail::to($new->email)->send($mailable);
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data cu dan']], 406);
         }

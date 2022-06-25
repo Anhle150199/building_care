@@ -57,7 +57,7 @@
                             <div class="card-body pt-0">
                                 <div class="mb-10 fv-row">
                                     <label class="required form-label">Họ tên</label>
-                                    <input type="text" name="name" class="form-control mb-2" placeholder="Tên căn hộ"
+                                    <input type="text" name="name" class="form-control mb-2" placeholder="Tên khách hàng"
                                         value="{{ @$customerCurrent->name }}" />
                                 </div>
 
@@ -75,12 +75,12 @@
                                         placeholder="Chọn ngày sinh" id="kt_daterangepicker_3" />
                                 </div>
                                 <div class="mb-10 fv-row">
-                                    <label class="required form-label">Số điện thoại</label>
+                                    <label class=" form-label">Số điện thoại</label>
                                     <input type="text" name="phone" class="form-control mb-2" placeholder="Số điện thoại"
                                         value="{{ @$customerCurrent->phone }}" />
                                 </div>
                                 <div class="mb-10 fv-row">
-                                    <label class=" form-label">Email</label>
+                                    <label class="required form-label">Email</label>
                                     <input type="text" name="email" class="form-control mb-2" placeholder="Địa chỉ email"
                                         value="{{ @$customerCurrent->email }}" />
                                 </div>

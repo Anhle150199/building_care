@@ -51,7 +51,7 @@ class ForgotPasswordController extends Controller
             }
             return view('auth.resent-mail', ['type' => $token->tokenable_type, 'email' => $user->email, 'name' => $token->name]);
         }
-        return view('auth.new-password', ['token' => $token]);
+        return view('auth.new-password', ['token' => $token->token]);
     }
 
     public function resetPassword(Request $request)
@@ -64,7 +64,7 @@ class ForgotPasswordController extends Controller
             ]
         );
         if ($validator->fails()) {
-            return new JsonResponse(['errors' => $validator->getMessageBag()->toArray()], 406);
+            return new JsonResponse(['errors' => $validator->getMessageBag()->toArray(), $request->all()], 406);
         }
         try {
             $token = AccessToken::where('token', $request->token)->first();

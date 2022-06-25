@@ -41,6 +41,9 @@ var KTAppEcommerceSaveProduct = (function () {
                             },
                             email: {
                                 validators: {
+                                    notEmpty: {
+                                        message: messageNotEmpty,
+                                    },
                                     emailAddress: {
                                         message: "Giá trị không hợp lệ.",
                                     },
@@ -164,6 +167,9 @@ var KTAppEcommerceSaveProduct = (function () {
                                                             console.log(errors);
                                                             if(errors.apartment_code){
                                                                 $('input[name=apartment_code]').parent().append(messageErr(errors.apartment_code))
+                                                            }
+                                                            if(errors.email){
+                                                                $('input[name=email]').parent().append(messageErr(errors.email))
                                                             }
                                                             setTimeout(() => {
                                                                 $('.invalid-feedback').remove();

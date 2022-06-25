@@ -176,7 +176,7 @@
                                                     class="menu-link px-3">Xoá</a>
                                             </div>
 
-                                            @if($item->pasword != null)
+                                            {{-- @if($item->pasword != null)
                                             <div class="menu-item px-3">
                                                 <a href="#" class="menu-link px-3">Reset password</a>
                                             </div>
@@ -184,7 +184,7 @@
                                             <div class="menu-item px-3">
                                                 <a href="#" class="menu-link px-3">Tạo tài khoản</a>
                                             </div>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </td>
                                 </tr>
