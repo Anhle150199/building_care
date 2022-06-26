@@ -86,17 +86,19 @@
                 <div class="col-12 col-md-8 col-lg-7 col-xl-6">
                     <div class="card shadow-sm blog-list-card">
                         <div class="">
-                            {{-- <div class="card-blog-img mw-100 w-100"
-                                style="background-image: url('{{ url('/') }}/customer/img/bg-img/23.jpg')"></div> --}}
-                                    <img class="card-img-top" src="{{ url('/') }}/images/{{$item->image}}" alt="Card image cap">
+                            <img class="card-img-top" src="{{ url('/') }}/images/{{$item->image}}" alt="Card image cap">
 
                             <div class="p-3">
                                 <div class="d-flex justify-content-between ">
-                                <span class="badge bg-warning rounded-pill mb-2 text-dark  d-inline-block">Thông báo</span>
-                                <span class="badge bg-danger rounded-pill mb-2 d-inline-block">{{date("H:i, d M Y", strtotime($item->created_at))}}</span>
+                                    @if ($item->category == 'notify')
+                                        <span class="badge bg-primary rounded-pill mb-2 d-inline-block">Thông báo</span>
+                                    @else
+                                        <span class="badge bg-primary rounded-pill mb-2 d-inline-block">Tin tức</span>
+                                    @endif
+                                    <span class="badge bg-danger rounded-pill mb-2 d-inline-block">{{date("H:i, d M Y", strtotime($item->created_at))}}</span>
                                 </div>
-                                <a class="blog-title d-block text-dark mb-2" href="page-blog-details.html">{{$item->title}}</a>
-                                <a class="btn btn-primary btn-sm" href="page-blog-details.html">Đọc thêm</a>
+                                <a class="blog-title d-block text-dark mb-2" href="{{ route('user.notify-detail', ['title'=>$item->title, 'id'=>$item->id]) }}">{{$item->title}}</a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('user.notify-detail', ['title'=>$item->title, 'id'=>$item->id]) }}">Đọc thêm</a>
                             </div>
                         </div>
                     </div>

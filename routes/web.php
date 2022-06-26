@@ -63,5 +63,6 @@ Route::prefix('user')->name('auth-user.')->group(function(){
 
 Route::middleware('auth:user')->name('user.')->group(function () {
     Route::get('home', [HomeHomeController::class, 'showHome'])->name("home");
+    Route::get('notify/{id}-{title}', [HomeHomeController::class, 'showNotifyDetail'])->name("notify-detail");
 });
 
