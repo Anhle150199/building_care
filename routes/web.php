@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Customer\Auth\ForgotPasswordController as AuthForgotPasswordController;
 use App\Http\Controllers\Customer\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\Customer\Home\HomeController as HomeHomeController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Redirect;
 
 foreach(config('constants.urls') as $url) {
     Route::get('/'. $url, function(){
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('user.home');
     });
 }
 
@@ -54,8 +55,13 @@ Route::namespace('Admin\Auth')->name('auth.')->group(function () {
 
 Route::prefix('user')->name('auth-user.')->group(function(){
     Route::get('login', [AuthLoginController::class, 'showLoginForm'])->name('form-login');
+    Route::post('login', [AuthLoginController::class, 'login'])->name('login');
+
     Route::get('forgot-pasword', [AuthForgotPasswordController::class, 'showForgotPasswordForm'])->name('show-forgot-password');
 
 });
 
+Route::middleware('auth:user')->name('user.')->group(function () {
+    Route::get('home', [HomeHomeController::class, 'showHome'])->name("home");
+});
 

@@ -48,13 +48,15 @@
     </div>
     {{-- Internet Connection Status --}}
     <div class="internet-connection-status" id="internetStatus"></div>
+    @include('page-customer.layout.haeder')
+    @include('page-customer.layout.sidenav')
 
     @yield('content')
 
-
+    @include('page-customer.layout.navbar')
     {{-- All JavaScript Files --}}
     <script src="{{ url('/') }}/js/jquery-3.6.0.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
     <script src="{{ url('/') }}/customer/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url('/') }}/customer/js/slideToggle.min.js"></script>

@@ -105,7 +105,7 @@ class ForgotPasswordController extends Controller
                 $user = Customer::where('email', $request->email)->first();
             }
             if ($user == null)
-                return new JsonResponse(['errors' => ['Có lỗi xảy ra']], 406);
+                return new JsonResponse(['errors' => ['unique'=>'Email không tồn tại']], 406);
             $token = AccessToken::createToken($user->id, $request->name, $request->type);
             $link = route('auth.verify-email', ['token' => $token]);
             $mailable = new ResetPassword($link);

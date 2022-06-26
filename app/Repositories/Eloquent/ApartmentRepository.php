@@ -16,4 +16,14 @@ class ApartmentRepository extends EloquentRepository
         $list = $this->_model->where('building_id', $buildingId)->get('id');
         return $list->toArray();
     }
+
+    public function getBuildingListForCustomer($userId)
+    {
+        // $apartmentList = Cache::get('apartment_list_'.$id);
+        // if($apartmentList != null){
+        //     return $apartmentList;
+        // }
+        $list = $this->_model->where('owner_id', $userId)->select('building_id')->distinct('building_id')->get('building_id');
+        return $list->toArray();
+    }
 }

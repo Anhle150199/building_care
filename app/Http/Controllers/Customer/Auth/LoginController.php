@@ -25,7 +25,7 @@ class LoginController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'email' => ['required', 'string', 'exists:admins,email'],
+                'email' => ['required', 'string', 'exists:customers,email'],
                 'password' => ['required', 'string', 'min:8']
             ]
         );
@@ -38,20 +38,20 @@ class LoginController extends Controller
         }
 
         // Check login quá nhiều lần
-        if (
-            method_exists($this, 'hasTooManyLoginAttempts') &&
-            $this->hasTooManyLoginAttempts($request)
-        ) {
-            $this->fireLockoutEvent($request);
-            $this->sendLockoutResponse($request);
-            return new JsonResponse(['errors' => ['email' => 'Bạn đã đăng nhập quá nhiều lần.']], 406);
-        }
+        // if (
+        //     method_exists($this, 'hasTooManyLoginAttempts') &&
+        //     $this->hasTooManyLoginAttempts($request)
+        // ) {
+        //     $this->fireLockoutEvent($request);
+        //     $this->sendLockoutResponse($request);
+        //     return new JsonResponse(['errors' => ['email' => 'Bạn đã đăng nhập quá nhiều lần.']], 406);
+        // }
 
         // Check tài khoản
         $credentials = $request->only(['email', 'password']);
         // array_push($credentials, ['status'=>'activated']);
         // if ($this->attemptLogin($request)) {
-        if (Auth::guard('api')->attempt(['email'=>$request->email, 'password'=>$request->password])) {
+        if (Auth::guard('user')->attempt(['email'=>$request->email, 'password'=>$request->password], true)) {
 
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
@@ -86,7 +86,7 @@ class LoginController extends Controller
     protected $redirectTo = '/';
 
     public function logout(Request $request){
-        $this->guard('api')->logout();
+        $this->guard('user')->logout();
 
         $request->session()->invalidate();
 
@@ -95,7 +95,7 @@ class LoginController extends Controller
         if ($response = $this->loggedOut($request)) {
             return $response;
         }
-        return redirect()->route('auth.form-login');
+        return redirect()->route('auth-user.form-login');
     }
 
 }
