@@ -4,7 +4,7 @@
 
     <div class="page-content-wrapper">
         {{-- Alert chào mừng, nhắc nhở cài app --}}
-        <div class="toast toast-autohide custom-toast-1 toast-success home-page-toast" role="alert" aria-live="assertive"
+        {{-- <div class="toast toast-autohide custom-toast-1 toast-success home-page-toast" role="alert" aria-live="assertive"
             aria-atomic="true" data-bs-delay="7000" data-bs-autohide="true">
             <div class="toast-body">
                 <svg class="bi bi-bookmark-check text-white" width="30" height="30" viewBox="0 0 16 16"
@@ -23,7 +23,7 @@
             </div>
             <button class="btn btn-close btn-close-white position-absolute p-1" type="button" data-bs-dismiss="toast"
                 aria-label="Close"></button>
-        </div>
+        </div> --}}
         {{-- Slide dầu trang --}}
         {{-- <div class="tiny-slider-one-wrapper">
             <div class="tiny-slider-one">
@@ -48,20 +48,24 @@
                     <div class="row g-3">
                         <div class="col-4">
                             <div class="feature-card mx-auto text-center">
-                                <div class="card mx-auto bg-gray">
-                                    {{-- <img src="img/demo-img/pwa.png" alt=""> --}}
-                                    <i class="bi bi-calendar2-event-fill text-danger "></i>
-                                </div>
-                                <p class="mb-0">Lịch bảo trì</p>
+                                <a href="{{ route('user.maintenance') }}">
+                                    <div class="card mx-auto bg-gray">
+                                        {{-- <img src="img/demo-img/pwa.png" alt=""> --}}
+                                        <i class="bi bi-calendar2-event-fill text-danger "></i>
+                                    </div>
+                                    <p class="mb-0">Lịch bảo trì</p>
+                                </a>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="feature-card mx-auto text-center">
-                                <div class="card mx-auto bg-gray">
-                                    {{-- <img src="img/demo-img/bootstrap.png" alt=""> --}}
-                                    <i class="bi bi-bicycle text-danger"></i>
-                                </div>
-                                <p class="mb-0">Phương tiện</p>
+                                <a href="{{ route('user.show-vehicle') }}">
+                                    <div class="card mx-auto bg-gray">
+                                        {{-- <img src="img/demo-img/bootstrap.png" alt=""> --}}
+                                        <i class="bi bi-bicycle text-danger"></i>
+                                    </div>
+                                    <p class="mb-0">Phương tiện</p>
+                                </a>
                             </div>
                         </div>
                         <div class="col-4">

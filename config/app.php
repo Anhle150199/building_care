@@ -231,7 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'LaravelPwa' => \Ladumor\LaravelPwa\LaravelPwa::class,
-
+        'Larafirebase' => \Kutia\Larafirebase\Providers\LarafirebaseServiceProvider::class
     ],
 
 ];

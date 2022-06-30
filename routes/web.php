@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Customer\Auth\ForgotPasswordController as AuthForgotPasswordController;
 use App\Http\Controllers\Customer\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\Customer\Home\HomeController as HomeHomeController;
+use App\Http\Controllers\Customer\MaintenanceController;
+use App\Http\Controllers\Customer\VehicleController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,10 +32,7 @@ foreach(config('constants.urls') as $url) {
     });
 }
 
-// Route::get('xxx', function ()
-// {
-//     return view('test');
-// })->name('xxx');
+Route::get('xxx', [HomeHomeController::class, 'notification'])->name('xxx');
 // Route::get('yyy', function (Request $req)
 // {
 //     dd($req->cars);
@@ -64,5 +63,15 @@ Route::prefix('user')->name('auth-user.')->group(function(){
 Route::middleware('auth:user')->name('user.')->group(function () {
     Route::get('home', [HomeHomeController::class, 'showHome'])->name("home");
     Route::get('notify/{id}-{title}', [HomeHomeController::class, 'showNotifyDetail'])->name("notify-detail");
+    // Route::get('notify', [HomeHomeController::class, 'notification'])->name("notify");
+
+    Route::patch('update-token', [HomeHomeController::class, 'updateDeviceKey'])->name('update-token');
+
+    Route::get('vehicle', [VehicleController::class, 'show'])->name('show-vehicle');
+    Route::get('vehicle/register', [VehicleController::class, 'showForm'])->name('show-vehicle-register');
+    Route::post('vehicle/create', [VehicleController::class, 'create'])->name('vehicle-create');
+    Route::delete('vehicle/delete', [VehicleController::class, 'delete'])->name('delete-vehicle');
+
+    Route::get('maintenance', [MaintenanceController::class, 'show'])->name('maintenance');
 });
 

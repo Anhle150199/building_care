@@ -2,22 +2,22 @@
     <div class="container px-0">
         <div class="footer-nav position-relative">
             <ul class="h-100 d-flex align-items-center justify-content-between ps-0">
-                <li class="active"><a href="{{ route('user.home') }}">
-                        <i class="bi bi-house display-6 @if (@$menu == 'home') text-danger @endif"></i>
-                        {{-- <span>Trang chủ</span> --}}
+                <li @if (@$menu == 'home') class="active" @endif><a href="{{ route('user.home') }}">
+                        <i class="bi bi-house-fill lead "></i>
+                        <span>Trang chủ</span>
                     </a>
                 </li>
-                <li><a href="pages.html">
-                        <i class="bi bi-megaphone display-6 @if (@$menu == 'notify') text-danger @endif"></i>
-                        {{-- <span>Thông báo</span> --}}
+                <li @if (@$menu == 'notify') class="active" @endif><a href="pages.html">
+                        <i class="bi bi-megaphone-fill lead"></i>
+                        <span>Thông báo</span>
                     </a></li>
-                <li><a href="page-chat-users.html">
-                        <i class="bi bi-chat-right-dots display-6 @if (@$menu == 'chat') text-danger @endif"></i>
-                        {{-- <span>Chat</span> --}}
+                <li @if (@$menu == 'chat') class="active" @endif><a href="page-chat-users.html">
+                        <i class="bi bi-chat-right-dots-fill lead"></i>
+                        <span>Hỗ trợ</span>
                     </a></li>
-                <li><a href="settings.html">
-                        <i class="bi bi-gear display-6 @if (@$menu == 'seting') text-danger @endif"></i>
-                        {{-- <span>Settings</span> --}}
+                <li @if (@$menu == 'seting') class="active" @endif><a href="settings.html">
+                        <i class="bi bi-gear-fill lead "></i>
+                        <span>Cài đặt</span>
                     </a>
                 </li>
             </ul>

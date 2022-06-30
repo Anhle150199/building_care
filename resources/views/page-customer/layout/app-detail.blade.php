@@ -30,9 +30,9 @@
     <link rel="stylesheet" href="{{ url('/') }}/customer/css/vanilla-dataTables.min.css">
     <link rel="stylesheet" href="{{ url('/') }}/customer/css/apexcharts.css">
     {{-- Core Stylesheet --}}
-    @stack('css')
-
     <link rel="stylesheet" href="{{ url('/') }}/customer/style.css">
+
+    @stack('css')
     <style>
         .indicator-progress {
             display: none;
@@ -40,6 +40,10 @@
         .active a i, .footer-nav ul li.active a span{
             color:red;
         }
+        .footer-nav ul li a span, .footer-nav ul li a i{
+            color:#8480ae !important;
+        }
+        .swal2-popup { font-size: 11px !important; }
 
     </style>
     <!-- Web App Manifest -->
@@ -54,15 +58,13 @@
     </div>
     {{-- Internet Connection Status --}}
     <div class="internet-connection-status" id="internetStatus"></div>
-    @include('page-customer.layout.haeder')
-    @include('page-customer.layout.sidenav')
-
+    @include("page-customer.layout.haeder-detail")
     @yield('content')
 
-    @include('page-customer.layout.navbar')
+    {{-- @include('page-customer.layout.navbar') --}}
     {{-- All JavaScript Files --}}
     <script src="{{ url('/') }}/js/jquery-3.6.0.min.js"></script>
-    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="{{ url('/') }}/customer/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url('/') }}/customer/js/slideToggle.min.js"></script>
@@ -87,58 +89,6 @@
                 return !v;
             });
         }
-    </script>
-
-        <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-
-    {{-- <script src="{{url("/")}}/firebase-messaging-sw.js"></script> --}}
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-        https://firebase.google.com/docs/web/setup#available-libraries -->
-
-    <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyBaI5e-ab33imAYOAjWRzpJXePls6N-FkA",
-            authDomain: "datn-megacare.firebaseapp.com",
-            projectId: "datn-megacare",
-            storageBucket: "datn-megacare.appspot.com",
-            messagingSenderId: "379787159816",
-            appId: "1:379787159816:web:2c12d2a5988e28e467e4bd",
-            measurementId: "G-B28M0Y4RFG"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        const messaging = firebase.messaging();
-
-        function initFirebaseMessagingRegistration() {
-            messaging.requestPermission().then(function () {
-                return messaging.getToken()
-            }).then(function(token) {
-
-                axios.post("{{ route('user.update-token') }}",{
-                    _method:"PATCH",
-                    token
-                }).then(({data})=>{
-                    console.log(data)
-                }).catch(({response:{data}})=>{
-                    console.error(data)
-                })
-
-            }).catch(function (err) {
-                console.log(`Token Error :: ${err}`);
-            });
-        }
-
-        initFirebaseMessagingRegistration();
-
-        messaging.onMessage(function({data:{body,title}}){
-            new Notification(title, {body});
-        });
     </script>
 </body>
 
