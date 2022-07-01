@@ -40,11 +40,14 @@
         .active a i, .footer-nav ul li.active a span{
             color:red;
         }
-        .footer-nav ul li a span, .footer-nav ul li a i{
-            color:#8480ae !important;
+        .swal2-popup {
+            font-size: 11px !important;
+            width: 450px;
+            max-width: 75%;
         }
-        .swal2-popup { font-size: 11px !important; }
-
+        #swal2-html-container {
+            font-size: 13px !important;
+        }
     </style>
     <!-- Web App Manifest -->
     {{-- <link rel="manifest" href="{{url('/')}}/customer/manifest.json"> --}}

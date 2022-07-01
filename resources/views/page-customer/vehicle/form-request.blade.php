@@ -119,7 +119,6 @@
                         Swal.fire({
                             text: 'Thành công!',
                             icon: 'success',
-                            showCancelButton: true,
                             confirmButtonColor: '#ea4c62',
                             confirmButtonText: 'Chấp nhận',
                             width: "80%"

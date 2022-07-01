@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
-
     use AuthenticatesUsers;
+        public function __construct()
+        {
+            $this->middleware('guest:user')->except('logout');
+        }
+
     public function showLoginForm()
     {
         return view('page-customer.auth.login');
@@ -86,7 +90,8 @@ class LoginController extends Controller
     protected $redirectTo = '/';
 
     public function logout(Request $request){
-        $this->guard('user')->logout();
+        // if()
+        Auth::guard('user')->logout();
 
         $request->session()->invalidate();
 

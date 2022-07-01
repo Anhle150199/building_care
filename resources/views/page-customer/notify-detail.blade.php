@@ -1,5 +1,5 @@
 @extends('page-customer.layout.app')
-@section('title', 'Trang chủ')
+@section('title', @$item->title)
 @section('content')
 
     <div class="page-content-wrapper">

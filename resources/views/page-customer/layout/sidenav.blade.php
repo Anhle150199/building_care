@@ -9,7 +9,14 @@
             <div class="sidenav-profile bg-gradient">
                 <div class="sidenav-style1"></div>
                 <!-- User Thumbnail -->
-                <div class="user-profile"><img src="img/bg-img/2.jpg" alt=""></div>
+                <div class="user-profile">
+                    @if(Auth::user()->avatar == null)
+                    <img src="{{url('/')}}/customer/img/bg-img/2.jpg" alt="">
+                    @else
+                    <img src="{{url('/')}}/" alt="">
+
+                    @endif
+                </div>
                 <!-- User Info -->
                 <div class="user-info">
                     <h6 class="user-name mb-0">{{Auth::user()->name}}</h6><span>{{Auth::user()->email}}</span>
@@ -18,25 +25,31 @@
             <!-- Sidenav Nav -->
             <ul class="sidenav-nav ps-0">
                 <li><a href="{{ route('user.home') }}"><i class="bi bi-house-door"></i>Trang chủ</a></li>
-                {{-- <li><a href="elements.html"><i class="bi bi-folder2-open"></i>Elements<span
-                            class="badge bg-danger rounded-pill ms-2">220+</span></a></li> --}}
-                <li><a href="pages.html"><i class="bi bi-collection"></i>Thông báo, tin tức</a></li>
-                <li><a href="#"><i class="bi bi-bar-chart-steps"></i>Khác</a>
-                    <ul>
-                        <li><a href="page-shop-grid.html">Đăng ký phương tiện</a></li>
-                        <li><a href="page-shop-details.html">Lịch bảo trì</a></li>
-                        <li><a href="page-shop-list.html">Gửi góp ý</a></li>
-                    </ul>
-                </li>
-                <li><a href="settings.html"><i class="bi bi-gear"></i>Cài đặt</a></li>
+                <li><a href="pages.html"><i class="bi bi-calendar2-event-fill"></i>Lịch bảo trì</a></li>
+                <li><a href="pages.html"><i class="bi bi-collection"></i>Đăng ký phương tiện</a></li>
+                <li><a href="pages.html"><i class="bi bi-collection"></i>Hỗ trợ</a></li>
                 <li>
-                    <div class="night-mode-nav"><i class="bi bi-moon"></i>Chế độ ban đêm
+                    <div class="night-mode-nav"><i class="bi bi-bell"></i><label for="notifySwitch">Gửi thông báo</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input form-check-success" id="notifySwitch" type="checkbox">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="night-mode-nav"><i class="bi bi-moon"></i><label for="darkSwitch">Chế độ ban đêm</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input form-check-success" id="darkSwitch" type="checkbox">
                         </div>
                     </div>
                 </li>
-                <li><a href="page-login.html"><i class="bi bi-box-arrow-right"></i>Đăng xuất</a></li>
+                <li>
+                    <div class="night-mode-nav"><i class="bi bi-arrow-repeat"></i></i><label for="rtlSwitch">RTL Mode</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input form-check-success" id="rtlSwitch" type="checkbox">
+                        </div>
+                    </div>
+                </li>
+                <li class="btn-logout"><a href="#"><i class="bi bi-box-arrow-right"></i>Đăng xuất</a></li>
             </ul>
         </div>
     </div>

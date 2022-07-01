@@ -15,11 +15,11 @@
                                 <div class="timeline-text mb-2">
                                     <span class="badge mb-2 rounded-pill">Từ: {{date("H:i, d-m-Y", strtotime($item->start_at))}}</span>
                                     <span class="badge mb-2 rounded-pill bg-success">Đến: {{date("H:i, d-m-Y", strtotime($item->end_at))}}</span>
-                                    <h6>{{$item->title}}</h6>
+                                    <h6 class="fw-bold">{{$item->title}}</h6>
                                 </div>
                             </div>
                             <p class="mb-2">{{$item->description}}</p>
-                            <p><i class="bi bi-geo-alt-fill"></i>{{"Toà nhà ".$item->name.": ".$item->location}} </p>
+                            <p><i class="bi bi-geo-alt-fill"></i><span class="fw-bold">{{" Toà nhà ".$item->name.": ".$item->location}} </span></p>
                         </div>
                     </div>
                 @endforeach

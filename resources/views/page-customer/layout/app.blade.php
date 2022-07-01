@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="{{ url('/') }}/customer/css/apexcharts.css">
     {{-- Core Stylesheet --}}
     @stack('css')
-
     <link rel="stylesheet" href="{{ url('/') }}/customer/style.css">
     <style>
         .indicator-progress {
@@ -39,6 +38,11 @@
         }
         .active a i, .footer-nav ul li.active a span{
             color:red;
+        }
+        .swal2-popup {
+            font-size: 11px !important;
+            width: 450px;
+            max-width: 75%;
         }
 
     </style>
@@ -60,6 +64,10 @@
     @yield('content')
 
     @include('page-customer.layout.navbar')
+
+    <form method="post" action="{{ route('auth-user.logout') }}" id="logout_form">
+        @csrf
+    </form>
     {{-- All JavaScript Files --}}
     <script src="{{ url('/') }}/js/jquery-3.6.0.min.js"></script>
     {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
@@ -76,6 +84,10 @@
     <script src="{{ url('/') }}/customer/js/magic-grid.min.js"></script>
     <script src="{{ url('/') }}/customer/js/dark-rtl.js"></script>
     <script src="{{ url('/') }}/customer/js/active.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
     @stack('js')
     {{-- PWA --}}
     {{-- <script src="{{url('/')}}/customer/js/pwa.js"></script> --}}
@@ -87,16 +99,10 @@
                 return !v;
             });
         }
+        $('.btn-logout').click(function(){
+            $("#logout_form").submit();
+        })
     </script>
-
-        <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-
-    {{-- <script src="{{url("/")}}/firebase-messaging-sw.js"></script> --}}
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-        https://firebase.google.com/docs/web/setup#available-libraries -->
 
     <script>
         // Your web app's Firebase configuration

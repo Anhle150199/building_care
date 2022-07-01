@@ -15,7 +15,7 @@
                         <i class="bi bi-chat-right-dots-fill lead"></i>
                         <span>Hỗ trợ</span>
                     </a></li>
-                <li @if (@$menu == 'seting') class="active" @endif><a href="settings.html">
+                <li @if (@$menu == 'setting') class="active" @endif><a href="{{ route('user.setting.show') }}">
                         <i class="bi bi-gear-fill lead "></i>
                         <span>Cài đặt</span>
                     </a>

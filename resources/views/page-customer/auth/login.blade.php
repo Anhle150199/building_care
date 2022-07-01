@@ -94,7 +94,7 @@
                                 confirmButtonText: "Chấp nhận!",
                                 customClass: {
                                     confirmButton: "btn btn-primary"
-                                }
+                                },
                             });
 
                             toggleBtnSubmit();

@@ -10,6 +10,7 @@ use App\Http\Controllers\Customer\Auth\ForgotPasswordController as AuthForgotPas
 use App\Http\Controllers\Customer\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\Customer\Home\HomeController as HomeHomeController;
 use App\Http\Controllers\Customer\MaintenanceController;
+use App\Http\Controllers\Customer\Setting\SettingController;
 use App\Http\Controllers\Customer\VehicleController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
@@ -55,6 +56,7 @@ Route::namespace('Admin\Auth')->name('auth.')->group(function () {
 Route::prefix('user')->name('auth-user.')->group(function(){
     Route::get('login', [AuthLoginController::class, 'showLoginForm'])->name('form-login');
     Route::post('login', [AuthLoginController::class, 'login'])->name('login');
+    Route::post('logout', [AuthLoginController::class, 'logout'])->name('logout');
 
     Route::get('forgot-pasword', [AuthForgotPasswordController::class, 'showForgotPasswordForm'])->name('show-forgot-password');
 
@@ -73,5 +75,11 @@ Route::middleware('auth:user')->name('user.')->group(function () {
     Route::delete('vehicle/delete', [VehicleController::class, 'delete'])->name('delete-vehicle');
 
     Route::get('maintenance', [MaintenanceController::class, 'show'])->name('maintenance');
+
+    Route::prefix('setting')->name('setting.')->group(function(){
+        Route::get('/', [SettingController::class, 'show'])->name('show');
+        Route::get('/profile', [SettingController::class, 'showProfile'])->name('show-profile');
+        Route::put('/profile-update', [SettingController::class, 'updateProfile'])->name('update-profile');
+    });
 });
 

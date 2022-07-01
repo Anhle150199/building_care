@@ -14,16 +14,10 @@ use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    public function __construct()
+    {
+        $this->middleware('guest:admin')->except('logout');
+    }
 
     use AuthenticatesUsers;
     public function showLoginForm()
@@ -41,9 +35,6 @@ class LoginController extends Controller
             ]
         );
 
-        // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // the login attempts for this application. We'll key this by the username and
-        // the IP address of the client making these requests into this application.
         if ($validator->fails()) {
             return new JsonResponse(['errors' => $validator->getMessageBag()->toArray()], 406);
         }
