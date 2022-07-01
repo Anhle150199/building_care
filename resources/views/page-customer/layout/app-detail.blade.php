@@ -42,8 +42,7 @@
         }
         .swal2-popup {
             font-size: 11px !important;
-            width: 450px;
-            max-width: 75%;
+            width: 280px;
         }
         #swal2-html-container {
             font-size: 13px !important;

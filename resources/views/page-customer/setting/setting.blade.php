@@ -26,7 +26,7 @@
                     <div class="single-setting-panel"><a href="{{ route('user.setting.show-profile') }}">
                             <div class="icon-wrapper"><i class="bi bi-person"></i></div>Cập nhật thông tin
                         </a></div>
-                    <div class="single-setting-panel"><a href="page-change-password.html">
+                    <div class="single-setting-panel"><a href="{{ route('user.setting.show-password') }}">
                             <div class="icon-wrapper bg-info"><i class="bi bi-lock"></i></div>Đổi mật khẩu
                         </a></div>
                     <div class="single-setting-panel btn-logout" ><a href="#">

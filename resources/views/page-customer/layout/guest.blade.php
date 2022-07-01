@@ -36,6 +36,16 @@
         .indicator-progress {
             display: none;
         }
+        .active a i, .footer-nav ul li.active a span{
+            color:red;
+        }
+        .swal2-popup {
+            font-size: 11px !important;
+            width: 280px;
+        }
+        #swal2-html-container {
+            font-size: 13px !important;
+        }
     </style>
     <!-- Web App Manifest -->
     {{-- <link rel="manifest" href="{{url('/')}}/customer/manifest.json"> --}}

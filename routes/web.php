@@ -80,6 +80,8 @@ Route::middleware('auth:user')->name('user.')->group(function () {
         Route::get('/', [SettingController::class, 'show'])->name('show');
         Route::get('/profile', [SettingController::class, 'showProfile'])->name('show-profile');
         Route::put('/profile-update', [SettingController::class, 'updateProfile'])->name('update-profile');
+        Route::get('/password', [SettingController::class, 'showPasswordChange'])->name('show-password');
+        Route::put('/password-update', [SettingController::class, 'updatePassword'])->name('update-password');
     });
 });
 

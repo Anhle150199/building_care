@@ -12,6 +12,7 @@ use App\Repositories\Eloquent\ApartmentRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Claims\Custom;
 use Kutia\Larafirebase\Facades\Larafirebase;
@@ -40,6 +41,13 @@ class SettingController extends Controller
         $data['title'] = "Thông tin tài khoản";
         $data['user'] = Auth::user();
         return view('page-customer.setting.profile', $data);
+    }
+
+    public function showPasswordChange()
+    {
+        $data = [];
+        $data['title'] = "Đổi mật khẩu";
+        return view('page-customer.setting.password', $data);
     }
 
     public function updateProfile(Request $request)
@@ -74,5 +82,27 @@ class SettingController extends Controller
         }
 
         return new JsonResponse(['success'], 200);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'password_current' => 'string|required|',
+                'password' => 'string|required|confirmed',
+            ]
+        );
+        if ($validate->fails()) {
+            return new JsonResponse(['errors' => $validate->getMessageBag()->toArray()], 406);
+        }
+        $user = Customer::find(Auth::user()->id);
+        if(Hash::check($request->password_current, $user->password)){
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return new JsonResponse(['success'], 200);
+        }
+        return new JsonResponse([], 406);
+
     }
 }
