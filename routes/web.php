@@ -82,6 +82,8 @@ Route::middleware('auth:user')->name('user.')->group(function () {
         Route::put('/profile-update', [SettingController::class, 'updateProfile'])->name('update-profile');
         Route::get('/password', [SettingController::class, 'showPasswordChange'])->name('show-password');
         Route::put('/password-update', [SettingController::class, 'updatePassword'])->name('update-password');
+
+        Route::post('/avatar-update', [SettingController::class, 'updateAvatar'])->name('update-avatar');
     });
 });
 

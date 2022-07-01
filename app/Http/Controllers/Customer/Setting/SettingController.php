@@ -105,4 +105,28 @@ class SettingController extends Controller
         return new JsonResponse([], 406);
 
     }
+
+    public function updateAvatar(Request $request)
+    {
+        $user = Customer::find(Auth::user()->id);
+        if($request->has('avatar') ){
+            if($user->avatar!= null && file_exists(public_path('images/avatar-user/'.$user->avatar))){
+                unlink(public_path('images/avatar-user/'.$user->avatar));
+            }
+            $user->avatar = $this->saveImage($request->avatar);
+        }
+        $user->save();
+    }
+
+    public function saveImage($file)
+    {
+        $fileName = $file->getClientOriginalName();
+        $fileExt = $file->getClientOriginalExtension();
+
+        while (file_exists("images/avatar-user/" . $fileName)) {
+            $fileName = strtotime("now") . '.' . $fileExt;
+        }
+        $file->move('images/avatar-user/', $fileName);
+        return $fileName;
+    }
 }
