@@ -45,15 +45,7 @@
                 let email = $('input[name=email]').val();
                 let password =$('#psw-input').val();
                 if (email == '' || password == '') {
-                    Swal.fire({
-                        text: "Hãy điền thông tin đầy đủ!",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Chấp nhận!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    })
+                    showToast('warning', 'Thông tin chưa đầy đủ');
                     toggleBtnSubmit();
                 } else {
                     let data = {
@@ -68,18 +60,10 @@
                         type: 'post',
                         dataType: 'json',
                         success: function(data) {
-                            Swal.fire({
-                                text: "Thành công!",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Chấp nhận!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            }).then(function(result) {
-                                // toggleBtnSubmit();
+                            showToast('success', '');
+                            setTimeout(() => {
                                 location.href= $('#form-login').data('redirect')
-                            });
+                            }, 50);
                         },
                         error: function(data) {
                             console.log(data);
@@ -87,17 +71,7 @@
                             console.log(errors);
                             let text="Thông tin đăng nhập không chính xác";
                             if(errors.email) text = errors.email;
-                            Swal.fire({
-                                text: text,
-                                icon: "error",
-                                buttonsStyling: false,
-                                confirmButtonText: "Chấp nhận!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                },
-                                
-                            });
-
+                            showToast('danger', text);
                             toggleBtnSubmit();
                         }
                     });

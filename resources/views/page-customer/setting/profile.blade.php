@@ -118,7 +118,6 @@
             $('#btn_submit').click(function(e) {
                 e.preventDefault();
                 validator.validate().then(function(status) {
-
                     let token = $('input[name=_token]').val();
                     let name = $("#name").val();
                     let email = $("#email").val();
@@ -126,14 +125,7 @@
                     let birthday = $("#birthday").val();
                     let current_array = [name, email, phone, birthday];
                     if(JSON.stringify(old_array) === JSON.stringify(current_array)){
-
-                        Swal.fire({
-                            text: 'Dữ liệu chưa được cập nhật!',
-                            icon: 'error',
-                            confirmButtonColor: "#ea4c62",
-                            confirmButtonText: 'Chấp nhận',
-                            width: "80%"
-                        });
+                        showToast('warning');
                     }
                     else if (status == 'Valid' ) {
                         toggleBtnSubmit();
@@ -151,39 +143,19 @@
                             data: data,
                             typeData: 'json',
                             success: function() {
-                                Swal.fire({
-                                    text: 'Thành công!',
-                                    icon: 'success',
-                                    confirmButtonColor: '#ea4c62',
-                                    confirmButtonText: 'Chấp nhận',
-                                    width: "80%"
-                                }).then(function(result) {
-                                    if (result.isConfirmed) {
-                                        location.href = $('form').data(
-                                            'redirect')
-                                    }
-                                });
+                                showToast('success');
+                                setTimeout(() => {
+                                location.href = $('form').data('redirect');
+                                }, 50);
                             },
                             error: function(data) {
                                 console.log(data);
-                                Swal.fire({
-                                    text: 'Có lỗi xảy ra. Thử lại sau!',
-                                    icon: 'error',
-                                    confirmButtonColor: '#ea4c62',
-                                    confirmButtonText: 'Chấp nhận',
-                                    width: "80%"
-                                });
+                                showToast('danger');
                                 toggleBtnSubmit();
                             }
                         })
                     } else {
-                        Swal.fire({
-                            text: 'Có lỗi xảy ra. Hãy xem lại biểu mẫu!',
-                            icon: 'error',
-                            confirmButtonColor: "#ea4c62",
-                            confirmButtonText: 'Chấp nhận',
-                            width: "80%"
-                        })
+                        showToast('warning');
                     }
                 })
 

@@ -84,18 +84,11 @@
                 $('.avatar').each(function(e){
                     $(this).height($(this).width());
                 })
+                showToast('success', 'Avatar đã được cập nhật.');
             },
             error: function(data){
                 console.log(data);
-                swal.fire({
-                    html: "Đã xảy ra lỗi.<br/> Thử lại sau.",
-                    icon: "error",
-                    buttonsStyling: false,
-                    confirmButtonText: "Chấp nhận!",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-light-primary"
-                    }
-                });
+                showToast('danger', '');
             }
         })
 

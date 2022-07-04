@@ -59,6 +59,8 @@
     {{-- Internet Connection Status --}}
     <div class="internet-connection-status" id="internetStatus"></div>
 
+    @include('page-customer.layout.toast')
+    
     @yield('content')
 
 

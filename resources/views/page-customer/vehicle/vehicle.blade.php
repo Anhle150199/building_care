@@ -130,7 +130,6 @@
 
             Swal.fire({
                 text: 'Bạn có chắc muốn xoá '+vehicle+' ?',
-                // text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -151,26 +150,12 @@
                         data: data,
                         typeData: 'json',
                         success: function(){
-                            Swal.fire({
-                                text: 'Đã xoá!',
-                                icon: 'success',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'Chấp nhận',
-                                width: "80%"
-                            });
+                            showToast('success', 'Phương tiện đã được xoá')
                             $('#staticBackdrop').modal('hide')
                             $('#'+id).remove();
                         },
                         error: function(){
-                            Swal.fire({
-                                text: 'Có lỗi xảy ra. Thử lại sau!',
-                                icon: 'error',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'Chấp nhận',
-                                width: "80%"
-                            })
+                            showToast('danger', "")
                         }
                     })
                 }

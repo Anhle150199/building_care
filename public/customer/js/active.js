@@ -504,7 +504,7 @@ var affanToast = [].slice.call(document.querySelectorAll('.toast'));
 var toastList = affanToast.map(function (toast) {
     return new bootstrap.Toast(toast);
 });
-toastList.forEach(toast => toast.show());
+// toastList.forEach(toast => toast.show());
 
 // ===========================
 // Chapter 4.0 Miscellaneous
@@ -524,6 +524,21 @@ if (toastBtn) {
     });
 }
 
+function showToast(category, text = '') {
+    if(text != ''){
+        $('.toast-'+category+' small').text(text);
+    }
+    var affanToast = [].slice.call(document.querySelectorAll('.toast-'+category));
+    var toastList = affanToast.map(function (toast) {
+        return new bootstrap.Toast(toast);
+    });
+    toastList.forEach(toast => toast.show());
+}
+function resetToast() {
+    $('#small-success').text('Biểu mẫu đã được gửi.');
+    $('#small-warning').text('Biểu mẫu hoàn thiện hoặc không thay đổi.');
+    $('#small-danger').text('Biểu mẫu chưa được gửi.');
+}
 // Toast Animation: This function creates the line animation effect on a toast.
 
 window.onload = function toastAnimation() {
@@ -630,17 +645,17 @@ if (offlineBtn.length > 0 && onlineBtn.length > 0) {
         alertShowingId.style.display = "block";
         alertShowingId.style.backgroundColor = "#ea4c62";
         alertShowingId.innerText = "Oops! No internet connection.";
-    
+
         setTimeout(function() {
             alertShowingId.style.display = "none";
         }, 5000);
     });
-    
+
     onlineBtn[0].addEventListener("click", function(){
         alertShowingId.style.display = "block";
         alertShowingId.style.backgroundColor = "#00b894";
         alertShowingId.innerText = "Your internet connection is back.";
-    
+
         setTimeout(function() {
             alertShowingId.style.display = "none";
         }, 5000);

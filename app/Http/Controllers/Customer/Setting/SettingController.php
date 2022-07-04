@@ -110,7 +110,7 @@ class SettingController extends Controller
     {
         $user = Customer::find(Auth::user()->id);
         if($request->has('avatar') ){
-            if($user->avatar!= null && file_exists(public_path('images/avatar-user/'.$user->avatar))){
+            if($user->avatar != null && file_exists(public_path('images/avatar-user/'.$user->avatar))){
                 unlink(public_path('images/avatar-user/'.$user->avatar));
             }
             $user->avatar = $this->saveImage($request->avatar);

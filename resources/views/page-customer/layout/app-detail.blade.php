@@ -60,11 +60,15 @@
     </div>
     {{-- Internet Connection Status --}}
     <div class="internet-connection-status" id="internetStatus"></div>
+
     @include("page-customer.layout.haeder-detail")
+    @include('page-customer.layout.sidenav')
+
+    @include('page-customer.layout.toast')
+
     @yield('content')
 
-    {{-- @include('page-customer.layout.navbar') --}}
-    {{-- All JavaScript Files --}}
+
     <script src="{{ url('/') }}/js/jquery-3.6.0.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -91,6 +95,10 @@
                 return !v;
             });
         }
+        $('.avatar').each(function(e){
+            $(this).height($(this).width());
+        })
+
     </script>
 </body>
 

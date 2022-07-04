@@ -110,39 +110,19 @@
                             data: data,
                             typeData: 'json',
                             success: function() {
-                                Swal.fire({
-                                    text: 'Thành công!',
-                                    icon: 'success',
-                                    confirmButtonColor: '#ea4c62',
-                                    confirmButtonText: 'Chấp nhận',
-                                    width: "80%"
-                                }).then(function(result) {
-                                    if (result.isConfirmed) {
-                                        location.href = $('form').data(
-                                            'redirect')
-                                    }
-                                });
+                                showToast('success');
+                                setTimeout(() => {
+                                    location.href = $('form').data('redirect')
+                                }, 50);
                             },
                             error: function(data) {
                                 console.log(data);
-                                Swal.fire({
-                                    text: 'Có lỗi xảy ra. Thử lại sau!',
-                                    icon: 'error',
-                                    confirmButtonColor: '#ea4c62',
-                                    confirmButtonText: 'Chấp nhận',
-                                    width: "80%"
-                                });
+                                showToast('danger');
                                 toggleBtnSubmit();
                             }
                         })
                     } else {
-                        Swal.fire({
-                            text: 'Có lỗi xảy ra. Hãy xem lại biểu mẫu!',
-                            icon: 'error',
-                            confirmButtonColor: "#ea4c62",
-                            confirmButtonText: 'Chấp nhận',
-                            width: "80%"
-                        })
+                        showToast('warning');
                     }
                 })
 

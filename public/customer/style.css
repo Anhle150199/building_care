@@ -1664,6 +1664,10 @@ textarea:invalid {
   max-width: 18.5rem;
 }
 
+.toast i{
+    font-size: 25px;
+}
+
 /* :: Miscellaneous CSS */
 .page-content-wrapper {
   margin-top: 50px;

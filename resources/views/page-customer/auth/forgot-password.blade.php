@@ -41,15 +41,7 @@
                 let token = $('input[name=_token]').val();
                 let email = $('input[name=email]').val();
                 if (email == '') {
-                    Swal.fire({
-                        text: "Email không được để trống!",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Chấp nhận!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    })
+                    showToast('warning');
                     toggleBtnSubmit();
                 } else {
                     let data = {
@@ -65,17 +57,8 @@
                         type: 'post',
                         dataType: 'json',
                         success: function(data) {
-                            Swal.fire({
-                                text: "Đã gửi!",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Chấp nhận!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            }).then(function(result) {
-                                toggleBtnSubmit();
-                            });
+                            showToast('success');
+                            toggleBtnSubmit();
                         },
                         error: function(data) {
                             // console.log(data);
@@ -87,15 +70,7 @@
                             }else{
                                 text = "Có lỗi xảy ra. Hãy thử lại sau.";
                             }
-                            Swal.fire({
-                                text: text,
-                                icon: "error",
-                                buttonsStyling: false,
-                                confirmButtonText: "Chấp nhận!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            });
+                            showToast('danger', text);
 
                             toggleBtnSubmit();
                         }

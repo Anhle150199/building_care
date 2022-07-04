@@ -11,7 +11,7 @@
                         <i class="bi bi-megaphone-fill lead"></i>
                         <span>Thông báo</span>
                     </a></li>
-                <li @if (@$menu == 'chat') class="active" @endif><a href="page-chat-users.html">
+                <li @if (@$menu == 'support') class="active" @endif><a href="{{ route('user.support.show-list') }}">
                         <i class="bi bi-chat-right-dots-fill lead"></i>
                         <span>Hỗ trợ</span>
                     </a></li>

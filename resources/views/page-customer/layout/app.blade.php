@@ -36,13 +36,17 @@
         .indicator-progress {
             display: none;
         }
-        .active a i, .footer-nav ul li.active a span{
-            color:red;
+
+        .active a i,
+        .footer-nav ul li.active a span {
+            color: red;
         }
+
         .swal2-popup {
             font-size: 11px !important;
             width: 280px;
         }
+
         #swal2-html-container {
             font-size: 13px !important;
         }
@@ -62,7 +66,7 @@
     <div class="internet-connection-status" id="internetStatus"></div>
     @include('page-customer.layout.haeder')
     @include('page-customer.layout.sidenav')
-
+    @include('page-customer.layout.toast')
     @yield('content')
 
     @include('page-customer.layout.navbar')
@@ -72,7 +76,6 @@
     </form>
     {{-- All JavaScript Files --}}
     <script src="{{ url('/') }}/js/jquery-3.6.0.min.js"></script>
-    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
     <script src="{{ url('/') }}/customer/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url('/') }}/customer/js/slideToggle.min.js"></script>
@@ -86,6 +89,7 @@
     <script src="{{ url('/') }}/customer/js/magic-grid.min.js"></script>
     <script src="{{ url('/') }}/customer/js/dark-rtl.js"></script>
     <script src="{{ url('/') }}/customer/js/active.js"></script>
+    
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
@@ -101,8 +105,12 @@
                 return !v;
             });
         }
-        $('.btn-logout').click(function(){
+
+        $('.btn-logout').click(function() {
             $("#logout_form").submit();
+        })
+        $('.avatar').each(function(e) {
+            $(this).height($(this).width());
         })
     </script>
 
@@ -124,28 +132,41 @@
         const messaging = firebase.messaging();
 
         function initFirebaseMessagingRegistration() {
-            messaging.requestPermission().then(function () {
+            messaging.requestPermission().then(function() {
                 return messaging.getToken()
             }).then(function(token) {
 
-                axios.post("{{ route('user.update-token') }}",{
-                    _method:"PATCH",
+                axios.post("{{ route('user.update-token') }}", {
+                    _method: "PATCH",
                     token
-                }).then(({data})=>{
+                }).then(({
+                    data
+                }) => {
                     console.log(data)
-                }).catch(({response:{data}})=>{
+                }).catch(({
+                    response: {
+                        data
+                    }
+                }) => {
                     console.error(data)
                 })
 
-            }).catch(function (err) {
+            }).catch(function(err) {
                 console.log(`Token Error :: ${err}`);
             });
         }
 
         initFirebaseMessagingRegistration();
 
-        messaging.onMessage(function({data:{body,title}}){
-            new Notification(title, {body});
+        messaging.onMessage(function({
+            data: {
+                body,
+                title
+            }
+        }) {
+            new Notification(title, {
+                body
+            });
         });
     </script>
 </body>

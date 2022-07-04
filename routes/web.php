@@ -11,6 +11,7 @@ use App\Http\Controllers\Customer\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\Customer\Home\HomeController as HomeHomeController;
 use App\Http\Controllers\Customer\MaintenanceController;
 use App\Http\Controllers\Customer\Setting\SettingController;
+use App\Http\Controllers\Customer\SupportController;
 use App\Http\Controllers\Customer\VehicleController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
@@ -75,6 +76,12 @@ Route::middleware('auth:user')->name('user.')->group(function () {
     Route::delete('vehicle/delete', [VehicleController::class, 'delete'])->name('delete-vehicle');
 
     Route::get('maintenance', [MaintenanceController::class, 'show'])->name('maintenance');
+
+    Route::prefix('support')->name('support.')->group(function(){
+        Route::get('/', [SupportController::class, 'showList'])->name('show-list');
+        Route::get('/detail/#{id}', [SupportController::class, 'showDetail'])->name('show-detail');
+
+    });
 
     Route::prefix('setting')->name('setting.')->group(function(){
         Route::get('/', [SettingController::class, 'show'])->name('show');
