@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Custommer\VehicleController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\Notification\MailController;
 use App\Http\Controllers\Admin\Notification\NotifyController;
+use App\Http\Controllers\Admin\Support\SupportController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\System\AdminController;
 use App\Http\Controllers\Admin\System\DepartmentController;
@@ -97,6 +98,12 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::put('vehicle/accept-request', [VehicleController::class, 'accept'])->name('vehicle-accept');
         Route::delete('vehicle/delete', [VehicleController::class, 'delete'])->name('vehicle-delete');
     });
+
+    // Support
+    Route::prefix("admin-support")->name('support.')->group(function(){
+        Route::get("/", [SupportController::class, 'showList'])->name('show-list');
+    });
+
     Route::prefix('system')->name('system.')->group(function () {
         Route::prefix('admins')->name('admins.')->group(function (){
             Route::get('/', [AdminController::class, 'showAdminList'])->name('admin-list');
