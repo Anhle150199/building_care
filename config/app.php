@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +175,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 
@@ -231,7 +232,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'LaravelPwa' => \Ladumor\LaravelPwa\LaravelPwa::class,
-        'Larafirebase' => \Kutia\Larafirebase\Providers\LarafirebaseServiceProvider::class
+        'Larafirebase' => \Kutia\Larafirebase\Providers\LarafirebaseServiceProvider::class,
+        'Image' => Intervention\Image\Facades\Image::class
+
     ],
 
 ];

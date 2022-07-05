@@ -1658,7 +1658,7 @@ textarea:invalid {
 
 .home-page-toast {
   position: fixed !important;
-  z-index: 1000 !important;
+  z-index: 1900 !important;
   top: 65px;
   right: 15px;
   max-width: 18.5rem;

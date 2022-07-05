@@ -80,7 +80,7 @@ Route::middleware('auth:user')->name('user.')->group(function () {
     Route::prefix('support')->name('support.')->group(function(){
         Route::get('/', [SupportController::class, 'showList'])->name('show-list');
         Route::get('/detail/#{id}', [SupportController::class, 'showDetail'])->name('show-detail');
-
+        Route::post('create', [SupportController::class, 'create'])->name('create');
     });
 
     Route::prefix('setting')->name('setting.')->group(function(){

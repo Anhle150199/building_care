@@ -103,26 +103,6 @@
                                                 <span class="indicator-progress">Đang gửi...
                                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                             </span>
-                                            {{-- <span class="btn btn-primary btn-icon fs-bold" role="button">
-                                                <span class="btn btn-icon" data-kt-menu-trigger="click" data-kt-menu-placement="top-start">
-                                                    <span class="svg-icon svg-icon-2 m-0">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                            <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                                                        </svg>
-                                                    </span>
-                                                </span>
-                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-150px py-4" data-kt-menu="true">
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">Schedule send</a>
-                                                    </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">Save &amp; archive</a>
-                                                    </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </span> --}}
                                         </div>
                                         <span class="btn btn-icon btn-sm btn-clean btn-active-light-primary me-2" id="kt_inbox_reply_attachments_select" data-kt-inbox-form="dropzone_upload">
                                             <span class="svg-icon svg-icon-2 m-0">
@@ -132,14 +112,6 @@
                                                 </svg>
                                             </span>
                                         </span>
-                                        {{-- <span class="btn btn-icon btn-sm btn-clean btn-active-light-primary">
-                                            <span class="svg-icon svg-icon-2 m-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path opacity="0.3" d="M18.0624 15.3453L13.1624 20.7453C12.5624 21.4453 11.5624 21.4453 10.9624 20.7453L6.06242 15.3453C4.56242 13.6453 3.76242 11.4453 4.06242 8.94534C4.56242 5.34534 7.46242 2.44534 11.0624 2.04534C15.8624 1.54534 19.9624 5.24534 19.9624 9.94534C20.0624 12.0453 19.2624 13.9453 18.0624 15.3453Z" fill="currentColor" />
-                                                    <path d="M12.0624 13.0453C13.7193 13.0453 15.0624 11.7022 15.0624 10.0453C15.0624 8.38849 13.7193 7.04535 12.0624 7.04535C10.4056 7.04535 9.06241 8.38849 9.06241 10.0453C9.06241 11.7022 10.4056 13.0453 12.0624 13.0453Z" fill="currentColor" />
-                                                </svg>
-                                            </span>
-                                        </span> --}}
                                     </div>
                                     {{-- d-none --}}
                                     {{-- <div class="d-flex align-items-center d-none" >
