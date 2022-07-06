@@ -90,7 +90,7 @@
                                 @foreach ($list as $item)
                                     <tr data-id={{ $item->id }} id="row_{{ $item->id }}">
                                         <td>
-                                            <a href="#"
+                                            <a href="{{ route('admin.support.show-detail', ['id'=>$item->id]) }}"
                                                 class="text-gray-800 text-hover-primary mb-1">{{ $item->title }}</a>
                                         </td>
                                         <td>
@@ -130,10 +130,17 @@
                                             </a>
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-150px py-4"
                                                 data-kt-menu="true">
+                                                @if ($item->status == 'request')
+                                                    <div class="menu-item px-3">
+                                                        <a href="#"
+                                                            class="menu-link px-3">Xử lý</a>
+                                                    </div>
+                                                @elseif ($item->status == 'request')
                                                 <div class="menu-item px-3">
                                                     <a href="#"
                                                         class="menu-link px-3">Xử lý</a>
                                                 </div>
+                                                @endif
                                                 <div class="menu-item px-3">
                                                     <a href="#"
                                                         class="menu-link px-3">Chi tiết</a>

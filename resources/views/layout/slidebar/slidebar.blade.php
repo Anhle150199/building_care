@@ -29,9 +29,9 @@
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
                 data-kt-menu="true">
                 {{-- Trang chủ --}}
-                <div data-kt-menu-trigger="click" class="menu-item  menu-accordion" id="menu-dashboard">
+                <div data-kt-menu-trigger="click" class="menu-item  menu-accordion" >
                     <a href="{{ route('admin.dashboard') }}">
-                        <span class="menu-link" href="">
+                        <span class="menu-link" id="menu-dashboard">
                             <!-- icon -->
                             <span class="menu-icon">
                                 <span class="svg-icon svg-icon-2">
@@ -211,7 +211,7 @@
                 {{-- Ý kiến cư dân --}}
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <a href="{{ route('admin.support.show-list') }}">
-                        <span class="menu-link">
+                        <span class="menu-link"  id="menu-support">
                             <span class="menu-icon">
                                 <span class="svg-icon svg-icon-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

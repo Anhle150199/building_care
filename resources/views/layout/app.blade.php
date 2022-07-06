@@ -29,7 +29,7 @@
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 @include('layout.slidebar.header')
                 @yield('content')
-                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                {{-- <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
                     <div
                         class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
                         <div class="text-dark order-2 order-md-1">
@@ -38,7 +38,7 @@
                                 class="text-gray-800 text-hover-primary">{{ config('app.name') }} </a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
             overflow: hidden;
             line-height: 24px;
             -webkit-line-clamp: 2;
-            height: 45px;
+            /* height: 45px; */
             display: -webkit-box;
             /* width: 136px; */
             -webkit-box-orient: vertical;

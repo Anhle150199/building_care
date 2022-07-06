@@ -102,6 +102,10 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
     // Support
     Route::prefix("admin-support")->name('support.')->group(function(){
         Route::get("/", [SupportController::class, 'showList'])->name('show-list');
+        Route::get("/detail-{id}", [SupportController::class, 'showDetail'])->name('show-detail');
+        Route::post('accept-request', [SupportController::class, 'acceptRequest'])->name('accept-request');
+        Route::post('close-support', [SupportController::class, 'close'])->name('close');
+        Route::post('reply', [SupportController::class, 'reply'])->name('reply');
     });
 
     Route::prefix('system')->name('system.')->group(function () {

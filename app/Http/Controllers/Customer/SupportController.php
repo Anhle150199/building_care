@@ -72,7 +72,7 @@ class SupportController extends Controller
         return new JsonResponse(['success'], 200);
     }
 
-    public function saveImage($images)
+    public static function saveImage($images)
     {
         $list = [];
         if ($images == null)
