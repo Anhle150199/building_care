@@ -68,7 +68,7 @@
                             <div class=" input-group mb-3 w-100" id="show-upload">
                             </div>
                             <div class=" mb-3">
-                                <span id="btn-image">
+                                <span id="btn-image" class="btn btn-icon">
                                     <i class="bi bi-images"></i>
                                 </span>
                                 <button type="submit" id="btn_submit" class="btn btn-danger float-end">
@@ -96,7 +96,7 @@
                 @if (sizeof($list) > 0)
                 @foreach ($list as $item)
                     <li class="p-3 @if($item->status != 'processed')chat-unread @endif">
-                        <a class="d-flex" href="page-chat.html">
+                        <a class="d-flex" href="{{ route('user.support.show-detail', ['id'=>$item->id]) }}">
                             <!-- Info -->
                             <div class="chat-user-info">
                                 <h6 class="text-truncate mb-0"><i class="bi bi-box-arrow-in-right"></i> Phòng {{$item->name}}
@@ -110,7 +110,7 @@
                             @if($item->status != 'processed')
                             <span class="badge rounded-pill bg-danger ms-2">Đang xử lý</span>
                             @else
-                            <span class="badge rounded-pill bg-success ms-2">Đóng</span>
+                            <span class="badge rounded-pill bg-success ms-2">Đã xử lý</span>
                             @endif
                             <p class="fs-11px text-end">{{$item->created_at->diffForHumans()}}</p>
                         </div>

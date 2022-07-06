@@ -189,10 +189,10 @@
                         </div>
                         <div class="d-flex flex-wrap align-items-center">
                             <?php $images = json_decode($item->image); ?>
-                                @foreach ($images as $img)
-                                    <a href="{{ url('/images/feedback/') . '/' . $img }}" class="p-2 m-1 border rounded"
-                                        target="_blank" rel="noopener noreferrer"> {{ $img }}</a>
-                                @endforeach
+                            @foreach ($images as $img)
+                                <a href="{{ url('/images/feedback/') . '/' . $img }}" class="p-2 m-1 border rounded"
+                                    target="_blank" rel="noopener noreferrer"> {{ $img }}</a>
+                            @endforeach
                         </div>
                     </div>
                 </div>

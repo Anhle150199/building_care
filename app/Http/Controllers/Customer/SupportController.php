@@ -11,6 +11,7 @@ use App\Models\Feedback;
 use App\Models\FeedbackType;
 use App\Models\Notification;
 use App\Models\NotifyRelationship;
+use App\Models\ReplyFeedback;
 use App\Repositories\Eloquent\ApartmentRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -36,6 +37,18 @@ class SupportController extends Controller
         $data['list'] =$list;
         // dd( $data['list']);
         return view('page-customer.support.list', $data);
+    }
+
+    public function showDetail($id)
+    {
+        $data = [];
+        $feedback = Feedback::find($id);
+        $reply = ReplyFeedback::where('feedback_id', $id)->get();
+        $data['reply'] = $reply;
+
+        $data['title']= $feedback->title;
+        $data['feedback']= $feedback;
+        return view("page-customer.support.detail", $data);
     }
 
     public function create(Request $request)
