@@ -85,75 +85,109 @@ class HomeController extends Controller
 
 
     public function pushNotification()
-	    {
+    {
 
-	        $data=[];
-	        $data['message']= "Some message";
+        // $data=[];
+        // $data['message']= "Some message";
 
-	        $data['booking_id']="my booking booking_id";
+        // $data['booking_id']="my booking booking_id";
 
-            $fcmTokens = Customer::whereNotNull('device_key')->pluck('device_key')->toArray();
+        $fcmTokens = Customer::whereNotNull('device_key')->pluck('device_key')->toArray();
 
-	        $response = $this->sendFirebasePush($fcmTokens,$data);
+        // $response = $this->sendFirebasePush($fcmTokens,$data);
+        var_dump( $fcmTokens);
+        // $fcmTokens=["xxxx"];
+        $dataEndCode = json_encode([
+            "registration_ids" => $fcmTokens,
+            "notification" => [
+                "title" => 'Thông báo thử nghiệm',
+                "body" => "Some message",
+            ]
+        ]);
 
-	    }
-        public function sendFirebasePush($tokens, $data)
-	    {
+        $headerRequest = [
+            'Authorization: key=' . env('FIREBASE_SERVER_KEY'),
+            'Content-Type: application/json'
+        ];
+        // FIRE_BASE_FCM_KEY mình có note ở phần 2.setting firebase nhé
 
-	        $serverKey = env("FIREBASE_SERVER_KEY");
+          // CURL
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, env('FIRE_BASE_URL'));
+          //FIRE_BASE_URL = https://fcm.googleapis.com/fcm/send
+          curl_setopt($ch, CURLOPT_POST, true);
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $headerRequest);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+          curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $dataEndCode);
+        // Mục đích mình đưa các tham số kia vào env để tùy biến nhé
+        $output = curl_exec($ch);
+        if ($output === FALSE) {
+            echo 'Curl error: ' . curl_error($ch);
+        }
+        curl_close($ch);
+        echo $output;
 
-	        // prep the bundle
-	        $msg = array
-	        (
-	            'message'   => $data['message'],
-	            'booking_id' => $data['booking_id'],
-	        );
+    }
+    public function sendFirebasePush($tokens, $data)
+    {
 
-	        $notifyData = [
-                 "body" => $data['message'],
-                 "title"=> "Port App"
-            ];
+        $serverKey = env("FIREBASE_SERVER_KEY");
 
-	        $registrationIds = $tokens;
+        // prep the bundle
+        $msg = array
+        (
+            'message'   => $data['message'],
+            'booking_id' => $data['booking_id'],
+        );
 
-	        if(count($tokens) > 1){
-                $fields = array
-                (
-                    'registration_ids' => $registrationIds, //  for  multiple users
-                    'notification'  => $notifyData,
-                    'data'=> $msg,
-                    'priority'=> 'high'
-                );
-            }
-            else{
+        $notifyData = [
+             "body" => $data['message'],
+             "title"=> "Port App"
+        ];
 
-                $fields = array
-                (
-                    'to' => $registrationIds[0], //  for  only one users
-                    'notification'  => $notifyData,
-                    'data'=> $msg,
-                    'priority'=> 'high'
-                );
-            }
+        $registrationIds = $tokens;
 
-	        $headers[] = 'Content-Type: application/json';
-	        $headers[] = 'Authorization: key='. $serverKey;
+        if(count($tokens) > 1){
+            $fields = array
+            (
+                'registration_ids' => $registrationIds, //  for  multiple users
+                'notification'  => $notifyData,
+                'data'=> $msg,
+                'priority'=> 'high'
+            );
+        }
+        else{
 
-	        $ch = curl_init();
-	        curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
-	        curl_setopt( $ch,CURLOPT_POST, true );
-	        curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
-	        curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-	        // curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-	        curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
-	        $result = curl_exec($ch );
-	        if ($result === FALSE)
-	        {
-	            die('FCM Send Error: ' . curl_error($ch));
-	        }
-	        curl_close( $ch );
-            echo $result;
-	        return $result;
-	    }
+            $fields = array
+            (
+                'to' => $registrationIds[0], //  for  only one users
+                'notification'  => $notifyData,
+                'data'=> $msg,
+                'priority'=> 'high'
+            );
+        }
+
+        $headers[] = 'Content-Type: application/json';
+        $headers[] = 'Authorization: key='. $serverKey;
+
+        $ch = curl_init();
+        curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
+        curl_setopt( $ch,CURLOPT_POST, true );
+        curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+        curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+        // curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+        $result = curl_exec($ch );
+        if ($result === FALSE)
+        {
+            die('FCM Send Error: ' . curl_error($ch));
+        }
+        curl_close( $ch );
+        echo $result;
+        return $result;
+    }
 
 }

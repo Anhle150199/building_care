@@ -4077,15 +4077,16 @@ form .btn.btn-sm {
   display: block;
 }
 .single-chat-item .user-message .single-message p {
-  padding: 8px 12px;
-  background-color: #ffffff;
+  /* padding: 8px 12px; */
+  /* background-color: #fa0e58; */
   border-radius: 18px;
   font-size: 14px;
   margin-bottom: 0;
+  color: white;
 }
 .single-chat-item .user-message .single-message img {
   border-radius: 12px;
-  max-width: 120px;
+  max-width: 100px;
 }
 .single-chat-item .user-message .single-message .typing {
   background-color: #ffffff;
@@ -4220,7 +4221,7 @@ form .btn.btn-sm {
   margin-bottom: 0;
 }
 .single-chat-item.outgoing .user-message .single-message p {
-  background-color: #0d5afd;
+  background-color: #fa0e58;
   color: #ffffff;
 }
 .single-chat-item.outgoing .user-message .message-time-status {
@@ -7088,7 +7089,7 @@ input[type=color].form-control.is-valid, input[type=color].form-control:valid {
   padding: 0;
   line-height: 30px;
   text-indent: -100000000000000020rem;
-  background-color: #0d5afd;
+  background-color: #fa0e58;
 }
 
 /* :: Demo CSS */
@@ -8510,9 +8511,9 @@ input[type=color].form-control.is-valid, input[type=color].form-control:valid {
 [data-theme=dark] body .call-video-wrapper a {
   color: #ffffff;
 }
-[data-theme=dark] body .single-chat-item .user-message .single-message p {
-  background-color: #242644;
-}
+/* [data-theme=dark] body .single-chat-item .user-message .single-message p { */
+  /* background-color: #242644; */
+/* } */
 [data-theme=dark] body .single-chat-item.outgoing .user-message .single-message p {
   background-color: #0d5afd;
   color: #ffffff;
@@ -8729,4 +8730,8 @@ input[type=color].form-control.is-valid, input[type=color].form-control:valid {
 }
 [data-theme=dark] body .single-plan-check {
   border-color: rgba(255, 255, 255, 0.1);
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }

@@ -6,7 +6,7 @@
         <!-- Side Nav Wrapper -->
         <div class="sidenav-wrapper">
             <!-- Sidenav Profile -->
-            <div class="sidenav-profile bg-gradient">
+            <div class="sidenav-profile bg-danger">
                 <div class="sidenav-style1"></div>
                 <!-- User Thumbnail -->
                 <div class="user-profile">

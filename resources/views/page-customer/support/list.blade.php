@@ -88,6 +88,7 @@
         {{-- Add New Contact --}}
         <div class="add-new-contact-wrap"><a class="shadow bg-danger" href="#" data-bs-toggle="modal"
                 data-bs-target="#addnewcontact"><i class="bi bi-plus-lg"></i></a></div>
+        {{-- List  --}}
         <div class="container">
             <div class="element-heading">
                 <h6 class="ps-1">Hỗ trợ gần đây</h6>

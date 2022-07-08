@@ -60,7 +60,7 @@
 
 <body>
     <div id="preloader">
-        <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+        <div class="spinner-grow text-danger" role="status"><span class="visually-hidden">Loading...</span></div>
     </div>
     {{-- Internet Connection Status --}}
     <div class="internet-connection-status" id="internetStatus"></div>
@@ -89,10 +89,6 @@
     <script src="{{ url('/') }}/customer/js/magic-grid.min.js"></script>
     <script src="{{ url('/') }}/customer/js/dark-rtl.js"></script>
     <script src="{{ url('/') }}/customer/js/active.js"></script>
-    
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
     @stack('js')
     {{-- PWA --}}
@@ -114,61 +110,7 @@
         })
     </script>
 
-    <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyBaI5e-ab33imAYOAjWRzpJXePls6N-FkA",
-            authDomain: "datn-megacare.firebaseapp.com",
-            projectId: "datn-megacare",
-            storageBucket: "datn-megacare.appspot.com",
-            messagingSenderId: "379787159816",
-            appId: "1:379787159816:web:2c12d2a5988e28e467e4bd",
-            measurementId: "G-B28M0Y4RFG"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        const messaging = firebase.messaging();
-
-        function initFirebaseMessagingRegistration() {
-            messaging.requestPermission().then(function() {
-                return messaging.getToken()
-            }).then(function(token) {
-
-                axios.post("{{ route('user.update-token') }}", {
-                    _method: "PATCH",
-                    token
-                }).then(({
-                    data
-                }) => {
-                    console.log(data)
-                }).catch(({
-                    response: {
-                        data
-                    }
-                }) => {
-                    console.error(data)
-                })
-
-            }).catch(function(err) {
-                console.log(`Token Error :: ${err}`);
-            });
-        }
-
-        initFirebaseMessagingRegistration();
-
-        messaging.onMessage(function({
-            data: {
-                body,
-                title
-            }
-        }) {
-            new Notification(title, {
-                body
-            });
-        });
-    </script>
+    @include("page-customer.layout.firebase")
 </body>
 
 </html>

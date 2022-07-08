@@ -78,11 +78,40 @@ class SupportController extends Controller
         $newFb->customer_id = Auth::user()->id;
         $newFb->image = json_encode($this->saveImage($request->images));
         $newFb->save();
+
         // } catch (\Throwable $th) {
         //     return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
         // }
 
         return new JsonResponse(['success'], 200);
+    }
+
+    public function reply(Request $request)
+    {
+        $valitator = Validator::make(
+            $request->all(),
+            [
+                'feecback_id' => 'required|integer|exists:feedback,id',
+                'content' => 'required|string'
+            ]
+        );
+        if($valitator->fails()){
+            return new JsonResponse(['errors'=>$valitator->getMessageBag()->toArray()], 406);
+        }
+        $reply = new ReplyFeedback();
+        $reply->feedback_id = $request->feecback_id;
+        $reply->content = $request->content;
+        $reply->user_type = 1;
+        $reply->image = json_encode($this->saveImage($request->images));
+        $reply->save();
+        $reply->image = json_decode($reply->image);
+        $reply->time = $reply->created_at->format('H:s d-m-Y');
+
+        $feedback = Feedback::find($request->feecback_id);
+        if ($feedback->admin_id != null) {
+            $this->pushNotification($reply, 'admin', [$feedback->admin_id]);
+        }
+        return new JsonResponse($reply->toArray(), 200);
     }
 
     public static function saveImage($images)
@@ -109,4 +138,43 @@ class SupportController extends Controller
         }
         return $list;
     }
+
+    public static function pushNotification($reply, $to, $toId)
+    {
+        if($to == 'user')
+        $fcmTokens = Customer::whereNotNull('device_key')->pluck('device_key')->toArray();
+        $dataEndCode = json_encode([
+            "registration_ids" => $fcmTokens,
+            "notification" => [
+                "title" => "xin chào",
+                "body" => "ok chưa bà con",
+            ],
+            "type" => 2,
+            "data" => $reply,
+        ]);
+
+        $headerRequest = [
+            'Authorization: key=' . env('FIREBASE_SERVER_KEY'),
+            'Content-Type: application/json'
+        ];
+
+        $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_URL, env('FIRE_BASE_URL'));
+        curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headerRequest);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataEndCode);
+        $output = curl_exec($ch);
+        if ($output === FALSE) {
+            log('Curl error: ' . curl_error($ch));
+        }
+        curl_close($ch);
+        echo $output;
+
+    }
+
 }

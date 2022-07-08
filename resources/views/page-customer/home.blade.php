@@ -1,5 +1,9 @@
 @extends('page-customer.layout.app')
 @section('title', 'Trang chủ')
+@push('css')
+    <style>
+    </style>
+@endpush
 @section('content')
 
     <div class="page-content-wrapper">
@@ -102,7 +106,7 @@
                                     <span class="badge bg-danger rounded-pill mb-2 d-inline-block">{{date("H:i, d M Y", strtotime($item->created_at))}}</span>
                                 </div>
                                 <a class="blog-title d-block text-dark mb-2" href="{{ route('user.notify-detail', ['title'=>$item->title, 'id'=>$item->id]) }}">{{$item->title}}</a>
-                                <a class="btn btn-primary btn-sm" href="{{ route('user.notify-detail', ['title'=>$item->title, 'id'=>$item->id]) }}">Đọc thêm</a>
+                                <a class="btn btn-danger btn-sm" href="{{ route('user.notify-detail', ['title'=>$item->title, 'id'=>$item->id]) }}">Đọc thêm</a>
                             </div>
                         </div>
                     </div>

@@ -121,6 +121,12 @@ class SupportController extends BaseBuildingController
         $reply->time = $reply->created_at->format('H:s d-m-Y');
         $reply->admin = Auth::user()->name;
         $reply->avatar = Auth::user()->avatar;
+
+        $feedback = Feedback::find($request->feecback_id);
+        if ($feedback->admin_id != null) {
+            // CustomerSupportController::pushNotification($reply);
+        }
         return new JsonResponse($reply->toArray(), 200);
     }
+
 }

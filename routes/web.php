@@ -34,7 +34,7 @@ foreach(config('constants.urls') as $url) {
     });
 }
 
-Route::get('xxx', [HomeHomeController::class, 'notification'])->name('xxx');
+Route::get('xxx', [HomeHomeController::class, 'pushNotification'])->name('xxx');
 // Route::get('yyy', function (Request $req)
 // {
 //     dd($req->cars);
@@ -82,6 +82,7 @@ Route::middleware('auth:user')->name('user.')->group(function () {
         Route::get('/detail/#{id}', [SupportController::class, 'showDetail'])->name('show-detail');
         Route::post('create', [SupportController::class, 'create'])->name('create');
         Route::get('detail-{id}', [SupportController::class, 'showDetail'])->name("show-detail");
+        Route::post("reply", [SupportController::class, 'reply'])->name("reply");
     });
 
     Route::prefix('setting')->name('setting.')->group(function(){

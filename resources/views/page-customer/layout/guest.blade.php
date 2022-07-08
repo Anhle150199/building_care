@@ -54,13 +54,13 @@
 
 <body>
     <div id="preloader">
-        <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+        <div class="spinner-grow text-danger" role="status"><span class="visually-hidden">Loading...</span></div>
     </div>
     {{-- Internet Connection Status --}}
     <div class="internet-connection-status" id="internetStatus"></div>
 
     @include('page-customer.layout.toast')
-    
+
     @yield('content')
 
 
