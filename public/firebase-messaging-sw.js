@@ -16,15 +16,21 @@ firebase.initializeApp({
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.
 const messaging = firebase.messaging();
-messaging.setBackgroundMessageHandler(function (payload) {
+messaging.onBackgroundMessage(function (payload) {
     console.log("Message received.", payload);
-    const title = "Hello world is awesome";
+    const title = payload.data.title;
     const options = {
-        body: "Your notificaiton message .",
-        icon: "/firebase-logo.png",
+        body: payload.data.body,
+        icon: '/assets/media/logos/favicon.ico',
+        data:{
+            time: new Date(Date.now()).toString(),
+            click_action: payload.data.click_action,
+        }
     };
-    return self.registration.showNotification(
-        title,
-        options,
-    );
+    return self.registration.showNotification(title,options);
+});
+self.addEventListener('notificationclick', event => {
+    var action_click = event.notification.data.click_action;
+    event.notification.close();
+    event.waitUntil(clients.openWindow(action_click));
 });

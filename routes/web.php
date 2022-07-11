@@ -34,12 +34,13 @@ foreach(config('constants.urls') as $url) {
     });
 }
 
-Route::get('xxx', [HomeHomeController::class, 'pushNotification'])->name('xxx');
-// Route::get('yyy', function (Request $req)
-// {
-//     dd($req->cars);
-//     return view('test');
-// })->name('yyy');
+use Illuminate\Support\Str;
+Route::get('xxx', [HomeHomeController::class, 'notification'])->name('xxx');
+Route::get('yyy', function (Request $req)
+{
+    $slug = Str::slug('Laravel 5  a lô lô â ê ạ á àFramework 5/5', '-');
+ECHO $slug;
+})->name('yyy');
 
 Route::namespace('Admin\Auth')->name('auth.')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('form-login');
@@ -65,7 +66,8 @@ Route::prefix('user')->name('auth-user.')->group(function(){
 
 Route::middleware('auth:user')->name('user.')->group(function () {
     Route::get('home', [HomeHomeController::class, 'showHome'])->name("home");
-    Route::get('notify/{id}-{title}', [HomeHomeController::class, 'showNotifyDetail'])->name("notify-detail");
+    Route::get('notify/{slug}', [HomeHomeController::class, 'showNotifyDetail'])->name("notify-detail");
+    Route::get("push-notification", [HomeHomeController::class, "showPushNotify"])->name("push-notify");
     // Route::get('notify', [HomeHomeController::class, 'notification'])->name("notify");
 
     Route::patch('update-token', [HomeHomeController::class, 'updateDeviceKey'])->name('update-token');

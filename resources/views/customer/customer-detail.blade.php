@@ -92,8 +92,8 @@
                                             Đang ở</option>
                                         <option value="absent" @if (@$customerCurrent->status == 'absent') selected="selected" @endif>
                                             Vắng</option>
-                                        <option value="leave" @if (@$customerCurrent->status == 'leave') selected="selected" @endif>
-                                            Bên ngoài</option>
+                                        {{-- <option value="leave" @if (@$customerCurrent->status == 'leave') selected="selected" @endif>
+                                            Bên ngoài</option> --}}
                                     </select>
                                 </div>
                                 <div class="mb-10 fv-row">

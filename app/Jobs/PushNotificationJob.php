@@ -32,7 +32,7 @@ class PushNotificationJob implements ShouldQueue
     /**
      * @param NotificationService $notificationService
      */
-    public function handle(\App\Services\Notification\FcmService  $notificationService)
+    public function handle(FcmService  $notificationService)
     {
         call_user_func_array(
             [

@@ -103,6 +103,9 @@ class ApartmentController extends BaseBuildingController
         $data['methodAjax'] = 'put';
         $data['apartment'] = $apartment;
         $data['buildingActive'] = $this->getBuildingActive();
+        if($apartment->building_id != $data['buildingActive'] ){
+            return redirect()->route("admin.customers.apartment-list");
+        }
         $data['buildingActiveInfo'] = $this->buildingModel->find($data['buildingActive']);
         $data['buildingList'] = $this->buildingList;
         $customers = Customer::all();

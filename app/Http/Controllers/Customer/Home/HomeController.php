@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Customer\Home;
 use App\Http\Controllers\Controller;
 use App\Jobs\PushNotificationJob;
 use App\Models\Admin;
+use App\Models\Apartment;
 use App\Models\Customer;
 use App\Models\Notification;
 use App\Models\NotifyRelationship;
+use App\Models\PushNotify;
+use App\Models\PushNotifyRelationship;
 use App\Repositories\Eloquent\ApartmentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,9 +39,13 @@ class HomeController extends Controller
         return view('page-customer.home', $data);
     }
 
-    public function showNotifyDetail($id, $title )
+    public function showNotifyDetail($slug)
     {
-        $notify = Notification::find($id);
+        $notify = Notification::where("slug", $slug)->first();
+        if($notify == null) {
+            abort(404);
+        }
+        // dd($notify->admin_id);
         $admin = Admin::find($notify->admin_id);
         if($notify->status != 'public'){
             abort(404);
@@ -47,6 +54,25 @@ class HomeController extends Controller
         $data['item'] = $notify;
         $data['admin'] = $admin;
         return view('page-customer.notify-detail', $data);
+    }
+
+
+    public function showPushNotify()
+    {
+        $data = [];
+        $data['menu'] = 'notify';
+        $list = Apartment::where('owner_id', Auth::user()->id)->pluck('id')->toArray();
+        $apartmentLive = Auth::user()->apartment_id;
+        if (!in_array($apartmentLive, $list)) {
+            array_push($list, $apartmentLive);
+        }
+        // dd($list);
+        $notifyRelationship=PushNotifyRelationship::whereIn("apartment_id", $list)->distinct('push_notify_id')->pluck('push_notify_id')->toArray();
+
+        $notify = PushNotify::whereIn('id', $notifyRelationship)->orderBy('id', 'desc')->get();
+        // dd($notify);
+        $data["notification"]=$notify;
+        return view('page-customer.notify', $data);
     }
 
     public function updateDeviceKey(Request $request)
@@ -77,7 +103,7 @@ class HomeController extends Controller
             'topicName' => 'birthday',
             'title' => 'Chúc mứng sinh nhật',
             'body' => 'Chúc bạn sinh nhật vui vẻ',
-            'image' => 'https://picsum.photos/536/354',
+            'click_action' => 'https://picsum.photos/536/354',
         ],
     ]);
 

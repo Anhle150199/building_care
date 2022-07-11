@@ -84,12 +84,12 @@
                                     <input type="number" name="floor" class="form-control mb-2" data-floor="{{$buildingActiveInfo->floors_number}}"
                                         placeholder="Số tầng" value="{{@$apartment->floor}}" />
                                 </div>
-                                <div class="mb-10 fv-row">
+                                <div class="mb-10 fv-row" >
                                     <label class="required form-label">Trạng thái </label>
                                     <select class="form-select mb-2" data-control="select2" data-hide-search="true" name = "status"
                                         data-placeholder="Chọn trạng thái" id="status_select">
                                         <option value="using" @if (@$apartment->status == 'using') selected="selected" @endif>Đang ở</option>
-                                        <option value="absent" @if (@$apartment->status == 'absent') selected="selected" @endif>Vắng</option>
+                                        {{-- <option value="absent" @if (@$apartment->status == 'absent') selected="selected" @endif>Vắng</option> --}}
                                         <option value="empty" @if (@$apartment->status == 'empty') selected="selected" @endif> Để trống</option>
                                     </select>
                                 </div>

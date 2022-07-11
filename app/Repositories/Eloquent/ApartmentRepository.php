@@ -21,13 +21,16 @@ class ApartmentRepository extends EloquentRepository
 
     public function getBuildingListForCustomer($userId)
     {
-        $apartmentList = Cache::get('apartment_list_'.$userId);
+        $apartmentList = Cache::get('building_list_'.$userId);
         if($apartmentList != null){
             return $apartmentList;
         }
         $list = $this->_model->where('owner_id', $userId)->distinct('building_id')->pluck('building_id')->toArray();
         $customer = Customer::find($userId);
-        array_push($list, $customer->id);
+        $buildingLive = $this->_model->find($customer->apartment_id)->building_id;
+        if (!in_array($buildingLive, $list)) {
+            array_push($list, $buildingLive);
+        }
         return $list;
     }
 }

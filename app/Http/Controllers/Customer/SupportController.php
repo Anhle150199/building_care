@@ -11,6 +11,8 @@ use App\Models\Feedback;
 use App\Models\FeedbackType;
 use App\Models\Notification;
 use App\Models\NotifyRelationship;
+use App\Models\PushNotify;
+use App\Models\PushNotifyRelationship;
 use App\Models\ReplyFeedback;
 use App\Repositories\Eloquent\ApartmentRepository;
 use Illuminate\Http\JsonResponse;
@@ -68,7 +70,7 @@ class SupportController extends Controller
         }
         // return new JsonResponse(['errors' => $request->all()], 406);
 
-        // try {
+        try {
         $newFb = new Feedback();
         $newFb->title = $request->title;
         $newFb->content = $request->content;
@@ -79,10 +81,38 @@ class SupportController extends Controller
         $newFb->image = json_encode($this->saveImage($request->images));
         $newFb->save();
 
-        // } catch (\Throwable $th) {
-        //     return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
-        // }
+        } catch (\Throwable $th) {
+            return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
+        }
+        // Todo push notification
+        $department = Department::find($newFb->department_id);
+        $pushNotify = new PushNotify();
+        $pushNotify->category= "support";
+        $pushNotify->item_id = $newFb->id;
+        $pushNotify->title = " Có một thư mới";
+        $pushNotify->body = $newFb->title;
+        $pushNotify->type_user = "admin";
+        $pushNotify->click_action = route('admin.support.show-detail', ['id'=> $newFb]);
+        $pushNotify->save();
 
+        PushNotifyRelationship::create([
+            'apartment_id' => $department->id,
+            'push_notify_id'=> $pushNotify->id,
+        ]);
+        $deviceTokens = Admin::where("departrment_id", $department)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+        // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+        PushNotificationJob::dispatch('sendBatchNotification', [
+            $deviceTokens,
+            [
+                'topicName' => $pushNotify->category,
+                'title' => $pushNotify->title,
+                'body' => $pushNotify->body,
+                'click_action' => $pushNotify->click_action,
+                'image'=>"<i class=\"bi bi-chat-right-dots\"></i>"
+            ],
+        ]);
         return new JsonResponse(['success'], 200);
     }
 
@@ -109,7 +139,37 @@ class SupportController extends Controller
 
         $feedback = Feedback::find($request->feecback_id);
         if ($feedback->admin_id != null) {
-            $this->pushNotification($reply, 'admin', [$feedback->admin_id]);
+            // $this->pushNotification($reply, 'admin', [$feedback->admin_id]);
+
+                // Todo push notification
+            $department = Department::find($feedback->department_id);
+            $pushNotify = new PushNotify();
+            $pushNotify->category= "support";
+            $pushNotify->item_id = $feedback->id;
+            $pushNotify->title = Auth::user()->name." đã trả lời";
+            $pushNotify->body = $feedback->title;
+            $pushNotify->type_user = "admin";
+            $pushNotify->click_action = route('admin.support.show-detail', ['id'=> $feedback]);
+            $pushNotify->save();
+
+            PushNotifyRelationship::create([
+                'apartment_id' => $department->id,
+                'push_notify_id'=> $pushNotify->id,
+            ]);
+            $deviceTokens = Admin::where("id", $feedback->admin_id)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+            // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+            PushNotificationJob::dispatch('sendBatchNotification', [
+                $deviceTokens,
+                [
+                    'topicName' => $pushNotify->category,
+                    'title' => $pushNotify->title,
+                    'body' => $pushNotify->body,
+                    'click_action' => $pushNotify->click_action,
+                    'image'=>"<i class=\"bi bi-chat-right-dots\"></i>"
+                ],
+            ]);
         }
         return new JsonResponse($reply->toArray(), 200);
     }
@@ -139,42 +199,3 @@ class SupportController extends Controller
         return $list;
     }
 
-    public static function pushNotification($reply, $to, $toId)
-    {
-        if($to == 'user')
-        $fcmTokens = Customer::whereNotNull('device_key')->pluck('device_key')->toArray();
-        $dataEndCode = json_encode([
-            "registration_ids" => $fcmTokens,
-            "notification" => [
-                "title" => "xin chào",
-                "body" => "ok chưa bà con",
-            ],
-            "type" => 2,
-            "data" => $reply,
-        ]);
-
-        $headerRequest = [
-            'Authorization: key=' . env('FIREBASE_SERVER_KEY'),
-            'Content-Type: application/json'
-        ];
-
-        $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_URL, env('FIRE_BASE_URL'));
-        curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headerRequest);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataEndCode);
-        $output = curl_exec($ch);
-        if ($output === FALSE) {
-            log('Curl error: ' . curl_error($ch));
-        }
-        curl_close($ch);
-        echo $output;
-
-    }
-
-}

@@ -57,7 +57,8 @@ class BuildingController extends BaseBuildingController
                 'status' => ['string', 'in:active,prepare,lock', 'required'],
                 'acreage' => 'integer',
                 'floors_number' => 'integer|required',
-                'apartment_number' => 'string|integer',
+                'apartment_number' => 'required|integer',
+                'building_code'=> "string|required|max:10|unique:building,building_code"
             ]
         );
 
@@ -104,6 +105,7 @@ class BuildingController extends BaseBuildingController
                 'acreage' => 'integer',
                 'floors_number' => 'integer|required',
                 'apartment_number' => 'string|integer',
+                'building_code'=> "string|required|max:10"
             ]
         );
 
@@ -115,6 +117,12 @@ class BuildingController extends BaseBuildingController
             $check = Building::where(['name' => $request->name])->first();
             if ($check != null) {
                 return new JsonResponse(['errors' => ['email' => 'Tên toà nhà bị trùng', $check]], 406);
+            }
+        }
+        if ($building->building_code != $request->building_code) {
+            $check = Building::where(['building_code' => $request->building_code])->first();
+            if ($check != null) {
+                return new JsonResponse(['errors' => ['building_code' => 'Mã toà nhà bị trùng', $check]], 406);
             }
         }
         try {
@@ -163,6 +171,7 @@ class BuildingController extends BaseBuildingController
         $building->acreage = $request->acreage;
         $building->floors_number = $request->floors_number;
         $building->apartment_number = $request->apartment_number;
+        $building->building_code = $request->building_code;
         $building->save();
         return $building;
     }

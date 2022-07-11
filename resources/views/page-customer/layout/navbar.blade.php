@@ -7,7 +7,7 @@
                         <span>Trang chủ</span>
                     </a>
                 </li>
-                <li @if (@$menu == 'notify') class="active" @endif><a href="pages.html">
+                <li @if (@$menu == 'notify') class="active" @endif><a href="{{ route('user.push-notify') }}">
                         <i class="bi bi-megaphone-fill lead"></i>
                         <span>Thông báo</span>
                     </a></li>

@@ -17,6 +17,7 @@ class FcmService implements NotificationService
      */
     public function sendBatchNotification($deviceTokens, $data = [])
     {
+        // log("run job");
         self::subscribeTopic($deviceTokens, $data['topicName']);
         self::sendNotification($data, $data['topicName']);
         self::unsubscribeTopic($deviceTokens, $data['topicName']);
@@ -32,14 +33,17 @@ class FcmService implements NotificationService
         $url = 'https://fcm.googleapis.com/fcm/send';
         $data = [
             'to' => '/topics/' . $topicName,
-            'notification' => [
+            // 'notification' => [
+            //     'body' => $data['body'] ?? 'Something',
+            //     'title' => $data['title'] ?? 'Something',
+            //     'image' => $data['image'] ?? null,
+            // ],
+            'data' => [
+                // 'url' => $data['url'] ?? null,
+                'click_action' => $data['click_action'] ?? null,
                 'body' => $data['body'] ?? 'Something',
                 'title' => $data['title'] ?? 'Something',
                 'image' => $data['image'] ?? null,
-            ],
-            'data' => [
-                'url' => $data['url'] ?? null,
-                'redirect_to' => $data['redirect_to'] ?? null,
             ],
             'apns' => [
                 'payload' => [
@@ -47,9 +51,9 @@ class FcmService implements NotificationService
                         'mutable-content' => 1,
                     ],
                 ],
-                'fcm_options' => [
-                    'image' => $data['image'] ?? null,
-                ],
+                // 'fcm_options' => [
+                //     'image' => $data['image'] ?? null,
+                // ],
             ],
         ];
 
@@ -103,7 +107,7 @@ class FcmService implements NotificationService
             $result = $client->request($method, $url, [
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Authorization' => 'key=' . env('FIRE_BASE_FCM_KEY'),
+                    'Authorization' => 'key=' . env('FIREBASE_SERVER_KEY'),
                 ],
                 'json' => $dataPost,
                 'timeout' => 300,

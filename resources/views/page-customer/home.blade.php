@@ -94,8 +94,9 @@
                 <div class="col-12 col-md-8 col-lg-7 col-xl-6">
                     <div class="card shadow-sm blog-list-card">
                         <div class="">
-                            <img class="card-img-top" src="{{ url('/') }}/images/{{$item->image}}" alt="Card image cap">
-
+                            <a href="{{ route('user.notify-detail', ['slug'=>$item->slug]) }}">
+                                <img class="card-img-top" src="{{ url('/') }}/images/{{$item->image}}" alt="Card image cap">
+                            </a>
                             <div class="p-3">
                                 <div class="d-flex justify-content-between ">
                                     @if ($item->category == 'notify')
@@ -105,8 +106,8 @@
                                     @endif
                                     <span class="badge bg-danger rounded-pill mb-2 d-inline-block">{{date("H:i, d M Y", strtotime($item->created_at))}}</span>
                                 </div>
-                                <a class="blog-title d-block text-dark mb-2" href="{{ route('user.notify-detail', ['title'=>$item->title, 'id'=>$item->id]) }}">{{$item->title}}</a>
-                                <a class="btn btn-danger btn-sm" href="{{ route('user.notify-detail', ['title'=>$item->title, 'id'=>$item->id]) }}">Đọc thêm</a>
+                                <a class="blog-title d-block text-dark mb-2" href="{{ route('user.notify-detail', ['slug'=>$item->slug]) }}">{{$item->title}}</a>
+                                <a class="btn btn-danger btn-sm" href="{{ route('user.notify-detail', ['slug'=>$item->slug]) }}">Đọc thêm</a>
                             </div>
                         </div>
                     </div>

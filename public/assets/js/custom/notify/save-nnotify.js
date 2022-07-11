@@ -220,9 +220,13 @@ var KTAppEcommerceSaveProduct = (function () {
                                                             console.log(response);
                                                             const errors = response.responseJSON.errors;
                                                             console.log(errors);
+                                                            let text = "Có lỗi xảy ra. <br/>Hãy thử lại sau.";
+                                                            if(errors.title){
+                                                                text = errors.title;
+                                                            }
                                                             o.removeAttribute("data-kt-indicator"),o.disabled = !1,
                                                             Swal.fire({
-                                                                html: "Có lỗi xảy ra. <br/>Hãy thử lại sau.",
+                                                                html: text,
                                                                 icon: "error",
                                                                 buttonsStyling: !1,
                                                                 confirmButtonText:

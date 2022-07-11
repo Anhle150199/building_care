@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin\Custommer;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Jobs\PushNotificationJob;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\Customer;
+use App\Models\PushNotify;
+use App\Models\PushNotifyRelationship;
 use App\Models\Vehicle;
 use App\Repositories\Eloquent\ApartmentRepository;
 use App\Repositories\Eloquent\BuildingRepository;
@@ -87,7 +91,10 @@ class VehicleController extends BaseBuildingController
         $data['routeAjax'] = route('admin.customers.vehicle-update');
         $data['methodAjax'] = 'put';
         $data['item'] = $vehicle;
-
+        $building = Apartment::find($vehicle->apartment_id)->building_id;
+        if($building != $data['buildingActive'] ){
+            return redirect()->route("admin.customers.vehicle-list");
+        }
         $apartments = Apartment::where('building_id', $data['buildingActive'])->get();
         $data['apartments'] = $apartments;
 
@@ -117,7 +124,37 @@ class VehicleController extends BaseBuildingController
             return new JsonResponse(['errors' => ['Lỗi insert data cu dan']], 406);
         }
         // Todo push notification "Phương tiện đã được thêm"
+        $apartment = Apartment::find($request->apartment_id);
+        $pushNotify = new PushNotify();
+        $pushNotify->category= "vehicle";
+        $pushNotify->item_id = $vehicle->id;
+        $pushNotify->title = "Căn hộ ".$apartment->apartment_code.": Phương tiện đã được thêm mới";
+        $pushNotify->body = $vehicle->model;
+        $pushNotify->type_user = "customer";
+        $pushNotify->click_action = route('user.show-vehicle');
+        $pushNotify->save();
 
+        PushNotifyRelationship::create([
+            'apartment_id' => $apartment->id,
+            'push_notify_id'=> $pushNotify->id,
+        ]);
+        $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
+        $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
+        $userList = array_unique(array_merge($userList1, $userList2));
+        $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+        // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+        PushNotificationJob::dispatch('sendBatchNotification', [
+            $deviceTokens,
+            [
+                'topicName' => $pushNotify->category,
+                'title' => $pushNotify->title,
+                'body' => $pushNotify->body,
+                'click_action' => $pushNotify->click_action,
+                'image'=>"<i class=\"bi bi-bicycle\"></i>"
+            ],
+        ]);
         return new JsonResponse(['success'], 200);
     }
     public function update(Request $request)
@@ -148,7 +185,38 @@ class VehicleController extends BaseBuildingController
         }
 
         // Todo push notification "Phương tiện đã được cập nhật"
+        $apartment = Apartment::find($request->apartment_id);
+        $pushNotify = new PushNotify();
+        $pushNotify->category= "vehicle";
+        $pushNotify->item_id = $edit->id;
+        $pushNotify->title = "Căn hộ ".$apartment->apartment_code.": Phương tiện đã được cập nhật";
+        $pushNotify->body = $edit->model;
+        $pushNotify->type_user = "customer";
+        $pushNotify->click_action = route('user.show-vehicle');
+        $pushNotify->save();
 
+        PushNotifyRelationship::create([
+            'apartment_id' => $apartment->id,
+            'push_notify_id'=> $pushNotify->id,
+        ]);
+        $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
+        $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
+        $userList = array_unique(array_merge($userList1, $userList2));
+        $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+        // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+        PushNotificationJob::dispatch('sendBatchNotification', [
+            $deviceTokens,
+            [
+                'topicName' => $pushNotify->category,
+                'title' => $pushNotify->title,
+                'body' => $pushNotify->body,
+                'click_action' => $pushNotify->click_action,
+                'image'=>"<i class=\"bi bi-bicycle\"></i>"
+
+            ],
+        ]);
         return new JsonResponse(['success'], 200);
     }
 
@@ -166,6 +234,44 @@ class VehicleController extends BaseBuildingController
             } catch (\Throwable $th) {
                 return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
             }
+
+                    // Todo push notification "Phương tiện đã được chấp nhận"
+            $vehicle= Vehicle::whereIn('id', $id)->get();
+            foreach ($vehicle as $key => $value) {
+                $apartment = Apartment::find($value->apartment_id);
+                $pushNotify = new PushNotify();
+                $pushNotify->category= "vehicle";
+                $pushNotify->item_id = $value->id;
+                $pushNotify->title = "Căn hộ ".$apartment->apartment_code.": Phương tiện đã được chấp nhận";
+                $pushNotify->body = '';
+                $pushNotify->type_user = "customer";
+                $pushNotify->click_action = route('user.show-vehicle');
+                $pushNotify->save();
+
+                PushNotifyRelationship::create([
+                    'apartment_id' => $apartment->id,
+                    'push_notify_id'=> $pushNotify->id,
+                ]);
+                $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
+                $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
+                $userList = array_unique(array_merge($userList1, $userList2));
+                $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+                // // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+                PushNotificationJob::dispatch('sendBatchNotification', [
+                    $deviceTokens,
+                    [
+                        'topicName' => $pushNotify->category,
+                        'title' => $pushNotify->title,
+                        'body' => $pushNotify->body,
+                        'click_action' => $pushNotify->click_action,
+                        'image'=>"<i class=\"bi bi-bicycle\"></i>"
+
+                    ],
+                ]);
+            }
+
             return new JsonResponse(['accepted'], 200);
         }
         return new JsonResponse(['errors' => 'không có id'], 406);

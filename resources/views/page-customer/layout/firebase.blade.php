@@ -1,57 +1,4 @@
-{{-- <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-<script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-        apiKey: "AIzaSyBaI5e-ab33imAYOAjWRzpJXePls6N-FkA",
-        authDomain: "datn-megacare.firebaseapp.com",
-        projectId: "datn-megacare",
-        storageBucket: "datn-megacare.appspot.com",
-        messagingSenderId: "379787159816",
-        appId: "1:379787159816:web:2c12d2a5988e28e467e4bd",
-        measurementId: "G-B28M0Y4RFG"
-    };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const messaging = firebase.messaging();
-
-    function initFirebaseMessagingRegistration() {
-        messaging.requestPermission().then(function() {
-            return messaging.getToken()
-        }).then(function(token) {
-            console.log(token);
-            axios.post("{{ route('user.update-token') }}", {
-                _method: "PATCH",
-                token
-            }).then(({
-                data
-            }) => {
-                console.log(data)
-            }).catch(({
-                response: {
-                    data
-                }
-            }) => {
-                console.error(data)
-            })
-        }).catch(function(err) {
-            console.log(`Token Error :: ${err}`);
-        });
-    }
-    initFirebaseMessagingRegistration();
-    messaging.onMessage(function({
-        data: {
-            body,
-            title
-        }
-    }) {
-        new Notification(title, {
-            body
-        });
-    });
-</script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
 <script type="module">
@@ -115,16 +62,15 @@
     requestPermission();
     onMessage(messaging, (payload) => {
         console.log(payload);
-        const notificationTitle = payload.notification.title;
-        const notificationOptions = {
-            body: payload.notification.body,
-            icon: '/assets/media/logos/favicon.ico'
-        };
-
-        // self.registration.showNotification(notificationTitle, notificationOptions);
-        new Notification(notificationTitle, notificationOptions);
-
+        const title = payload.data.title;
+        const body = payload.data.body;
+        const click_action = payload.data.click_action;
+        $("#toast_custom_link").data("action", click_action);
+        showToast("custom-notify", title);
+        $("#body_list_push_notification").prepend()
     });
-
+    $("#toast_custom_link").on('click', ()=>{
+        location.href=$("#toast_custom_link").data("action");
+    })
 </script>
 

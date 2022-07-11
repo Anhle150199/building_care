@@ -101,6 +101,10 @@ class CustommerController extends BaseBuildingController
         $data['methodAjax'] = 'put';
         $data['customerCurrent'] = $customerCurrent;
         $data['buildingActive'] = $this->getBuildingActive();
+        $buildingCustomer = Apartment::find($customerCurrent->apartment_id)->building_id;
+        if($buildingCustomer != $data['buildingActive'] ){
+            return redirect()->route("admin.customers.customer-list");
+        }
         $data['buildingList'] = $this->buildingList;
         $apartments = Apartment::where('building_id', $data['buildingActive'])->get();
         $data['apartments'] = $apartments;
@@ -120,7 +124,7 @@ class CustommerController extends BaseBuildingController
                 'customer_code' => 'string|required',
                 'birthday' => 'required',
                 'status' => ['string', 'in:stay,leave,absent', 'required'],
-                'email' => ['required', 'string', 'unique:customers,email']
+                'email' => ['required', 'string']
             ]
         );
 
@@ -141,6 +145,12 @@ class CustommerController extends BaseBuildingController
                     $oldApartmnet = Apartment::where('id', $edit->apartment_id)->first();
                     $oldApartmnet->status = 'absent';
                     $oldApartmnet->save();
+            }
+        }
+        if($edit->email != $request->email){
+            $count = Customer::where('email', $request->email)->count();
+            if($count >0){
+                return new JsonResponse(['errors' => ['email' => 'Email bị trùng']], 406);
             }
         }
         try {
