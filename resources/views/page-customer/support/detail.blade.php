@@ -251,7 +251,8 @@
                         $(".item").remove();
                         scrollToBottom();
                     },
-                    error: function() {
+                    error: function(data) {
+                        console.log(data);
                         showToast('danger')
                     }
                 })

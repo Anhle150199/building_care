@@ -13,7 +13,7 @@
 
         <a href="{{$item->click_action}}">
           <div class="alert unread custom-alert-3 alert-primary" role="alert">
-            @if($item->category =="feedback")
+            @if($item->category =="support")
             <i class="bi bi-chat-dots mt-0"></i>
             @elseif($item->category =="notify_event")
             <i class="bi bi-bell"></i>

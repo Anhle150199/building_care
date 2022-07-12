@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Building;
+use App\Models\PushNotify;
+use App\Models\PushNotifyRelationship;
 use App\Repositories\Eloquent\ApartmentRepository;
 use App\Repositories\Eloquent\BuildingRepository;
 use Illuminate\Http\JsonResponse;
@@ -28,7 +30,7 @@ class BaseBuildingController extends Controller
     public function updateBuildingActive(Request $request)
     {
         $validate = Validator::make(
-            $request->all(),
+            $request->all() ,
             [
                 'id' => ['integer', 'required', 'exists:building,id'],
             ]
@@ -49,6 +51,16 @@ class BaseBuildingController extends Controller
     public function getBuildingActive()
     {
         return $this->buildingModel->getBuildingActive(Auth::user()->id);
+    }
+
+    public function getPushNotify()
+    {
+        $notify = PushNotify::where("type_user", "admin")->whereJsonContains('receive_id', Auth::user()->id)->orderBy("id", 'desc')->limit(5)->get();
+        foreach ($notify as $key => $value) {
+            $value->time = $value->created_at->diffForHumans();
+        }
+        return new JsonResponse($notify, 200);
+
     }
 
 }

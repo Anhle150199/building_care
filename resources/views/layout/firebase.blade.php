@@ -32,17 +32,13 @@
             console.log('Notification permission granted.');
             getToken(messaging, { vapidKey: 'BIz_RR4vvfPX7U7d7p41VEOVePDZnQ9oV4qad8Ixa8P7OOABanXs_jJjP0_HLPNQFekYvBptfYL1pqefML8T_TA' }).then((token) => {
                 if (token) {
-                    axios.post("{{ route('user.update-token') }}", {
+                    axios.post("{{ route('admin.update-token') }}", {
                         _method: "PATCH",
                         token
-                    }).then(({
-                        data
-                    }) => {
+                    }).then(({data}) => {
                         console.log(data)
                     }).catch(({
-                        response: {
-                            data
-                        }
+                        response: {data}
                     }) => {
                         console.error(data)
                     })
@@ -62,21 +58,13 @@
     requestPermission();
     onMessage(messaging, (payload) => {
         console.log(payload);
-        const title = payload.data.title;
-        const body = payload.data.body;
-        const click_action = payload.data.click_action;
-        $("#toast_custom_link").data("action", click_action);
-        showToast("custom-notify", title);
-        const itemNotify= `<a href="${click_action}">
-          <div class="alert unread custom-alert-3 alert-primary" role="alert">
-            ${payload.data.image}
-            <div class="alert-text w-75">
-              <h6 class="text-truncate">${title}</h6><span class="text-truncate">${body}</span>
-            </div>
-          </div>
-        </a>
-        `
-        $("#body_list_push_notification").prepend(itemNotify);
+        $("#notify_dot").show();
+        // const title = payload.data.title;
+        // const body = payload.data.body;
+        // const click_action = payload.data.click_action;
+        // $("#toast_custom_link").data("action", click_action);
+        // showToast("custom-notify", title);
+        // $("#body_list_push_notification").prepend()
     });
     $("#toast_custom_link").on('click', ()=>{
         location.href=$("#toast_custom_link").data("action");

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Support;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Http\Controllers\Customer\SupportController as CustomerSupportController;
+use App\Jobs\PushNotificationJob;
 use App\Mail\NotifyEmail;
 use App\Models\Admin;
 use App\Models\Building;
@@ -12,6 +13,7 @@ use App\Models\Department;
 use App\Models\Feedback;
 use App\Models\Notification;
 use App\Models\NotifyRelationship;
+use App\Models\PushNotify;
 use App\Models\ReplyFeedback;
 use App\Models\SentMail;
 use Illuminate\Http\JsonResponse;
@@ -123,9 +125,33 @@ class SupportController extends BaseBuildingController
         $reply->avatar = Auth::user()->avatar;
 
         $feedback = Feedback::find($request->feecback_id);
-        if ($feedback->admin_id != null) {
-            // CustomerSupportController::pushNotification($reply);
-        }
+        if ($feedback->customer_id != null) {
+                // Todo push notification
+                $pushNotify = new PushNotify();
+                $pushNotify->category= "support";
+                $pushNotify->item_id = $feedback->id;
+                $pushNotify->title = "Admin đã trả lờibạn";
+                $pushNotify->body = $feedback->title;
+                $pushNotify->type_user = "customer";
+                $pushNotify->click_action = route('user.support.show-detail', ['id'=> $feedback->id]);
+                $pushNotify->receive_id = json_encode([$feedback->customer_id]);
+                $pushNotify->save();
+
+                $deviceTokens = Admin::where("id", $feedback->admin_id)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+                // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+                PushNotificationJob::dispatch('sendBatchNotification', [
+                    $deviceTokens,
+                    [
+                        'topicName' => $pushNotify->category,
+                        'title' => $pushNotify->title,
+                        'body' => $pushNotify->body,
+                        'click_action' => $pushNotify->click_action,
+                        'image'=>"<i class=\"bi bi-chat-right-dots\"></i>"
+                    ],
+                ]);
+            }
         return new JsonResponse($reply->toArray(), 200);
     }
 

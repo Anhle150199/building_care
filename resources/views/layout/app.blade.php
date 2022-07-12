@@ -87,6 +87,48 @@
                     }
                 })
             })
+            const itemNotify = (icon, title, body, time, link)=>{
+                return `<div class="d-flex flex-stack py-4" >
+                            <a href="${link}" class="d-flex align-items-center">
+                                <div class="symbol symbol-35px me-4">
+                                    <span class="symbol-label bg-light-primary">
+                                        <span class="svg-icon svg-icon-2 svg-icon-primary">
+                                            ${icon}
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="mb-0 me-2">
+                                    <span href="#" class="fs-6 text-gray-800 text-hover-primary fw-bolder">${title}</span>
+                                    <div class="text-gray-400 fs-7">${body}
+                                    </div>
+                                </div>
+                            </a >
+                            <span class="badge badge-light fs-8 notify_time" >${time}</span>
+                        </div>`;
+            };
+            $("#notify_btn").on("click", ()=>{
+                $.ajax({
+                    url:"{{route('admin.get-push-notification')}}",
+                    type: "get",
+                    success: function(data){
+                        // console.log(data);
+                        let icon;
+                        $("#notify_list").empty();
+                        data.forEach((item)=>{
+                            if(item.category == "support"){
+                                icon =`<i class="bi bi-chat-dots"></i>`;
+                            }else if(item.category == "notify_event"){
+                                icon =`<i class="bi bi-bell"></i>`;
+                            }else if(item.category == "maintenance"){
+                                icon =`<i class="bi bi-calendar2-event"></i>`;
+                            }else if(item.category == "vehicle"){
+                                icon =`<i class="bi bi-bicycle"></i>`;
+                            }
+                            $("#notify_list").append(itemNotify(icon, item.title, item.body, item.time, item.click_action));
+                        })
+                    }
+                })
+            })
         })
     </script>
     {{-- <script src="{{ asset('/sw.js') }}"></script>
@@ -111,6 +153,7 @@
             -webkit-box-orient: vertical;
         }
     </style>
+    @include("layout.firebase")
 </body>
 
 </html>

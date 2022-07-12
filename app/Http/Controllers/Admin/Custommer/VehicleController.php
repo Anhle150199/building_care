@@ -34,8 +34,15 @@ class VehicleController extends BaseBuildingController
         $data['buildingList'] = $this->buildingList;
         return $data;
     }
+    public function checkUpdateBuildingId(Request $request)
+    {
+        if($request->has("id")){
+            $this->updateBuildingActive($request);
+        }
+    }
     public function showList(Request $request)
     {
+        $this->checkUpdateBuildingId($request);
         $data = $this->generalData();
 
         $apartmentIdList = $this->apartmentModel->getApartmentList($data['buildingActive']);
@@ -53,6 +60,8 @@ class VehicleController extends BaseBuildingController
 
     public function showRequest(Request $request)
     {
+        $this->checkUpdateBuildingId($request);
+
         $data = $this->generalData();
         $apartmentIdList = $this->apartmentModel->getApartmentList($data['buildingActive']);
 
@@ -70,6 +79,8 @@ class VehicleController extends BaseBuildingController
 
     public function showCreate(Request $request)
     {
+        $this->checkUpdateBuildingId($request);
+
         $data = $this->generalData();
         $data['typePage'] = 'new';
         $data['title'] = 'Thêm mới phương tiện';
@@ -125,12 +136,18 @@ class VehicleController extends BaseBuildingController
         }
         // Todo push notification "Phương tiện đã được thêm"
         $apartment = Apartment::find($request->apartment_id);
+
+        $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
+        $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
+        $userList = array_unique(array_merge($userList1, $userList2));
+
         $pushNotify = new PushNotify();
         $pushNotify->category= "vehicle";
         $pushNotify->item_id = $vehicle->id;
         $pushNotify->title = "Căn hộ ".$apartment->apartment_code.": Phương tiện đã được thêm mới";
         $pushNotify->body = $vehicle->model;
         $pushNotify->type_user = "customer";
+        $pushNotify->receive_id = json_encode($userList);
         $pushNotify->click_action = route('user.show-vehicle');
         $pushNotify->save();
 
@@ -138,9 +155,7 @@ class VehicleController extends BaseBuildingController
             'apartment_id' => $apartment->id,
             'push_notify_id'=> $pushNotify->id,
         ]);
-        $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
-        $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
-        $userList = array_unique(array_merge($userList1, $userList2));
+
         $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
 
         // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
@@ -186,6 +201,10 @@ class VehicleController extends BaseBuildingController
 
         // Todo push notification "Phương tiện đã được cập nhật"
         $apartment = Apartment::find($request->apartment_id);
+        $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
+        $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
+        $userList = array_unique(array_merge($userList1, $userList2));
+
         $pushNotify = new PushNotify();
         $pushNotify->category= "vehicle";
         $pushNotify->item_id = $edit->id;
@@ -193,15 +212,14 @@ class VehicleController extends BaseBuildingController
         $pushNotify->body = $edit->model;
         $pushNotify->type_user = "customer";
         $pushNotify->click_action = route('user.show-vehicle');
+        $pushNotify->receive_id = json_encode($userList);
+
         $pushNotify->save();
 
         PushNotifyRelationship::create([
             'apartment_id' => $apartment->id,
             'push_notify_id'=> $pushNotify->id,
         ]);
-        $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
-        $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
-        $userList = array_unique(array_merge($userList1, $userList2));
         $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
 
         // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
@@ -239,6 +257,10 @@ class VehicleController extends BaseBuildingController
             $vehicle= Vehicle::whereIn('id', $id)->get();
             foreach ($vehicle as $key => $value) {
                 $apartment = Apartment::find($value->apartment_id);
+                $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
+                $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
+                $userList = array_unique(array_merge($userList1, $userList2));
+
                 $pushNotify = new PushNotify();
                 $pushNotify->category= "vehicle";
                 $pushNotify->item_id = $value->id;
@@ -246,15 +268,13 @@ class VehicleController extends BaseBuildingController
                 $pushNotify->body = '';
                 $pushNotify->type_user = "customer";
                 $pushNotify->click_action = route('user.show-vehicle');
+                $pushNotify->receive_id = json_encode($userList);
                 $pushNotify->save();
 
                 PushNotifyRelationship::create([
                     'apartment_id' => $apartment->id,
                     'push_notify_id'=> $pushNotify->id,
                 ]);
-                $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
-                $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
-                $userList = array_unique(array_merge($userList1, $userList2));
                 $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
 
                 // // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();

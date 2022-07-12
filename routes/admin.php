@@ -27,6 +27,8 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
     Route::get('/', [AdminHomeController::class, 'index'])->name('dashboard');
     Route::post('/update-building-active', [BaseBuildingController::class, 'updateBuildingActive'])->name('update_building_active');
 
+    Route::patch('update-token', [AdminHomeController::class, 'updateDeviceKey'])->name('update-token');
+    Route::get('push-notification', [BaseBuildingController::class, 'getPushNotify'])->name('get-push-notification');
     // User manage(for admin login)
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('profile', [UserController::class, 'showProfile'])->name('profile');

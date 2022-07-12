@@ -122,6 +122,16 @@ class NotifyController extends BaseBuildingController
         if($new->category == "notify"){
             $apartments = Apartment::whereIn("building_id", $building)->pluck('id')->toArray();
 
+            if ($request->sent_type == 1) {
+                $userList = Customer::pluck("id")->toArray();
+                $deviceTokens = Customer::whereNotNull('device_key')->pluck('device_key')->toArray();
+
+            } else{
+                $userList1 = Apartment::whereIn("id", $apartments)->pluck('owner_id')->toArray();
+                $userList2 = Customer::whereIn("apartment_id", $apartments)->pluck('id')->toArray();
+                $userList = array_unique(array_merge($userList1, $userList2));
+                $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
+            }
             $pushNotify = new PushNotify();
             $pushNotify->category= "notify_event";
             $pushNotify->item_id = $new->id;
@@ -129,6 +139,8 @@ class NotifyController extends BaseBuildingController
             $pushNotify->body = $new->title;
             $pushNotify->type_user = "customer";
             $pushNotify->click_action = url("/notify/").'/'.$new->slug;
+            $pushNotify->receive_id = json_encode($userList);
+
             $pushNotify->save();
 
             foreach ($apartments as $key => $value) {
@@ -136,14 +148,6 @@ class NotifyController extends BaseBuildingController
                     'apartment_id' => $value,
                     'push_notify_id'=> $pushNotify->id,
                 ]);
-            }
-            if ($request->sent_type == 1) {
-            $deviceTokens = Customer::whereNotNull('device_key')->pluck('device_key')->toArray();
-            } else{
-                $userList1 = Apartment::whereIn("id", $apartments)->pluck('owner_id')->toArray();
-                $userList2 = Customer::whereIn("apartment_id", $apartments)->pluck('id')->toArray();
-                $userList = array_unique(array_merge($userList1, $userList2));
-                $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
             }
             PushNotificationJob::dispatch('sendBatchNotification', [
                 $deviceTokens,

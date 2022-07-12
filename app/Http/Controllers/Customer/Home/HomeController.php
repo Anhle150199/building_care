@@ -61,15 +61,7 @@ class HomeController extends Controller
     {
         $data = [];
         $data['menu'] = 'notify';
-        $list = Apartment::where('owner_id', Auth::user()->id)->pluck('id')->toArray();
-        $apartmentLive = Auth::user()->apartment_id;
-        if (!in_array($apartmentLive, $list)) {
-            array_push($list, $apartmentLive);
-        }
-        // dd($list);
-        $notifyRelationship=PushNotifyRelationship::whereIn("apartment_id", $list)->distinct('push_notify_id')->pluck('push_notify_id')->toArray();
-
-        $notify = PushNotify::whereIn('id', $notifyRelationship)->orderBy('id', 'desc')->get();
+        $notify = PushNotify::where("type_user", "customer")->whereJsonContains('receive_id', Auth::user()->id)->get();
         // dd($notify);
         $data["notification"]=$notify;
         return view('page-customer.notify', $data);

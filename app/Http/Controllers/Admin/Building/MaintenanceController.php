@@ -86,9 +86,14 @@ class MaintenanceController extends BaseBuildingController
         }
         // Todo push notification "Có lịch bảo trì "
         $apartments = Apartment::where("building_id", $request->building_id)->pluck('id')->toArray();
+        $userList1 = Apartment::whereIn("id", $apartments)->pluck('owner_id')->toArray();
+        $userList2 = Customer::whereIn("apartment_id", $apartments)->pluck('id')->toArray();
+        $userList = array_unique(array_merge($userList1, $userList2));
+
         $building = Building::find($request->building_id);
         $pushNotify = new PushNotify();
         $pushNotify->category= "maintenance";
+        $pushNotify->receive_id = json_encode($userList);
         $pushNotify->item_id = $new->id;
         $pushNotify->title = "Toà ".$building->name.": Có lịch bảo trì mới!";
         $pushNotify->body = $new->title;
@@ -102,9 +107,6 @@ class MaintenanceController extends BaseBuildingController
             ]);
         }
 
-        $userList1 = Apartment::whereIn("id", $apartments)->pluck('owner_id')->toArray();
-        $userList2 = Customer::whereIn("apartment_id", $apartments)->pluck('id')->toArray();
-        $userList = array_unique(array_merge($userList1, $userList2));
         $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
 
         PushNotificationJob::dispatch('sendBatchNotification', [

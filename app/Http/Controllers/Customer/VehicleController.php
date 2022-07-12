@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\PushNotificationJob;
 use App\Models\Admin;
 use App\Models\Apartment;
 use App\Models\Customer;
 use App\Models\Notification;
 use App\Models\NotifyRelationship;
+use App\Models\PushNotify;
 use App\Models\Vehicle;
 use App\Repositories\Eloquent\ApartmentRepository;
 use Illuminate\Http\JsonResponse;
@@ -99,6 +101,30 @@ class VehicleController extends Controller
             return new JsonResponse(['errors' => ['Lỗi insert data cu dan']], 406);
         }
         // Todo push notification "Phương tiện đã được thêm"
+        $apartment = Apartment::find($model->apartment_id);
+        $adminId = Admin::pluck("id")->toArray();
+        $pushNotify = new PushNotify();
+        $pushNotify->category= "vehicle";
+        $pushNotify->item_id = $model->id;
+        $pushNotify->title = "Căn hộ".$apartment->apartment_code.": Có phương tiện đăng ký mới";
+        $pushNotify->body = $model->model;
+        $pushNotify->type_user = "admin";
+        $pushNotify->click_action = route('admin.customers.vehicle-request')."?id=".$apartment->building_id;
+        $pushNotify->receive_id = json_encode($adminId);
+        $pushNotify->save();
+
+        $deviceTokens = Admin::whereNotNull('device_key')->pluck('device_key')->toArray();
+
+        PushNotificationJob::dispatch('sendBatchNotification', [
+            $deviceTokens,
+            [
+                'topicName' => $pushNotify->category,
+                'title' => $pushNotify->title,
+                'body' => $pushNotify->body,
+                'click_action' => $pushNotify->click_action,
+                'image'=>"<i class=\"bi bi-chat-right-dots\"></i>"
+            ],
+        ]);
 
         return new JsonResponse(['success'], 200);
 

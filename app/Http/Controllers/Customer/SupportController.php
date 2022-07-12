@@ -86,6 +86,7 @@ class SupportController extends Controller
         }
         // Todo push notification
         $department = Department::find($newFb->department_id);
+        $userList = Admin::where("department_id", $department->id)->pluck("id")->toArray();
         $pushNotify = new PushNotify();
         $pushNotify->category= "support";
         $pushNotify->item_id = $newFb->id;
@@ -93,13 +94,14 @@ class SupportController extends Controller
         $pushNotify->body = $newFb->title;
         $pushNotify->type_user = "admin";
         $pushNotify->click_action = route('admin.support.show-detail', ['id'=> $newFb]);
+        $pushNotify->receive_id = json_encode($userList);
         $pushNotify->save();
 
         PushNotifyRelationship::create([
             'apartment_id' => $department->id,
             'push_notify_id'=> $pushNotify->id,
         ]);
-        $deviceTokens = Admin::where("departrment_id", $department)->whereNotNull('device_key')->pluck('device_key')->toArray();
+        $deviceTokens = Admin::where("department_id", $department->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
 
         // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
 
@@ -139,23 +141,17 @@ class SupportController extends Controller
 
         $feedback = Feedback::find($request->feecback_id);
         if ($feedback->admin_id != null) {
-            // $this->pushNotification($reply, 'admin', [$feedback->admin_id]);
-
                 // Todo push notification
-            $department = Department::find($feedback->department_id);
             $pushNotify = new PushNotify();
             $pushNotify->category= "support";
             $pushNotify->item_id = $feedback->id;
             $pushNotify->title = Auth::user()->name." đã trả lời";
             $pushNotify->body = $feedback->title;
             $pushNotify->type_user = "admin";
-            $pushNotify->click_action = route('admin.support.show-detail', ['id'=> $feedback]);
+            $pushNotify->click_action = route('admin.support.show-detail', ['id'=> $feedback->id]);
+            $pushNotify->receive_id = json_encode([$feedback->admin_id]);
             $pushNotify->save();
 
-            PushNotifyRelationship::create([
-                'apartment_id' => $department->id,
-                'push_notify_id'=> $pushNotify->id,
-            ]);
             $deviceTokens = Admin::where("id", $feedback->admin_id)->whereNotNull('device_key')->pluck('device_key')->toArray();
 
             // $deviceTokens = Customer::where('apartment_id', $apartment->id)->whereNotNull('device_key')->pluck('device_key')->toArray();
@@ -199,3 +195,4 @@ class SupportController extends Controller
         return $list;
     }
 
+}
