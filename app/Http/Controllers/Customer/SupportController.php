@@ -112,7 +112,8 @@ class SupportController extends Controller
                 'title' => $pushNotify->title,
                 'body' => $pushNotify->body,
                 'click_action' => $pushNotify->click_action,
-                'image'=>"<i class=\"bi bi-chat-right-dots\"></i>"
+                'image'=>"<i class=\"bi bi-chat-right-dots\"></i>",
+                "category"=>'support_request',
             ],
         ]);
         return new JsonResponse(['success'], 200);
@@ -146,7 +147,7 @@ class SupportController extends Controller
             $pushNotify->category= "support";
             $pushNotify->item_id = $feedback->id;
             $pushNotify->title = Auth::user()->name." đã trả lời";
-            $pushNotify->body = $feedback->title;
+            $pushNotify->body = $reply->content;
             $pushNotify->type_user = "admin";
             $pushNotify->click_action = route('admin.support.show-detail', ['id'=> $feedback->id]);
             $pushNotify->receive_id = json_encode([$feedback->admin_id]);
@@ -163,7 +164,9 @@ class SupportController extends Controller
                     'title' => $pushNotify->title,
                     'body' => $pushNotify->body,
                     'click_action' => $pushNotify->click_action,
-                    'image'=>"<i class=\"bi bi-chat-right-dots\"></i>"
+                    'image'=>"<i class=\"bi bi-chat-right-dots\"></i>",
+                    "category"=>'support_reply_admin',
+                    "images_support"=> $reply->image,
                 ],
             ]);
         }

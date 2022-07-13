@@ -61,7 +61,7 @@ class HomeController extends Controller
     {
         $data = [];
         $data['menu'] = 'notify';
-        $notify = PushNotify::where("type_user", "customer")->whereJsonContains('receive_id', Auth::user()->id)->get();
+        $notify = PushNotify::where("type_user", "customer")->whereJsonContains('receive_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
         // dd($notify);
         $data["notification"]=$notify;
         return view('page-customer.notify', $data);

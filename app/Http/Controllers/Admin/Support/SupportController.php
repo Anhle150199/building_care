@@ -131,7 +131,7 @@ class SupportController extends BaseBuildingController
                 $pushNotify->category= "support";
                 $pushNotify->item_id = $feedback->id;
                 $pushNotify->title = "Admin đã trả lờibạn";
-                $pushNotify->body = $feedback->title;
+                $pushNotify->body = $reply->content;
                 $pushNotify->type_user = "customer";
                 $pushNotify->click_action = route('user.support.show-detail', ['id'=> $feedback->id]);
                 $pushNotify->receive_id = json_encode([$feedback->customer_id]);
@@ -148,7 +148,9 @@ class SupportController extends BaseBuildingController
                         'title' => $pushNotify->title,
                         'body' => $pushNotify->body,
                         'click_action' => $pushNotify->click_action,
-                        'image'=>"<i class=\"bi bi-chat-right-dots\"></i>"
+                        'image'=>"<i class=\"bi bi-chat-right-dots\"></i>",
+                        "category"=>"support_reply_customer",
+                        "images_support"=> $reply->image,
                     ],
                 ]);
             }

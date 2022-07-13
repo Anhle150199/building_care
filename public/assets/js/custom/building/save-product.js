@@ -62,7 +62,14 @@ var KTAppEcommerceSaveProduct = (function () {
                             product_name: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Tên không được để trống.",
+                                        message: "Tên toà nhà không được để trống.",
+                                    },
+                                },
+                            },
+                            building_code: {
+                                validators: {
+                                    notEmpty: {
+                                        message: "Mã toà nhà không được để trống.",
                                     },
                                 },
                             },
@@ -157,7 +164,7 @@ var KTAppEcommerceSaveProduct = (function () {
                                                     let email = $('input[name=email]').val();
                                                     let phone = $('input[name=phone]').val();
                                                     let description = quill.root.innerHTML;
-
+                                                    let building_code = $('input[name=building_code]').val();
                                                     let data ={
                                                         _token: token,
                                                         id: id,
@@ -170,7 +177,8 @@ var KTAppEcommerceSaveProduct = (function () {
                                                         height: height,
                                                         acreage: acreage,
                                                         floors_number: floors_number,
-                                                        apartment_number: apartment_number
+                                                        apartment_number: apartment_number,
+                                                        building_code: building_code,
                                                     };
                                                     console.log(data);
                                                     $.ajax({

@@ -60,11 +60,26 @@
         console.log(payload);
         $("#notify_dot").show();
         // const title = payload.data.title;
-        // const body = payload.data.body;
+        const body = payload.data.body;
         // const click_action = payload.data.click_action;
         // $("#toast_custom_link").data("action", click_action);
         // showToast("custom-notify", title);
         // $("#body_list_push_notification").prepend()
+        const category = payload.data.category;
+
+        if(category == "support_reply_admin"){
+            let avatar =$("#avatar_customer span").attr("style").split(")")[0].split("(")[1].split("/")[5];
+            let name = $("#name_customer").text();
+            var m = new Date();
+            var time =
+                ("0" + m.getUTCHours()).slice(-2) + ":" +
+                ("0" + m.getUTCMinutes()).slice(-2)+" "+
+                m.getUTCFullYear() + "-" +
+                ("0" + (m.getUTCMonth()+1)).slice(-2) + "-" +
+                ("0" + m.getUTCDate()).slice(-2)
+            addToList(avatar, name, body, time, JSON.parse(payload.data.images_support), 'receive');
+            scroolButtom();
+        }
     });
     $("#toast_custom_link").on('click', ()=>{
         location.href=$("#toast_custom_link").data("action");

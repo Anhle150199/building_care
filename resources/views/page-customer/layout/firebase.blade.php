@@ -1,6 +1,12 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+{{-- <script>
 
+var payLoad;
+function addpaylad(params) {
+    payLoad = params;
+}
+</script> --}}
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-analytics.js";
@@ -61,10 +67,12 @@
     }
     requestPermission();
     onMessage(messaging, (payload) => {
+        // addpaylad(payload);
         console.log(payload);
         const title = payload.data.title;
         const body = payload.data.body;
         const click_action = payload.data.click_action;
+        const category = payload.data.category;
         $("#toast_custom_link").data("action", click_action);
         showToast("custom-notify", title);
         const itemNotify= `<a href="${click_action}">
@@ -77,6 +85,51 @@
         </a>
         `
         $("#body_list_push_notification").prepend(itemNotify);
+
+        if(category == "support_reply_customer"){
+            const message = (content, images)=>{
+                let host = location.origin;
+                var m = new Date();
+                var time =
+                    ("0" + m.getUTCHours()).slice(-2) + ":" +
+                    ("0" + m.getUTCMinutes()).slice(-2)+" "+
+                    m.getUTCFullYear() + "-" +
+                    ("0" + (m.getUTCMonth()+1)).slice(-2) + "-" +
+                    ("0" + m.getUTCDate()).slice(-2)
+                const image = () => {
+                    let x = '';
+                    images.forEach(img => {
+                        x += `<img class="p-1 cursor-pointer" src="${host}/images/feedback/${img}">`
+                    });
+                    return x;
+                }
+                $("#chat-body").append( `<div class="single-chat-item ">
+                        <div class="user-avatar mt-1">
+                            <span class="name-first-letter">A</span>
+                            <img src="${ host}/assets/media/avatars/avatar-1.png">
+                        </div>
+                        <div class="user-message" style="max-width: 85%">
+                            <div class="message-time-status">
+                                <div class="sent-time">Admin</div>
+                            <div class="sent-time">${ time }</div>
+                            </div>
+                            <div class="message-content">
+                                <div
+                                    class="single-message bg-info rounded p-2">
+                                    ${content}
+                                </div>
+                            </div>
+                            <div class="message-content ">
+                                <div class="single-message d-flex flex-wrap align-items-center">
+                                    ${image()}
+                                </div>
+                            </div>
+                        </div>
+                    </div>`);
+            }
+            message(body, JSON.parse(payload.data.images_support))
+            $(document).scrollTop(99999999);
+        }
     });
     $("#toast_custom_link").on('click', ()=>{
         location.href=$("#toast_custom_link").data("action");

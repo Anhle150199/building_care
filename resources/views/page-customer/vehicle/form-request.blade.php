@@ -121,7 +121,8 @@
                             location.href=$('form').data('redirect')
                         }, 50);
                     },
-                    error: function() {
+                    error: function(data) {
+                        console.log(data);
                         showToast('danger')
                     }
                 })

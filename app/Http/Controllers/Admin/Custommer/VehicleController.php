@@ -305,10 +305,47 @@ class VehicleController extends BaseBuildingController
                 return new JsonResponse(['errors' => 'input rỗng'], 406);
             }
             try {
+                $vehicle= Vehicle::whereIn('id', $id)->get();
                 Vehicle::whereIn('id', $id)->delete();
+                foreach ($vehicle as $key => $value) {
+                    $apartment = Apartment::find($value->apartment_id);
+                    $userList1 = Apartment::where("id", $apartment->id)->pluck('owner_id')->toArray();
+                    $userList2 = Customer::where("apartment_id", $apartment->id)->pluck('id')->toArray();
+                    $userList = array_unique(array_merge($userList1, $userList2));
+
+                    $pushNotify = new PushNotify();
+                    $pushNotify->category= "vehicle";
+                    $pushNotify->item_id = $value->id;
+                    $pushNotify->title = "Căn hộ ".$apartment->apartment_code.": Phương tiện đã không được chấp nhận";
+                    $pushNotify->body = $value->model."đã bị xoá";
+                    $pushNotify->type_user = "customer";
+                    $pushNotify->click_action = route('user.show-vehicle');
+                    $pushNotify->receive_id = json_encode($userList);
+                    $pushNotify->save();
+
+                    PushNotifyRelationship::create([
+                        'apartment_id' => $apartment->id,
+                        'push_notify_id'=> $pushNotify->id,
+                    ]);
+                    $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+                    PushNotificationJob::dispatch('sendBatchNotification', [
+                        $deviceTokens,
+                        [
+                            'topicName' => $pushNotify->category,
+                            'title' => $pushNotify->title,
+                            'body' => $pushNotify->body,
+                            'click_action' => $pushNotify->click_action,
+                            'image'=>"<i class=\"bi bi-bicycle\"></i>"
+
+                        ],
+                    ]);
+                }
+
             } catch (\Throwable $th) {
                 return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
             }
+
             return new JsonResponse(['deleted'], 200);
         }
         return new JsonResponse(['errors' => 'không có id'], 406);

@@ -106,7 +106,7 @@ class VehicleController extends Controller
         $pushNotify = new PushNotify();
         $pushNotify->category= "vehicle";
         $pushNotify->item_id = $model->id;
-        $pushNotify->title = "Căn hộ".$apartment->apartment_code.": Có phương tiện đăng ký mới";
+        $pushNotify->title = "Căn hộ ".$apartment->apartment_code.": Đăng ký phương tiện mới";
         $pushNotify->body = $model->model;
         $pushNotify->type_user = "admin";
         $pushNotify->click_action = route('admin.customers.vehicle-request')."?id=".$apartment->building_id;

@@ -89,13 +89,13 @@
                 <div data-kt-inbox-message="message_wrapper">
                     <div class="d-flex flex-wrap gap-2 flex-stack cursor-pointer" data-kt-inbox-message="header">
                         <div class="d-flex align-items-center">
-                            <div class="symbol symbol-50 me-4">
+                            <div class="symbol symbol-50 me-4" id="avatar_customer">
                                 <span class="symbol-label"
                                     style="background-image:url({{ url('/') }}/images/avatar-user/{{ str_replace(' ', '%20', $user->avatar) }});"></span>
                             </div>
                             <div class="pe-5">
                                 <div class="d-flex align-items-center flex-wrap gap-1">
-                                    <a href="#"
+                                    <a href="#" id="name_customer"
                                         class="fw-bolder text-dark text-hover-primary">{{ $user->name }}</a>
                                 </div>
                                 <div data-kt-inbox-message="details">
@@ -199,6 +199,7 @@
                 <div class="separator my-6"></div>
                 @endforeach
             </div>
+            <div id="scrollBottom"></div>
             @isset($admin)
                 @if ($admin->id == Auth::user()->id && $feedback->status == 'processing')
                     <div class="card-footer p-1" id="kt_drawer_chat_messenger_footer">
