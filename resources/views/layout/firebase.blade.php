@@ -66,8 +66,9 @@
         // showToast("custom-notify", title);
         // $("#body_list_push_notification").prepend()
         const category = payload.data.category;
+        const type_user = payload.data.type_user;
 
-        if(category == "support_reply_admin"){
+        if(category == "support_reply_admin" && type_user == "admin"){
             let avatar =$("#avatar_customer span").attr("style").split(")")[0].split("(")[1].split("/")[5];
             let name = $("#name_customer").text();
             var m = new Date();

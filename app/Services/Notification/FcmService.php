@@ -47,6 +47,7 @@ class FcmService implements NotificationService
                 'sound' => 'default',
                 'category' => $data['category'] ?? null,
                 'images_support'=>$data['images_support'] ?? null,
+                "type_user"=>$data['for'] ?? null,
             ],
             'apns' => [
                 'payload' => [

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\System;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Http\Controllers\Controller;
+use App\Jobs\MailJob;
 use App\Mail\VerifyMail;
 use App\Models\AccessToken;
 use App\Models\Admin;
@@ -75,8 +76,14 @@ class AdminController extends BaseBuildingController
 
             $token = AccessToken::createToken($new->id, 'verify-email','admin');
             $link = route('auth.verify-email', ['token'=>$token]); //1: admin, 0: user
-            $mailable = new VerifyMail($new->name, $link);
-            Mail::to($new->email)->send($mailable);
+            // $mailable = new VerifyMail($new->name, $link);
+            // Mail::to($new->email)->send($mailable);
+            MailJob::dispatch([
+                'link'=>$link,
+                "name"=>$new->name,
+                "email" =>$new->email,
+                'type'=>"verify",
+            ]);
             return new JsonResponse($new, 200);
         // } catch (\Throwable $th) {
         //     return new JsonResponse(['errors' => ['Có lỗi xảy ra', $request->all()]], 406);
@@ -174,7 +181,13 @@ class AdminController extends BaseBuildingController
     {
         $token = AccessToken::createToken($user->id, 'verify-email','admin');
         $link = route('auth.verify-email', ['token'=>$token, 'type'=>'admin']);
-        $mailable = new VerifyMail($user->name, $link);
-        Mail::to($user->email)->send($mailable);
+        // $mailable = new VerifyMail($user->name, $link);
+        // Mail::to($user->email)->send($mailable);
+        MailJob::dispatch([
+            'link'=>$link,
+            "name"=>$user->name,
+            "email" =>$user->email,
+            'type'=>"verify",
+        ]);
     }
 }

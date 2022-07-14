@@ -32,7 +32,7 @@
     </div>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-7 col-xl-6">
+            <div class="col-12 ">
                 <div class="card mt-3">
                     <div class="card-body p-3">
                         <nav aria-label="Page navigation example">

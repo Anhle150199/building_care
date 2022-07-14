@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\MailJob;
 use App\Mail\ResetPassword;
 use App\Models\AccessToken;
 use App\Models\Admin;
@@ -108,8 +109,13 @@ class ForgotPasswordController extends Controller
                 return new JsonResponse(['errors' => ['unique'=>'Email không tồn tại']], 406);
             $token = AccessToken::createToken($user->id, $request->name, $request->type);
             $link = route('auth.verify-email', ['token' => $token]);
-            $mailable = new ResetPassword($link);
-            Mail::to($request->email)->send($mailable);
+            // $mailable = new ResetPassword($link);
+            // Mail::to($request->email)->send($mailable);
+            MailJob::dispatch([
+                'link'=>$link,
+                "email" =>$request->email,
+                'type'=>"reset_password",
+            ]);
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Có lỗi xảy ra']], 406);
         }

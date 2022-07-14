@@ -114,6 +114,7 @@ class SupportController extends Controller
                 'click_action' => $pushNotify->click_action,
                 'image'=>"<i class=\"bi bi-chat-right-dots\"></i>",
                 "category"=>'support_request',
+                "for"=>"admin",
             ],
         ]);
         return new JsonResponse(['success'], 200);
@@ -167,6 +168,7 @@ class SupportController extends Controller
                     'image'=>"<i class=\"bi bi-chat-right-dots\"></i>",
                     "category"=>'support_reply_admin',
                     "images_support"=> $reply->image,
+                    "for"=>"admin",
                 ],
             ]);
         }

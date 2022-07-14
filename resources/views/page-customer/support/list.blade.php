@@ -125,6 +125,21 @@
                 @endif
             </ul>
         </div>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 ">
+                    <div class="card mt-3">
+                        <div class="card-body p-3">
+                            <nav aria-label="Page navigation example">
+                            {{ $list->links("page-customer.layout.paginate") }}
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 @endsection

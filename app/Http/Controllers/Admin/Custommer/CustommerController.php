@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Custommer;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Jobs\MailJob;
 use App\Mail\VerifyMail;
 use App\Models\AccessToken;
 use Illuminate\Http\Request;
@@ -75,8 +76,14 @@ class CustommerController extends BaseBuildingController
             // Gửi mail
             $token = AccessToken::createToken($new->id, 'verify-email','customer');
             $link = route('auth.verify-email', ['token'=>$token]); //1: admin, 0: user
-            $mailable = new VerifyMail($new->name, $link);
-            Mail::to($new->email)->send($mailable);
+            // $mailable = new VerifyMail($new->name, $link);
+            // Mail::to($new->email)->send($mailable);
+            MailJob::dispatch([
+                'link'=>$link,
+                "name"=>$new->name,
+                "email" =>$new->email,
+                'type'=>"verify",
+            ]);
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data cu dan']], 406);
         }

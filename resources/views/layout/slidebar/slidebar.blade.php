@@ -300,14 +300,14 @@
                                 <span class="menu-title">Danh sách thiết bị </span>
                             </a>
                         </div> --}}
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="{{ route('admin.system.feedback-type.list') }}" id="item-feedback-type">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Thể loại phản hồi </span>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
