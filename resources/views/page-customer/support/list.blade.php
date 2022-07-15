@@ -19,15 +19,7 @@
 
     </style>
 @endpush
-<?php
- function getTimeAgo($carbonObject) {
-    return str_ireplace(
-        [' seconds', ' second', ' minutes', ' minute', ' hours', ' hour', ' days', ' day', ' weeks', ' week'],
-        ['giây', 'giây', 'phút', 'phút', 'giờ', 'giờ', 'ngày', 'ngày', 'tuần', 'tuần'],
-        $carbonObject->diffForHumans()
-    );
-}
-?>
+
 @section('content')
 
     <div class="page-content-wrapper py-3">
@@ -97,9 +89,9 @@
                 @if (sizeof($list) > 0)
                 @foreach ($list as $item)
                     <li class="p-3 @if($item->status != 'processed')chat-unread @endif">
-                        <a class="d-flex" href="{{ route('user.support.show-detail', ['id'=>$item->id]) }}">
+                        <a class="d-flex justify-content-between w-100" href="{{ route('user.support.show-detail', ['id'=>$item->id]) }}">
                             <!-- Info -->
-                            <div class="chat-user-info">
+                            <div class="chat-user-info w-75">
                                 <h6 class="text-truncate mb-0"><i class="bi bi-box-arrow-in-right"></i> Phòng {{$item->name}}
                                 </h6>
                                 <div class="last-chat">
@@ -107,14 +99,14 @@
                                 </div>
                             </div>
 
-                        <div class="dropstart ">
-                            @if($item->status != 'processed')
-                            <span class="badge rounded-pill bg-danger ms-2">Đang xử lý</span>
-                            @else
-                            <span class="badge rounded-pill bg-success ms-2">Đã xử lý</span>
-                            @endif
-                            <p class="fs-11px text-end">{{$item->created_at->diffForHumans()}}</p>
-                        </div>
+                            <div class="dropstart w-25 ">
+                                @if($item->status != 'processed')
+                                <span class="badge rounded-pill text-start bg-danger ms-2">Đang xử lý</span>
+                                @else
+                                <span class="badge rounded-pill text-start bg-success ms-2">Đã xử lý</span>
+                                @endif
+                                <p class="fs-11px text-start ms-2">{{$item->created_at->diffForHumans()}}</p>
+                            </div>
                         </a>
                     </li>
                 @endforeach

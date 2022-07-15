@@ -23,7 +23,9 @@
             <i class="bi bi-bicycle"></i>
             @endif
             <div class="alert-text w-75">
-              <h6 class="text-truncate">{{$item->title}}</h6><span class="text-truncate">{{$item->body}}</span>
+                <h6 class="text-truncate" style="font-size:14px;">{{$item->title}}</h6>
+                <span class="text-truncate" style="font-size:14px;"><?php echo $item->body;?></span>
+                <small class="text-muted">{{$item->created_at->diffForHumans()}}</small>
             </div>
           </div>
         </a>

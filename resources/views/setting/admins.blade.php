@@ -297,7 +297,12 @@
                                                 <span id="position_{{ $admin->id }}">{{ $admin->position }}</span>
                                             </div>
                                         </td>
-                                        <td id="status_{{ $admin->id }}">{{ $admin->status }}</td>
+                                        <td id="status_{{ $admin->id }}">
+                                            {{ $admin->status }}
+                                            @if($admin->status == "verifying")
+                                            <button class="d-block btn btn-sm btn-primary btn-resend" data-email="{{$admin->email}}">Resen Email</button>
+                                            @endif
+                                        </td>
                                         <td id="time_{{ $admin->id }}">
                                             {{ $admin->created_at->format('d M Y, h:i a') }}</td>
                                         <td class="text-center">
@@ -451,6 +456,10 @@
                 $('#btn-submit-form-create').text('Thêm mới');
                 $("#add-form-type").val('new')
             });
+            $(".btn-resend").on('click', function(e){
+                let email = $(this).data('email');
+                console.log(email);
+            })
         })
 
         function showEditModal(id) {
