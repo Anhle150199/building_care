@@ -29,6 +29,10 @@ var KTAppEcommerceSaveProduct = (function () {
                                     notEmpty: {
                                         message: messageNotEmpty,
                                     },
+                                    regexp: {
+                                        regexp: /^\d{10,11}$/i,
+                                        message: 'Giá trị không hợp lệ.',
+                                    },
                                 },
                             },
                             phone: {
@@ -84,6 +88,11 @@ var KTAppEcommerceSaveProduct = (function () {
                                                 let apartment = $('#apartment_select').val();
                                                 let email = $('input[name=email]').val();
                                                 let phone = $('input[name=phone]').val();
+                                                let isOwner=0;
+                                                if($('#owner_check:checkbox:checked').length>0){
+                                                    isOwner =1;
+                                                }
+
                                                 if (status == 'leave') {
                                                     apartment = null;
                                                 } else if(apartment == ""){
@@ -132,6 +141,7 @@ var KTAppEcommerceSaveProduct = (function () {
                                                         phone: phone,
                                                         status: status,
                                                         apartment_id: apartment,
+                                                        isOwner: isOwner,
                                                     };
                                                     console.log(data);
                                                     $.ajax({
@@ -165,8 +175,8 @@ var KTAppEcommerceSaveProduct = (function () {
                                                             let messageErr = (mess)=>{return `<div class="fv-plugins-message-container invalid-feedback"><div data-field="address" data-validator="notEmpty">${mess}</div></div>`}
                                                             const errors = response.responseJSON.errors;
                                                             console.log(errors);
-                                                            if(errors.apartment_code){
-                                                                $('input[name=apartment_code]').parent().append(messageErr(errors.apartment_code))
+                                                            if(errors.customer_code){
+                                                                $('input[name=customer_code]').parent().append(messageErr(errors.customer_code))
                                                             }
                                                             if(errors.email){
                                                                 $('input[name=email]').parent().append(messageErr(errors.email))

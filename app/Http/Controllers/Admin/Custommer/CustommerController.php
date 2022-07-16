@@ -59,7 +59,8 @@ class CustommerController extends BaseBuildingController
                 'customer_code' => 'string|required|unique:customers,customer_code',
                 'birthday' => 'required',
                 'status' => ['string', 'in:stay,leave,absent', 'required'],
-                'email' => ['required', 'string', 'unique:customers,email']
+                'email' => ['required', 'string', 'unique:customers,email'],
+                'isOwner'=>'in:0,1'
             ]
         );
 
@@ -73,6 +74,12 @@ class CustommerController extends BaseBuildingController
         try {
             $customer = new Customer();
             $new = $this->saveDataCustomer($customer, $request);
+            if($request->isOwner == 1){
+                Apartment::where("id", $request->apartment_id)->update([
+                    "owner_id"=>$new->id,
+                    "status"=>"using"
+                ]);
+            }
             // Gửi mail
             $token = AccessToken::createToken($new->id, 'verify-email','customer');
             $link = route('auth.verify-email', ['token'=>$token]); //1: admin, 0: user

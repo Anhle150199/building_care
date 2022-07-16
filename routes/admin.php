@@ -78,6 +78,7 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('apartments', [ApartmentController::class, 'showApartmentList'])->name('apartment-list');
         Route::get('apartments/new', [ApartmentController::class, 'showNewApartment'])->name('show-apartment-new');
         Route::post('apartments/create', [ApartmentController::class, 'create'])->name('apartment-create');
+        Route::post('apartments/import-excel', [ApartmentController::class, 'importExcel'])->name('apartment-import-excel');
         Route::get('apartments/detail-{id}', [ApartmentController::class, 'showUpdate'])->name('show-apartment-update');
         Route::put('apartments/update', [ApartmentController::class, 'update'])->name('apartment-update');
         Route::delete('apartments/delete', [ApartmentController::class, 'delete'])->name('apartment-delete');

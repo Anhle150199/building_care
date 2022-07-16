@@ -109,7 +109,16 @@
                                         @endforeach
                                     </select>
                                 </div>
-
+                                <div class="mb-10 fv-row">
+                                    <div class="form-check ">
+                                        <input class="form-check-input me-3" name="owner"
+                                            type="checkbox" value="1"
+                                            id="owner_check" />
+                                        <label class="form-check-label" for="owner_check">
+                                            <div class="fw-bolder text-gray-800">Chủ căn hộ</div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
@@ -148,7 +157,7 @@
                                                             <tr class="fw-bolder text-muted">
                                                                 <th class="min-w-100px">Toà nhà</th>
                                                                 <th class="min-w-100px">Căn hộ</th>
-                                                                <th class="min-w-100px text-end">Thao tác</th>
+                                                                {{-- <th class="min-w-100px text-end">Thao tác</th> --}}
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -157,14 +166,14 @@
                                                                 <td>
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="d-flex justify-content-start flex-column">
-                                                                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{$item->buildingName}}</a>
+                                                                            <a href="{{ route('admin.customers.show-apartment-update', ['id'=>$item->apartmentId]) }}" class="text-dark fw-bolder text-hover-primary fs-6">{{$item->buildingName}}</a>
                                                                         </div>
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{$item->apartmentName}}</a>
                                                                 </td>
-                                                                <td>
+                                                                {{-- <td>
                                                                     <div class="d-flex justify-content-end flex-shrink-0">
                                                                         <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                                             <span class="svg-icon svg-icon-3">
@@ -184,7 +193,7 @@
                                                                             </span>
                                                                             </a>
                                                                     </div>
-                                                                </td>
+                                                                </td> --}}
                                                             </tr>
                                                             @endforeach
 

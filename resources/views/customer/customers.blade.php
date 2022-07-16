@@ -65,20 +65,16 @@
                                 <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
                                     data-bs-target="#kt_export_modal">
                                     <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
-                                            <rect opacity="0.3" x="12.75" y="4.25" width="12" height="2" rx="1"
-                                                transform="rotate(90 12.75 4.25)" fill="currentColor" />
-                                            <path
-                                                d="M12.0573 6.11875L13.5203 7.87435C13.9121 8.34457 14.6232 8.37683 15.056 7.94401C15.4457 7.5543 15.4641 6.92836 15.0979 6.51643L12.4974 3.59084C12.0996 3.14332 11.4004 3.14332 11.0026 3.59084L8.40206 6.51643C8.0359 6.92836 8.0543 7.5543 8.44401 7.94401C8.87683 8.37683 9.58785 8.34458 9.9797 7.87435L11.4427 6.11875C11.6026 5.92684 11.8974 5.92684 12.0573 6.11875Z"
-                                                fill="currentColor" />
-                                            <path
-                                                d="M18.75 8.25H17.75C17.1977 8.25 16.75 8.69772 16.75 9.25C16.75 9.80228 17.1977 10.25 17.75 10.25C18.3023 10.25 18.75 10.6977 18.75 11.25V18.25C18.75 18.8023 18.3023 19.25 17.75 19.25H5.75C5.19772 19.25 4.75 18.8023 4.75 18.25V11.25C4.75 10.6977 5.19771 10.25 5.75 10.25C6.30229 10.25 6.75 9.80228 6.75 9.25C6.75 8.69772 6.30229 8.25 5.75 8.25H4.75C3.64543 8.25 2.75 9.14543 2.75 10.25V19.25C2.75 20.3546 3.64543 21.25 4.75 21.25H18.75C19.8546 21.25 20.75 20.3546 20.75 19.25V10.25C20.75 9.14543 19.8546 8.25 18.75 8.25Z"
-                                                fill="#C4C4C4" />
-                                        </svg>
+                                        <i class="bi bi-download"></i>
                                     </span>Export
                                 </button>
-
+                                {{-- Inport --}}
+                                {{-- <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
+                                data-bs-target="#kt_import_modal">
+                                <span class="svg-icon svg-icon-2">
+                                    <i class="bi bi-upload"></i>
+                                </span>Tải lên file Excel
+                                </button> --}}
                                 {{-- Thêm mới --}}
                                 <a href="{{ route('admin.customers.show-customer-create') }}" class="btn btn-primary">
                                     <span class="svg-icon svg-icon-2">
@@ -149,10 +145,18 @@
                                         <span class="text-muted fw-bold text-muted d-block fs-7">{{$item->email}}</span>
                                     </td>
                                     <td>{{$item->birthday}}</td>
-                                    <td>@if($item->pasword != null)
+                                    <td>
+                                        @if($item->password != null)
                                         <div class="badge badge-light-success">Kích hoạt</div>
+                                        @else
+                                        <button class="d-block btn btn-sm btn-primary btn-resend" data-email="{{$item->email}}">
+                                            <span class="indicator-label">Gửi lại Email</span>
+                                            <span class="indicator-progress">Đang gửi...
+                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 
+                                        </button>
                                         @endif
+
                                     </td>
                                     <td class="text-center">
                                         <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
@@ -241,6 +245,52 @@
                         </div>
                     </div>
                 </div>
+
+
+                {{-- Modal Import --}}
+                <div class="modal fade " id="kt_import_modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable mw-850px">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="fw-bolder">Xuất danh sách</h2>
+
+                                <div id="kt_export_close" data-bs-dismiss="modal" aria-label="Close"
+                                    class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <span class="svg-icon svg-icon-1">
+                                        <i class="bi bi-x-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                {{-- <form id="kt_export_form" class="form" action="#"> --}}
+                                <div class="fv-row mb-10 text-center w-100">
+                                    <button class="btn btn-primary" id="btn_upload_file">Tải lên</button>
+                                    <input type="file" name="file_import" id="file_import" hidden
+                                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                </div>
+                                <div class="show_data" style="display: none;">
+                                    <div class="show_data text-center" id="show_import">
+
+                                    </div>
+                                </div>
+                                {{-- </form> --}}
+                            </div>
+                            <div class="modal-footer show_data" style="display: none;">
+                                <div class="text-center">
+                                    <button type="reset" data-bs-dismiss="modal" aria-label="Close"
+                                        class="btn btn-light me-3">Huỷ</button>
+                                    <button type="submit" id="kt_import_submit" class="btn btn-primary" >
+                                        <span class="indicator-label">Lưu</span>
+                                        <span class="indicator-progress">Đang lưu...
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -255,4 +305,156 @@
             display:none;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
+    <script>
+        var dataAjax = [];
+        var process = `<span class="spinner-border text-primary ms-2" style="font-size: 20px;"></span>`;
+        $("#btn_upload_file").on("click", () => {
+            $("#file_import").click()
+        })
+        $("#file_import").on("change", function() {
+            $(".show_data").show();
+            $("#show_import").html(process)
+            upload();
+        })
+
+        $('#kt_import_modal').on('hidden.bs.modal', function() {
+            $(".show_data").hide();
+            $("#show_import").html('');
+            $("#file_import").val('');
+        })
+        $(".btn-resend").on('click', function(e){
+            let email = $(this).data('email');
+            console.log(email);
+            const button = $(this);
+            funcResend(email, button);
+        })
+        function upload() {
+            var files = document.getElementById('file_import').files;
+            if (files.length == 0) {
+                alert("Please choose any file...");
+                return;
+            }
+            var filename = files[0].name;
+            var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+            if (extension == '.XLS' || extension == '.XLSX') {
+                //Here calling another method to read excel file into json
+                excelFileToJSON(files[0]);
+            } else {
+                alert("Please select a valid excel file.");
+            }
+        }
+        //Method to read excel file and convert it into JSON
+        function excelFileToJSON(file) {
+            try {
+                var reader = new FileReader();
+                let xxx;
+                reader.readAsBinaryString(file);
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    var workbook = XLSX.read(data, {
+                        type: 'binary'
+                    });
+                    var result = {};
+                    var firstSheetName = workbook.SheetNames[0];
+                    //reading only first sheet data
+                    var jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheetName]);
+                    //displaying the json result into HTML table
+                    displayJsonToHtmlTable(jsonData);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        //Method to display the data in HTML Table
+        function displayJsonToHtmlTable(jsonData) {
+            if (jsonData.length > 0 && jsonData.length <= 30) {
+                let element = `<table class="table table-striped">
+                    <thead class="thead-primary">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">building_id</th>
+                        <th scope="col">owner_id</th>
+                        <th scope="col">name</th>
+                        <th scope="col">apartment_code</th>
+                        <th scope="col">floor</th>
+                        <th scope="col">status</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                jsonData.forEach((e, key) => {
+                    // console.log(e);
+                    element += `<tr>
+                        <th scope="row">${key+1}</th>
+                        <td>${e.building_id}</td>
+                        <td>${e.owner_id?e.owner_id:''}</td>
+                        <td>${e.name}</td>
+                        <td>${e.apartment_code}</td>
+                        <td>${e.floor}</td>
+                        <td>${e.status}</td>
+                        </tr>`
+                    dataAjax.push(e);
+                });
+
+                element += `</tbody></table>`
+                $("#show_import").html(element);
+                // console.log(jsonData);
+                $("#kt_import_submit").attr('disabled', false);
+            } else {
+                $("#show_import").html('<span>File không thuộc dang Excel hoặc quá 30 dòng.</span>')
+                $("#kt_import_submit").attr('disabled', true);
+            }
+        }
+
+        $("#kt_import_submit").click(e => {
+            console.log(dataAjax);
+        })
+
+        function funcResend(email, submitButton){
+            let data={
+                _token: '{{csrf_token()}}',
+                email: email,
+                type: 'customer',
+                name: 'verify-email'
+            }
+            console.log(data);
+            // return
+            $.ajax({
+                url: "{{route("auth.sent-mail-reset-password")}}",
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                success: function(){
+                    // submitButton.removeAttribute('data-kt-indicator');
+                    submitButton.disabled = false;
+
+                    Swal.fire({
+                        text: "Đã gửi!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Chấp nhận!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    })
+                },
+                error: function(data){
+                    console.log(data);
+                    Swal.fire({
+                        text: "Có lỗi xảy ra. Hãy thử lại sau.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+                    submitButton.removeAttribute('data-kt-indicator');
+                    submitButton.disabled = false;
+                }
+            })
+
+        }
+
+    </script>
 @endpush

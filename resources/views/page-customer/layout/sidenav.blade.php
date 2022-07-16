@@ -27,14 +27,14 @@
                 <li><a href="pages.html"><i class="bi bi-calendar2-event-fill"></i>Lịch bảo trì</a></li>
                 <li><a href="pages.html"><i class="bi bi-collection"></i>Đăng ký phương tiện</a></li>
                 <li><a href="pages.html"><i class="bi bi-collection"></i>Hỗ trợ</a></li>
-                <li>
+                {{-- <li>
                     <div class="night-mode-nav"><i class="bi bi-bell"></i><label for="notifySwitch">Gửi thông
                             báo</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input form-check-success" id="notifySwitch" type="checkbox">
                         </div>
                     </div>
-                </li>
+                </li> --}}
                 <li>
                     <div class="night-mode-nav"><i class="bi bi-moon"></i><label for="darkSwitch">Chế độ ban đêm</label>
                         <div class="form-check form-switch">

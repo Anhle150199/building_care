@@ -300,7 +300,12 @@
                                         <td id="status_{{ $admin->id }}">
                                             {{ $admin->status }}
                                             @if($admin->status == "verifying")
-                                            <button class="d-block btn btn-sm btn-primary btn-resend" data-email="{{$admin->email}}">Resen Email</button>
+                                            <button class="d-block btn btn-sm btn-primary btn-resend" data-email="{{$admin->email}}">
+                                                <span class="indicator-label">Gửi lại Email</span>
+                                                <span class="indicator-progress">Đang gửi...
+                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+
+                                            </button>
                                             @endif
                                         </td>
                                         <td id="time_{{ $admin->id }}">
@@ -383,7 +388,17 @@
                                                 <span id="position_{{ $admin->id }}">{{ $admin->position }}</span>
                                             </div>
                                         </td>
-                                        <td id="status_{{ $admin->id }}">{{ $admin->status }}</td>
+                                        <td id="status_{{ $admin->id }}">
+                                            {{ $admin->status }}
+                                            @if($admin->status == "verifying")
+                                            <button class="d-block btn btn-sm btn-primary btn-resend" data-email="{{$admin->email}}">
+                                                <span class="indicator-label">Gửi lại Email</span>
+                                                <span class="indicator-progress">Đang gửi...
+                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+
+                                            </button>
+                                            @endif
+                                        </td>
                                         <td id="time_{{ $admin->id }}">
                                             {{ $admin->created_at->format('d M Y, h:i a') }}</td>
                                         <td class="text-center">
@@ -459,6 +474,8 @@
             $(".btn-resend").on('click', function(e){
                 let email = $(this).data('email');
                 console.log(email);
+                const button = $(this);
+                funcResend(email, button);
             })
         })
 
@@ -588,6 +605,51 @@
                             <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Xoá</a>
                         </div>
                     </div>`;
+        }
+        function funcResend(email, submitButton){
+            let data={
+                _token: '{{csrf_token()}}',
+                email: email,
+                type: 'admin',
+                name: 'verify-email'
+            }
+            console.log(data);
+            // return
+            $.ajax({
+                url: "{{route("auth.sent-mail-reset-password")}}",
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                success: function(){
+                    // submitButton.removeAttribute('data-kt-indicator');
+                    submitButton.disabled = false;
+
+                    Swal.fire({
+                        text: "Đã gửi!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Chấp nhận!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    })
+                },
+                error: function(data){
+                    console.log(data);
+                    Swal.fire({
+                        text: "Có lỗi xảy ra. Hãy thử lại sau.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+                    submitButton.removeAttribute('data-kt-indicator');
+                    submitButton.disabled = false;
+                }
+            })
+
         }
     </script>
 @endpush
