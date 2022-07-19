@@ -74,12 +74,13 @@
                         </div>
                         <div class="col-4">
                             <div class="feature-card mx-auto text-center">
-                                <div class="card mx-auto bg-gray">
-                                    {{-- <img src="img/demo-img/js.png" alt=""> --}}
-                                    <i class="bi bi-chat-right-dots text-danger"></i>
-
-                                </div>
-                                <p class="mb-0">Hỗ trợ</p>
+                                <a href="{{ route('user.support.show-list') }}">
+                                    <div class="card mx-auto bg-gray">
+                                        {{-- <img src="img/demo-img/js.png" alt=""> --}}
+                                        <i class="bi bi-chat-right-dots text-danger"></i>
+                                    </div>
+                                    <p class="mb-0">Hỗ trợ</p>
+                                </a>
                             </div>
                         </div>
                     </div>

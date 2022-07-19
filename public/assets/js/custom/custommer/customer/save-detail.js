@@ -30,7 +30,7 @@ var KTAppEcommerceSaveProduct = (function () {
                                         message: messageNotEmpty,
                                     },
                                     regexp: {
-                                        regexp: /^\d{10,11}$/i,
+                                        regexp: /^\d{10,12}$/i,
                                         message: 'Giá trị không hợp lệ.',
                                     },
                                 },

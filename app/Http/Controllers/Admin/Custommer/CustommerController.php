@@ -120,7 +120,7 @@ class CustommerController extends BaseBuildingController
             return redirect()->route("admin.customers.customer-list");
         }
         $data['buildingList'] = $this->buildingList;
-        $apartments = Apartment::where('building_id', $data['buildingActive'])->get();
+        $apartments = Apartment::all();
         $data['apartments'] = $apartments;
         $ownedApartment = Apartment::where('owner_id', $id)->join('building', 'building_id', 'building.id')
             ->select('apartments.id as apartmentId', 'apartments.name as apartmentName', 'building.name as buildingName')->get();
@@ -169,6 +169,12 @@ class CustommerController extends BaseBuildingController
         }
         try {
             $edit = $this->saveDataCustomer($edit, $request);
+            if($request->isOwner == 1){
+                Apartment::where("id", $request->apartment_id)->update([
+                    "owner_id"=>$edit->id,
+                    "status"=>"using"
+                ]);
+            }
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
         }

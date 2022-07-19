@@ -104,15 +104,25 @@
                                         <option value=""></option>
                                         @foreach ($apartments as $value)
                                             <option value="{{ $value->id }}"
-                                                @if ($value->id == @$customerCurrent->apartment_id) selected=true @endif>{{ $value->name }}
+                                                @if ($value->id == @$customerCurrent->apartment_id) selected=true @endif>{{ $value->apartment_code }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="mb-10 fv-row">
                                     <div class="form-check ">
+
+                                        <?php
+                                            if($typePage != 'new'){
+
+                                                $isOwner = 'false';
+                                                foreach(@$ownedApartment as $item){
+                                                    if($item->apartmentId == $customerCurrent->apartment_id) $isOwner = 'true';
+                                                }
+                                            }
+                                        ?>
                                         <input class="form-check-input me-3" name="owner"
-                                            type="checkbox" value="1"
+                                            type="checkbox" value="1" @if(@$isOwner == 'true') checked @endif
                                             id="owner_check" />
                                         <label class="form-check-label" for="owner_check">
                                             <div class="fw-bolder text-gray-800">Chủ căn hộ</div>

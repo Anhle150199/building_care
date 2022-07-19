@@ -66,6 +66,7 @@
                                         <i class="bi bi-download"></i>
                                     </span>Export
                                 </button>
+                                @if ($addCreate==="true")
                                 {{-- Inport --}}
                                 <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
                                     data-bs-target="#kt_import_modal">
@@ -86,6 +87,7 @@
                                     </span>
                                     Thêm mới
                                 </a>
+                                @endif
                             </div>
                             <div class="d-flex justify-content-end align-items-center d-none"
                                 data-kt-table-toolbar="selected">

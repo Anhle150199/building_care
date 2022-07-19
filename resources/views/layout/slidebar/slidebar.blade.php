@@ -324,7 +324,7 @@
             @foreach ($buildingList as $value)
                 <option value="{{$value->id}}" @if ($value->id == $buildingActive)
                     selected=true
-                @endif>{{$value->name}}</option>
+                @endif>{{$value->id." - ".$value->name}}</option>
             @endforeach
             @csrf
         </select>

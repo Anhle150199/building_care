@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Custommer;
 use App\Http\Controllers\Admin\BaseBuildingController;
 use App\Models\Apartment;
 use App\Models\ApartmentsRelationship;
+use App\Models\Building;
 use App\Models\Customer;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -43,6 +44,13 @@ class ApartmentController extends BaseBuildingController
         }
         $data['apartmentList'] = $apartmentList;
 
+        $check = Apartment::where("building_id",  $data['buildingActive'])->count();
+        $apartmentCount = Building::find( $data['buildingActive']);
+        $addCreate ="true";
+        if($check >= $apartmentCount->apartment_number){
+            $addCreate ="false";
+        }
+        $data['addCreate']=$addCreate;
         return view('customer.apartment', $data);
     }
 
@@ -83,6 +91,12 @@ class ApartmentController extends BaseBuildingController
         if ($check != null) {
             return new JsonResponse(['errors' => ['apartment_code' => 'Mã căn hộ bị trùng']], 406);
         }
+
+        $check = Apartment::where("building_id",  $this->getBuildingActive())->count();
+        $apartmentCount = Building::find( $this->getBuildingActive())->apartment_number;
+        if($check >= $apartmentCount){
+            return new JsonResponse(['errors' => 'full'], 406);
+        }
         try {
             $new = new Apartment();
             $new = $this->saveDataApartment($new, $request);
@@ -110,6 +124,12 @@ class ApartmentController extends BaseBuildingController
         foreach ($data as $key => $value) {
             $check = Apartment::where('apartment_code', $value->apartment_code)->first();
             if ($check != null) {
+                array_push($codeDataError,  $value->apartment_code);
+                continue;
+            }
+            $check = Apartment::where("building_id", $value->building_id)->count();
+            $apartmentCount = Building::find($value->building_id)->apartment_number;
+            if($check >= $apartmentCount){
                 array_push($codeDataError,  $value->apartment_code);
                 continue;
             }
