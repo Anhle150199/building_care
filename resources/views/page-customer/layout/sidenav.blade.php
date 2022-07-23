@@ -24,9 +24,9 @@
             <!-- Sidenav Nav -->
             <ul class="sidenav-nav ps-0">
                 <li><a href="{{ route('user.home') }}"><i class="bi bi-house-door"></i>Trang chủ</a></li>
-                <li><a href="pages.html"><i class="bi bi-calendar2-event-fill"></i>Lịch bảo trì</a></li>
-                <li><a href="pages.html"><i class="bi bi-collection"></i>Đăng ký phương tiện</a></li>
-                <li><a href="pages.html"><i class="bi bi-collection"></i>Hỗ trợ</a></li>
+                <li><a href="{{ route('user.maintenance') }}"><i class="bi bi-calendar2-event-fill"></i>Lịch bảo trì</a></li>
+                <li><a href="{{ route('user.show-vehicle') }}"><i class="bi bi-collection"></i>Đăng ký phương tiện</a></li>
+                <li><a href="{{ route('user.support.show-list') }}"><i class="bi bi-collection"></i>Hỗ trợ</a></li>
                 {{-- <li>
                     <div class="night-mode-nav"><i class="bi bi-bell"></i><label for="notifySwitch">Gửi thông
                             báo</label>

@@ -5,7 +5,6 @@
     </style>
 @endpush
 @section('content')
-
     <div class="page-content-wrapper">
         {{-- Alert chào mừng, nhắc nhở cài app --}}
         {{-- <div class="toast toast-autohide custom-toast-1 toast-success home-page-toast" role="alert" aria-live="assertive"

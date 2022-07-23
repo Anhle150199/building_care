@@ -34,8 +34,10 @@ class HomeController extends Controller
         $data['menu'] = 'home';
         $buildingId = $this->apartmentModel->getBuildingListForCustomer(Auth::user()->id);
         // dd($buildingId);
-        $notify = NotifyRelationship::whereIn('building_id', $buildingId)->join('notifications', 'notifications.id', 'notify_id')->where('status', 'public')->orderBy('notifications.id', 'desc')->paginate(10);
+        $notify = NotifyRelationship::whereIn('building_id', $buildingId)->distinct("notify_id")->pluck("notify_id")->toArray();
+        $notify =Notification::whereIn("id", $notify)->where('status', 'public')->orderBy('notifications.id', 'desc')->paginate(10);
         $data['list'] = $notify;
+        // dd($notify);
         return view('page-customer.home', $data);
     }
 

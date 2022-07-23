@@ -86,11 +86,12 @@ class MaintenanceController extends BaseBuildingController
         }
         // Todo push notification "Có lịch bảo trì "
         $apartments = Apartment::where("building_id", $request->building_id)->pluck('id')->toArray();
-        $userList1 = Apartment::whereIn("id", $apartments)->pluck('owner_id')->toArray();
+        $userList1 = Apartment::whereIn("id", $apartments)->whereNotNull('owner_id')->select('owner_id')->distinct('owner_id')->pluck('owner_id')->toArray();
         $userList2 = Customer::whereIn("apartment_id", $apartments)->pluck('id')->toArray();
         $userList = array_unique(array_merge($userList1, $userList2));
 
         $building = Building::find($request->building_id);
+
         $pushNotify = new PushNotify();
         $pushNotify->category= "maintenance";
         $pushNotify->receive_id = json_encode($userList);
@@ -100,12 +101,12 @@ class MaintenanceController extends BaseBuildingController
         $pushNotify->type_user = "customer";
         $pushNotify->click_action = route('user.maintenance');
         $pushNotify->save();
-        foreach ($apartments as $key => $value) {
-            PushNotifyRelationship::create([
-                'apartment_id' => $value,
-                'push_notify_id'=> $pushNotify->id,
-            ]);
-        }
+        // foreach ($apartments as $key => $value) {
+        //     PushNotifyRelationship::create([
+        //         'apartment_id' => $value,
+        //         'push_notify_id'=> $pushNotify->id,
+        //     ]);
+        // }
 
         $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
 
