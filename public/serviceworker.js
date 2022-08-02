@@ -10,7 +10,15 @@ var filesToCache = [
     '/images/icons/icon-152x152.png',
     '/images/icons/icon-192x192.png',
     '/images/icons/icon-384x384.png',
-    '/images/icons/icon-512x512.png',
+    '/customer/css/bootstrap.min.css',
+    '/customer/css/bootstrap-icons.css',
+    '/customer/style.css',
+    '/customer/js/bootstrap.bundle.min.js',
+    '/customer/js/internet-status.js',
+    '/customer/js/index.js',
+    '/customer/js/dark-rtl.js',
+    '/customer/js/active.js',
+
 ];
 
 // Cache on install
@@ -46,7 +54,7 @@ self.addEventListener("fetch", event => {
                 return response || fetch(event.request);
             })
             .catch(() => {
-                return caches.match('offline');
+                return caches.match('offline.html');
             })
     )
 });

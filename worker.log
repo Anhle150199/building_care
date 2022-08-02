@@ -1241,3 +1241,569 @@ PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/
 [2022-07-23 11:27:35][1D5XaYxrsI674NHqiaaZKhhZhf5baprB] Processed:  App\Jobs\PushNotificationJob
 [2022-07-23 11:31:53][NgS4dTbGUPCaBYxb8xcxvFOqzDdLYuWi] Processing: App\Jobs\PushNotificationJob
 [2022-07-23 11:31:55][NgS4dTbGUPCaBYxb8xcxvFOqzDdLYuWi] Processed:  App\Jobs\PushNotificationJob
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+28 vendor frames [22m
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+
+
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+   Predis\Connection\ConnectionException 
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+   Predis\Connection\ConnectionException 
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+   Predis\Connection\ConnectionException 
+
+  Error while reading line from the server. [tcp://127.0.0.1:6379]
+
+  at /home/lexuananh/Desktop/DATN/admin-care/vendor/predis/predis/src/Connection/AbstractConnection.php:155
+    151▕      */
+    152▕     protected function onConnectionError($message, $code = null)
+    153▕     {
+    154▕         CommunicationException::handle(
+  ➜ 155▕             new ConnectionException($this, static::createExceptionMessage($message), $code)
+    156▕         );
+    157▕     }
+    158▕ 
+    159▕     /**
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+      [2m+28 vendor frames [22m
+  29  /home/lexuananh/Desktop/DATN/admin-care/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle()
+
+   Whoops\Exception\ErrorException 
+
+  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory))
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'sodium' (tried: /usr/lib/php/20190902/sodium (/usr/lib/php/20190902/sodium: cannot open shared object file: No such file or directory), /usr/lib/php/20190902/sodium.so (/usr/lib/php/20190902/sodium.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
