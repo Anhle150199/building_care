@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Notification;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Jobs\MailJob;
 use App\Mail\NotifyEmail;
 use App\Models\Admin;
 use App\Models\Building;
@@ -85,10 +86,16 @@ class MailController extends BaseBuildingController
         foreach ($emailsBcc as $key => $value) {
             $emailsBcc[$key]=$value->email;
         }
-        $mailable = new NotifyEmail($email->subject, $email->content);
-        Mail::to($emailsTo)->cc($emailsCc)->bcc($emailsBcc)->send($mailable);
-
-
+        // $mailable = new NotifyEmail($email->subject, $email->content);
+        // Mail::to($emailsTo)->cc($emailsCc)->bcc($emailsBcc)->send($mailable);
+        MailJob::dispatch([
+            'subject'=>$email->subject,
+            "content" =>$email->content,
+            'to'=>$emailsTo,
+            'cc'=>$emailsCc,
+            'bcc'=>$emailsBcc,
+            'type'=>"notify",
+        ]);
         return new JsonResponse(['success', $emailsCc], 200);
     }
 
@@ -104,7 +111,7 @@ class MailController extends BaseBuildingController
             $data['item'] = $email;
             $admin = Admin::find($email->admin_id);
             if($admin == null){
-                
+
                 $admin = new Admin();
                 $admin->name ='noName';
                 $admin->avatar = "blank.png";

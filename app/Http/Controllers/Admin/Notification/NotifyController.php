@@ -3,19 +3,24 @@
 namespace App\Http\Controllers\Admin\Notification;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Jobs\PushNotificationJob;
 use App\Models\Admin;
+use App\Models\Apartment;
 use App\Models\Building;
+use App\Models\Customer;
 use App\Models\Notification;
 use App\Models\NotifyRelationship;
+use App\Models\PushNotify;
+use App\Models\PushNotifyRelationship;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class NotifyController extends BaseBuildingController
 {
-
     public function generalData()
     {
         $data = [];
@@ -87,6 +92,11 @@ class NotifyController extends BaseBuildingController
         if ($validate->fails()) {
             return new JsonResponse(['errors' => $validate->getMessageBag()->toArray()], 406);
         }
+
+        $request->slug = $this->checkSlug($request->title);
+        if($request->slug == false){
+            return new JsonResponse(['errors' => ["title" => "Slug bị trùng"]], 406);
+        }
         try {
             $request->admin_id = Auth::user()->id;
             $request->image_name = $this->saveImage($request->image);
@@ -108,6 +118,47 @@ class NotifyController extends BaseBuildingController
             return new JsonResponse(['errors' => ['Lỗi insert data.']], 406);
         }
         // Todo push notification "Có thông báo mới"
+        if($new->category == "notify"){
+            $apartments = Apartment::whereIn("building_id", $building)->pluck('id')->toArray();
+
+            if ($request->sent_type == 1) {
+                $userList = Customer::pluck("id")->toArray();
+                $deviceTokens = Customer::whereNotNull('device_key')->pluck('device_key')->toArray();
+
+            } else{
+                $userList1 = Apartment::whereIn("id", $apartments)->whereNotNull('owner_id')->select('owner_id')->distinct('owner_id')->pluck('owner_id')->toArray();
+                $userList2 = Customer::whereIn("apartment_id", $apartments)->pluck('id')->toArray();
+                $userList = array_unique(array_merge($userList1, $userList2));
+                $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
+            }
+            $pushNotify = new PushNotify();
+            $pushNotify->category= "notify_event";
+            $pushNotify->item_id = $new->id;
+            $pushNotify->title = "Bạn có thông báo mới từ Ban quản lý toà nhà";
+            $pushNotify->body = $new->title;
+            $pushNotify->type_user = "customer";
+            $pushNotify->click_action = url("/notify/").'/'.$new->slug;
+            $pushNotify->receive_id = json_encode($userList);
+            $pushNotify->save();
+
+            foreach ($apartments as $key => $value) {
+                PushNotifyRelationship::create([
+                    'apartment_id' => $value,
+                    'push_notify_id'=> $pushNotify->id,
+                ]);
+            }
+            PushNotificationJob::dispatch('sendBatchNotification', [
+                $deviceTokens,
+                [
+                    'topicName' => $pushNotify->category,
+                    'title' => $pushNotify->title,
+                    'body' => $pushNotify->body,
+                    'click_action' => $pushNotify->click_action,
+                    'image'=>"<i class=\"bi bi-bell\"></i>"
+                ],
+            ]);
+
+        }
 
         return new JsonResponse(['success'], 200);
     }
@@ -131,6 +182,20 @@ class NotifyController extends BaseBuildingController
         }
         try {
             $edit = Notification::find($request->id);
+            if($edit->title != $request->title){
+                $slug = Str::slug($request->title, '-');
+                if($slug != $edit->slug){
+                    $request->slug = $this->checkSlug($request->title);
+                    if($request->slug == false){
+                        return new JsonResponse(['errors' => ["title" => "Slug bị trùng"]], 406);
+                    }
+                } else {
+                    $request->slug = $slug;
+                }
+            }else{
+                $request->slug = $edit->slug;
+            }
+
             $request->admin_id = $edit->admin_id;
             if ($request->image == 'null') {
                 $request->image_name = $edit->image;
@@ -170,6 +235,15 @@ class NotifyController extends BaseBuildingController
             return new JsonResponse(['errors' => ['Lỗi insert data.', $request->image]], 406);
         }
         // Todo push notification "Có thông báo mới"
+        if($edit->category == "notify"){
+            $apartments = Apartment::whereIn("building_id", $building)->pluck('id')->toArray();
+            // Thêm trạng thái đọc người dùng
+            PushNotify::where(["type_user" => "customer","item_id" => $edit->id, 'category'=> "notify_event"])->update([
+                "title" => "Bạn có thông báo mới từ Ban quản lý toà nhà",
+                "body" => $edit->title,
+                "click_action" => url("/notify/").'/'.$edit->slug
+            ]);
+        }
 
         return new JsonResponse(['success'], 200);
     }
@@ -184,13 +258,13 @@ class NotifyController extends BaseBuildingController
             try {
                 Notification::whereIn('id', $id)->delete();
                 NotifyRelationship::whereIn('notify_id', $id)->delete();
+                // PushNotify::where(["type_user" => "customer", 'category'=> "notify_event"])->whereIn("item_id", $id)->delete();
             } catch (\Throwable $th) {
                 return new JsonResponse(['errors' => ' lỗi truy vấn'], 406);
             }
             return new JsonResponse(['deleted'], 200);
         }
         return new JsonResponse(['errors' => 'không có id'], 406);
-
     }
 
     public function saveData($model, $request)
@@ -202,6 +276,7 @@ class NotifyController extends BaseBuildingController
         $model->content = $request->content;
         $model->image = $request->image_name;
         $model->status = $request->status;
+        $model->slug = $request->slug;
         $model->save();
         return $model;
     }
@@ -229,5 +304,15 @@ class NotifyController extends BaseBuildingController
         }
         $file->move('images/', $fileName);
         return $fileName;
+    }
+
+    public function checkSlug($title)
+    {
+        $slug = Str::slug($title, '-');
+        $check = Notification::where("slug", $slug)->count();
+        if($check >0){
+            return false;
+        }
+        return $slug;
     }
 }

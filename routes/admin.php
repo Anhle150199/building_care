@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Custommer\VehicleController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\Notification\MailController;
 use App\Http\Controllers\Admin\Notification\NotifyController;
+use App\Http\Controllers\Admin\Support\SupportController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\System\AdminController;
 use App\Http\Controllers\Admin\System\DepartmentController;
@@ -26,6 +27,8 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
     Route::get('/', [AdminHomeController::class, 'index'])->name('dashboard');
     Route::post('/update-building-active', [BaseBuildingController::class, 'updateBuildingActive'])->name('update_building_active');
 
+    Route::patch('update-token', [AdminHomeController::class, 'updateDeviceKey'])->name('update-token');
+    Route::get('push-notification', [BaseBuildingController::class, 'getPushNotify'])->name('get-push-notification');
     // User manage(for admin login)
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('profile', [UserController::class, 'showProfile'])->name('profile');
@@ -75,6 +78,7 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('apartments', [ApartmentController::class, 'showApartmentList'])->name('apartment-list');
         Route::get('apartments/new', [ApartmentController::class, 'showNewApartment'])->name('show-apartment-new');
         Route::post('apartments/create', [ApartmentController::class, 'create'])->name('apartment-create');
+        Route::post('apartments/import-excel', [ApartmentController::class, 'importExcel'])->name('apartment-import-excel');
         Route::get('apartments/detail-{id}', [ApartmentController::class, 'showUpdate'])->name('show-apartment-update');
         Route::put('apartments/update', [ApartmentController::class, 'update'])->name('apartment-update');
         Route::delete('apartments/delete', [ApartmentController::class, 'delete'])->name('apartment-delete');
@@ -97,6 +101,16 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::put('vehicle/accept-request', [VehicleController::class, 'accept'])->name('vehicle-accept');
         Route::delete('vehicle/delete', [VehicleController::class, 'delete'])->name('vehicle-delete');
     });
+
+    // Support
+    Route::prefix("admin-support")->name('support.')->group(function(){
+        Route::get("/", [SupportController::class, 'showList'])->name('show-list');
+        Route::get("/detail-{id}", [SupportController::class, 'showDetail'])->name('show-detail');
+        Route::post('accept-request', [SupportController::class, 'acceptRequest'])->name('accept-request');
+        Route::post('close-support', [SupportController::class, 'close'])->name('close');
+        Route::post('reply', [SupportController::class, 'reply'])->name('reply');
+    });
+
     Route::prefix('system')->name('system.')->group(function () {
         Route::prefix('admins')->name('admins.')->group(function (){
             Route::get('/', [AdminController::class, 'showAdminList'])->name('admin-list');

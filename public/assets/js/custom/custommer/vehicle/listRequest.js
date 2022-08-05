@@ -59,7 +59,7 @@ var KTSubscriptionsList = (function () {
                                             });
                                     },
                                     error: function (data) {
-                                        console.log(data.responseJSON.errors);
+                                        console.log(data);
 
                                         Swal.fire({
                                             text: o + " chưa được xoá.",
@@ -153,7 +153,8 @@ var KTSubscriptionsList = (function () {
                                         i(), l();
                                     })
                             },
-                            error:function () {
+                            error:function (data) {
+                                console.log(data);
                                 Swal.fire({
                                     text: "Mục đã chọn chưa bị xoá.",
                                     icon: "error",

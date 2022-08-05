@@ -6,6 +6,13 @@ use App\Http\Controllers\Admin\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Customer\Auth\ForgotPasswordController as AuthForgotPasswordController;
+use App\Http\Controllers\Customer\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\Customer\Home\HomeController as HomeHomeController;
+use App\Http\Controllers\Customer\MaintenanceController;
+use App\Http\Controllers\Customer\Setting\SettingController;
+use App\Http\Controllers\Customer\SupportController;
+use App\Http\Controllers\Customer\VehicleController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,21 +30,19 @@ use Illuminate\Support\Facades\Redirect;
 
 foreach(config('constants.urls') as $url) {
     Route::get('/'. $url, function(){
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('user.home');
     });
 }
 
-// Route::get('xxx', function ()
-// {
-//     return view('test');
-// })->name('xxx');
-// Route::get('yyy', function (Request $req)
-// {
-//     dd($req->cars);
-//     return view('test');
-// })->name('yyy');
+use Illuminate\Support\Str;
+Route::get('xxx', [HomeHomeController::class, 'notification'])->name('xxx');
+Route::get('yyy', function (Request $req)
+{
+    $slug = Str::slug('Laravel 5  a lô lô â ê ạ á àFramework 5/5', '-');
+ECHO $slug;
+})->name('yyy');
 
-Route::namespace('Auth\Admin')->name('auth.')->group(function () {
+Route::namespace('Admin\Auth')->name('auth.')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('form-login');
     Route::post('login', [LoginController::class, 'login'])->name('login');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
@@ -50,6 +55,46 @@ Route::namespace('Auth\Admin')->name('auth.')->group(function () {
     Route::post('sent-mail-reset',[ForgotPasswordController::class, 'sentToken'])->name('sent-mail-reset-password');
 });
 
-// Route::namespace()
+Route::prefix('user')->name('auth-user.')->group(function(){
+    Route::get('login', [AuthLoginController::class, 'showLoginForm'])->name('form-login');
+    Route::post('login', [AuthLoginController::class, 'login'])->name('login');
+    Route::post('logout', [AuthLoginController::class, 'logout'])->name('logout');
 
+    Route::get('forgot-pasword', [AuthForgotPasswordController::class, 'showForgotPasswordForm'])->name('show-forgot-password');
+
+});
+
+Route::middleware('auth:user')->name('user.')->group(function () {
+    Route::get('home', [HomeHomeController::class, 'showHome'])->name("home");
+    Route::get('notify/{slug}', [HomeHomeController::class, 'showNotifyDetail'])->name("notify-detail");
+    Route::get("push-notification", [HomeHomeController::class, "showPushNotify"])->name("push-notify");
+    // Route::get('notify', [HomeHomeController::class, 'notification'])->name("notify");
+
+    Route::patch('update-token', [HomeHomeController::class, 'updateDeviceKey'])->name('update-token');
+
+    Route::get('vehicle', [VehicleController::class, 'show'])->name('show-vehicle');
+    Route::get('vehicle/register', [VehicleController::class, 'showForm'])->name('show-vehicle-register');
+    Route::post('vehicle/create', [VehicleController::class, 'create'])->name('vehicle-create');
+    Route::delete('vehicle/delete', [VehicleController::class, 'delete'])->name('delete-vehicle');
+
+    Route::get('maintenance', [MaintenanceController::class, 'show'])->name('maintenance');
+
+    Route::prefix('support')->name('support.')->group(function(){
+        Route::get('/', [SupportController::class, 'showList'])->name('show-list');
+        Route::get('/detail/#{id}', [SupportController::class, 'showDetail'])->name('show-detail');
+        Route::post('create', [SupportController::class, 'create'])->name('create');
+        Route::get('detail-{id}', [SupportController::class, 'showDetail'])->name("show-detail");
+        Route::post("reply", [SupportController::class, 'reply'])->name("reply");
+    });
+
+    Route::prefix('setting')->name('setting.')->group(function(){
+        Route::get('/', [SettingController::class, 'show'])->name('show');
+        Route::get('/profile', [SettingController::class, 'showProfile'])->name('show-profile');
+        Route::put('/profile-update', [SettingController::class, 'updateProfile'])->name('update-profile');
+        Route::get('/password', [SettingController::class, 'showPasswordChange'])->name('show-password');
+        Route::put('/password-update', [SettingController::class, 'updatePassword'])->name('update-password');
+
+        Route::post('/avatar-update', [SettingController::class, 'updateAvatar'])->name('update-avatar');
+    });
+});
 

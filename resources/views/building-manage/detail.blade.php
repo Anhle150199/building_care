@@ -131,13 +131,19 @@
                                                 <div class="text-muted fs-7">Tên toà nhà là bắt buộc và duy nhất.</div>
                                             </div>
                                             <div class="mb-10 fv-row">
+                                                <label class="required form-label">Mã toà nhà</label>
+                                                <input type="text" name="building_code" class="form-control mb-2"
+                                                    placeholder="Mã toà nhà" value="{{@$building->building_code}}" />
+                                                <div class="text-muted fs-7">Mã toà nhà là bắt buộc và duy nhất.</div>
+                                            </div>
+                                            <div class="mb-10 fv-row">
                                                 <label class=" form-label">Địa chỉ</label>
                                                 <input type="text" name="address" class="form-control mb-2"
                                                     placeholder="Địa chỉ toà nhà" value="{{@$building->address}}" />
                                             </div>
                                             <div class="mb-10  row">
                                                 <div class="col-6 fv-row">
-                                                    <label class=" form-label">Email</label>
+                                                    <label class="required form-label">Email</label>
                                                     <input type="text" name="email" class="form-control mb-2"
                                                         placeholder="Địa chỉ email toà nhà" value="{{@$building->email}}" />
                                                 </div>

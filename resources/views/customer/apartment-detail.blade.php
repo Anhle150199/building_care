@@ -84,12 +84,12 @@
                                     <input type="number" name="floor" class="form-control mb-2" data-floor="{{$buildingActiveInfo->floors_number}}"
                                         placeholder="Số tầng" value="{{@$apartment->floor}}" />
                                 </div>
-                                <div class="mb-10 fv-row">
+                                <div class="mb-10 fv-row" >
                                     <label class="required form-label">Trạng thái </label>
                                     <select class="form-select mb-2" data-control="select2" data-hide-search="true" name = "status"
                                         data-placeholder="Chọn trạng thái" id="status_select">
                                         <option value="using" @if (@$apartment->status == 'using') selected="selected" @endif>Đang ở</option>
-                                        <option value="absent" @if (@$apartment->status == 'absent') selected="selected" @endif>Vắng</option>
+                                        {{-- <option value="absent" @if (@$apartment->status == 'absent') selected="selected" @endif>Vắng</option> --}}
                                         <option value="empty" @if (@$apartment->status == 'empty') selected="selected" @endif> Để trống</option>
                                     </select>
                                 </div>
@@ -152,7 +152,7 @@
                                                             <tr class="fw-bolder text-muted">
                                                                 <th class="min-w-100px">Họ tên</th>
                                                                 <th class="min-w-100px">Liên hệ</th>
-                                                                <th class="min-w-100px text-end">Thao tác</th>
+                                                                {{-- <th class="min-w-100px text-end">Thao tác</th> --}}
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -161,7 +161,7 @@
                                                                 <td>
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="d-flex justify-content-start flex-column">
-                                                                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{$item->name}}</a>
+                                                                            <a href="{{ route('admin.customers.show-customer-update', ['id'=>$item->id]) }}" class="text-dark fw-bolder text-hover-primary fs-6">{{$item->name}}</a>
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -169,7 +169,7 @@
                                                                     <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{$item->phone}}</a>
                                                                     <span class="text-muted fw-bold text-muted d-block fs-7">{{$item->email}}</span>
                                                                 </td>
-                                                                <td>
+                                                                {{-- <td>
                                                                     <div class="d-flex justify-content-end flex-shrink-0">
                                                                         <a href="{{ route('admin.customers.show-customer-update', ['id'=>$item->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                                             <span class="svg-icon svg-icon-3">
@@ -180,7 +180,7 @@
                                                                             </span>
                                                                         </a>
                                                                     </div>
-                                                                </td>
+                                                                </td> --}}
                                                             </tr>
                                                             @endforeach
 
@@ -195,8 +195,8 @@
                                                 <h3 class="card-title align-items-start flex-column">
                                                     <span class="card-label fw-bolder fs-3 mb-1">Phương tiện</span>
                                                 </h3>
-                                                <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
-                                                    <a href="#" class="btn btn-sm btn-light btn-active-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">
+                                                <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover">
+                                                    <a href="{{ route('admin.customers.show-vehicle-create') }}" class="btn btn-sm btn-light btn-active-primary">
                                                     <span class="svg-icon svg-icon-3">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                             <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
@@ -213,7 +213,7 @@
                                                             <tr class="fw-bolder text-muted">
                                                                 <th class="min-w-100px">Phương tiện</th>
                                                                 <th class="min-w-100px">Trạng thái</th>
-                                                                <th class="min-w-100px text-end">Thao tác</th>
+                                                                {{-- <th class="min-w-100px text-end">Thao tác</th> --}}
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -222,7 +222,12 @@
                                                                 <td>
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="d-flex justify-content-start flex-column">
-                                                                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">
+                                                                            <a
+                                                                            @if($item->status == "request")
+                                                                            href="{{ route('admin.customers.vehicle-request') }}"
+                                                                            @else
+                                                                            href="{{ route('admin.customers.vehicle-list') }}"
+                                                                            @endif class="text-dark fw-bolder text-hover-primary fs-6">
                                                                                 @if ($item->category == 'motorbike')
                                                                                     {{"Xe máy"}}
                                                                                 @elseif ($item->category == 'car')
@@ -236,7 +241,7 @@
                                                                     </div>
                                                                 </td>
                                                                 <td>{{$item->status}}</td>
-                                                                <td>
+                                                                {{-- <td>
                                                                     <div class="d-flex justify-content-end flex-shrink-0">
                                                                         <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                                             <span class="svg-icon svg-icon-3">
@@ -256,7 +261,7 @@
                                                                             </span>
                                                                             </a>
                                                                     </div>
-                                                                </td>
+                                                                </td> --}}
                                                             </tr>
                                                             @endforeach
 

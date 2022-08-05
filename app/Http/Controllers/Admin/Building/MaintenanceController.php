@@ -3,8 +3,14 @@
 namespace App\Http\Controllers\Admin\Building;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Jobs\PushNotificationJob;
+use App\Models\Apartment;
+use App\Models\Building;
+use App\Models\Customer;
 use App\Models\Equipment;
 use App\Models\MaintenanceSchedule;
+use App\Models\PushNotify;
+use App\Models\PushNotifyRelationship;
 use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,7 +31,7 @@ class MaintenanceController extends BaseBuildingController
     public function show()
     {
         $data = $this->generalData();
-        $data['equipments'] = Equipment::all();
+        // $data['equipments'] = Equipment::all();
         return view('building-manage.maintenance-schedule', $data);
     }
 
@@ -78,7 +84,42 @@ class MaintenanceController extends BaseBuildingController
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
         }
+        // Todo push notification "Có lịch bảo trì "
+        $apartments = Apartment::where("building_id", $request->building_id)->pluck('id')->toArray();
+        $userList1 = Apartment::whereIn("id", $apartments)->whereNotNull('owner_id')->select('owner_id')->distinct('owner_id')->pluck('owner_id')->toArray();
+        $userList2 = Customer::whereIn("apartment_id", $apartments)->pluck('id')->toArray();
+        $userList = array_unique(array_merge($userList1, $userList2));
 
+        $building = Building::find($request->building_id);
+
+        $pushNotify = new PushNotify();
+        $pushNotify->category= "maintenance";
+        $pushNotify->receive_id = json_encode($userList);
+        $pushNotify->item_id = $new->id;
+        $pushNotify->title = "Toà ".$building->name.": Có lịch bảo trì mới!";
+        $pushNotify->body = $new->title;
+        $pushNotify->type_user = "customer";
+        $pushNotify->click_action = route('user.maintenance');
+        $pushNotify->save();
+        // foreach ($apartments as $key => $value) {
+        //     PushNotifyRelationship::create([
+        //         'apartment_id' => $value,
+        //         'push_notify_id'=> $pushNotify->id,
+        //     ]);
+        // }
+
+        $deviceTokens = Customer::whereIn("id", $userList)->whereNotNull('device_key')->pluck('device_key')->toArray();
+
+        PushNotificationJob::dispatch('sendBatchNotification', [
+            $deviceTokens,
+            [
+                'topicName' => $pushNotify->category,
+                'title' => $pushNotify->title,
+                'body' => $pushNotify->body,
+                'click_action' => $pushNotify->click_action,
+                'image'=>"<i class=\"bi bi-calendar2-event\"></i>"
+            ],
+        ]);
         return new JsonResponse([$new], 200);
     }
 

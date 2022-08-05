@@ -29,7 +29,7 @@
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 @include('layout.slidebar.header')
                 @yield('content')
-                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                {{-- <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
                     <div
                         class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
                         <div class="text-dark order-2 order-md-1">
@@ -38,7 +38,7 @@
                                 class="text-gray-800 text-hover-primary">{{ config('app.name') }} </a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -87,6 +87,48 @@
                     }
                 })
             })
+            const itemNotify = (icon, title, body, time, link)=>{
+                return `<div class="d-flex flex-stack py-4" >
+                            <a href="${link}" class="d-flex align-items-center">
+                                <div class="symbol symbol-35px me-4">
+                                    <span class="symbol-label bg-light-primary">
+                                        <span class="svg-icon svg-icon-2 svg-icon-primary">
+                                            ${icon}
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="mb-0 me-2">
+                                    <span href="#" class="fs-6 text-gray-800 text-hover-primary fw-bolder">${title}</span>
+                                    <div class="text-gray-400 fs-7">${body}
+                                    </div>
+                                </div>
+                            </a >
+                            <span class="badge badge-light fs-8 notify_time" >${time}</span>
+                        </div>`;
+            };
+            $("#notify_btn").on("click", ()=>{
+                $.ajax({
+                    url:"{{route('admin.get-push-notification')}}",
+                    type: "get",
+                    success: function(data){
+                        // console.log(data);
+                        let icon;
+                        $("#notify_list").empty();
+                        data.forEach((item)=>{
+                            if(item.category == "support"){
+                                icon =`<i class="bi bi-chat-dots"></i>`;
+                            }else if(item.category == "notify_event"){
+                                icon =`<i class="bi bi-bell"></i>`;
+                            }else if(item.category == "maintenance"){
+                                icon =`<i class="bi bi-calendar2-event"></i>`;
+                            }else if(item.category == "vehicle"){
+                                icon =`<i class="bi bi-bicycle"></i>`;
+                            }
+                            $("#notify_list").append(itemNotify(icon, item.title, item.body, item.time, item.click_action));
+                        })
+                    }
+                })
+            })
         })
     </script>
     {{-- <script src="{{ asset('/sw.js') }}"></script>
@@ -105,12 +147,13 @@
             overflow: hidden;
             line-height: 24px;
             -webkit-line-clamp: 2;
-            height: 45px;
+            /* height: 45px; */
             display: -webkit-box;
             /* width: 136px; */
             -webkit-box-orient: vertical;
         }
     </style>
+    @include("layout.firebase")
 </body>
 
 </html>

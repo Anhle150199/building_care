@@ -1,14 +1,13 @@
 @extends('layout.app')
 @push('css')
-    <link href="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('title', 'Danh sách căn hộ toà nhà ')
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         {{-- Header --}}
-        <div class="toolbar" id="kt_toolbar" data-route-delete="{{route('admin.customers.apartment-delete')}}">
+        <div class="toolbar" id="kt_toolbar" data-route-delete="{{ route('admin.customers.apartment-delete') }}">
             <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
@@ -20,8 +19,7 @@
                     <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
 
                         <li class="breadcrumb-item text-muted">
-                            <a href="{{ route('admin.dashboard') }}"
-                                class="text-muted text-hover-primary">Trang chủ</a>
+                            <a href="{{ route('admin.dashboard') }}" class="text-muted text-hover-primary">Trang chủ</a>
                         </li>
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-300 w-5px h-2px"></span>
@@ -45,10 +43,10 @@
                         <div class="card-title">
                             <div class="d-flex align-items-center position-relative my-1">
                                 <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none">
-                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
-                                            transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2"
+                                            rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
                                         <path
                                             d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
                                             fill="currentColor" />
@@ -65,32 +63,31 @@
                                 <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
                                     data-bs-target="#kt_export_modal">
                                     <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
-                                            <rect opacity="0.3" x="12.75" y="4.25" width="12" height="2" rx="1"
-                                                transform="rotate(90 12.75 4.25)" fill="currentColor" />
-                                            <path
-                                                d="M12.0573 6.11875L13.5203 7.87435C13.9121 8.34457 14.6232 8.37683 15.056 7.94401C15.4457 7.5543 15.4641 6.92836 15.0979 6.51643L12.4974 3.59084C12.0996 3.14332 11.4004 3.14332 11.0026 3.59084L8.40206 6.51643C8.0359 6.92836 8.0543 7.5543 8.44401 7.94401C8.87683 8.37683 9.58785 8.34458 9.9797 7.87435L11.4427 6.11875C11.6026 5.92684 11.8974 5.92684 12.0573 6.11875Z"
-                                                fill="currentColor" />
-                                            <path
-                                                d="M18.75 8.25H17.75C17.1977 8.25 16.75 8.69772 16.75 9.25C16.75 9.80228 17.1977 10.25 17.75 10.25C18.3023 10.25 18.75 10.6977 18.75 11.25V18.25C18.75 18.8023 18.3023 19.25 17.75 19.25H5.75C5.19772 19.25 4.75 18.8023 4.75 18.25V11.25C4.75 10.6977 5.19771 10.25 5.75 10.25C6.30229 10.25 6.75 9.80228 6.75 9.25C6.75 8.69772 6.30229 8.25 5.75 8.25H4.75C3.64543 8.25 2.75 9.14543 2.75 10.25V19.25C2.75 20.3546 3.64543 21.25 4.75 21.25H18.75C19.8546 21.25 20.75 20.3546 20.75 19.25V10.25C20.75 9.14543 19.8546 8.25 18.75 8.25Z"
-                                                fill="#C4C4C4" />
-                                        </svg>
+                                        <i class="bi bi-download"></i>
                                     </span>Export
                                 </button>
-
+                                @if ($addCreate==="true")
+                                {{-- Inport --}}
+                                <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
+                                    data-bs-target="#kt_import_modal">
+                                    <span class="svg-icon svg-icon-2">
+                                        <i class="bi bi-upload"></i>
+                                    </span>Tải lên file Excel
+                                </button>
                                 {{-- Thêm mới --}}
                                 <a href="{{ route('admin.customers.show-apartment-new') }}" class="btn btn-primary">
                                     <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
-                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                                transform="rotate(-90 11.364 20.364)" fill="currentColor" />
-                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2"
+                                                rx="1" transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                                fill="currentColor" />
                                         </svg>
                                     </span>
                                     Thêm mới
                                 </a>
+                                @endif
                             </div>
                             <div class="d-flex justify-content-end align-items-center d-none"
                                 data-kt-table-toolbar="selected">
@@ -109,8 +106,7 @@
                                     <th class="w-10px pe-2">
                                         <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                             <input class="form-check-input" type="checkbox" data-kt-check="true"
-                                                data-kt-check-target="#kt_table .form-check-input"
-                                                value="1" />
+                                                data-kt-check-target="#kt_table .form-check-input" value="1" />
                                         </div>
                                     </th>
                                     <th class="min-w-100px">Căn hộ</th>
@@ -122,58 +118,65 @@
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-bold">
-                                @foreach ($apartmentList as $item )
-                                <tr data-id={{$item->id}} id="row_{{$item->id}}">
-                                    <td>
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="{{$item->id}}" />
-                                        </div>
-                                    </td>
-                                    <td data-order="{{$item->floor}}">
-                                        <a href="{{ route('admin.customers.show-apartment-update', ['id'=>$item->id]) }}"
-                                            class="text-gray-800 text-hover-primary mb-1">{{$item->name}}</a>
-                                            <span class="text-muted fw-bold text-muted d-block fs-7">{{$item->apartment_code}}</span>
-                                    </td>
-                                    <td>
-                                        @isset($item->owner)
-                                        {{$item->owner}}
-                                        @endisset()
-                                    </td>
-                                    <td>
-                                        @if ($item->status == 'using')
-                                        <div class="badge badge-light-success">Đang ở</div>
-                                        @elseif ($item->status == 'empty')
-                                        <div class="badge badge-light-danger">Để trống</div>
-                                        @elseif ($item->status == 'absent')
-                                        <div class="badge badge-light-warning">Vắng</div>
-                                        @endif
-                                    </td>
-                                    <td></td>
-                                    <td>{{ $item->vehicle_number }}</td>
-                                    <td class="text-center">
-                                        <a href="#" class="btn btn-light btn-active-light-primary btn-sm btn-icon"
-                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                            <span class="svg-icon svg-icon-5 m-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect x="10" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                                    <rect x="17" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                                    <rect x="3" y="10" width="4" height="4" rx="2" fill="currentColor"></rect>
-                                                </svg>
-                                            </span>
-                                        </a>
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
-                                            data-kt-menu="true">
-                                            <div class="menu-item px-3">
-                                                <a href="{{ route('admin.customers.show-apartment-update', ['id'=>$item->id]) }}"
-                                                    class="menu-link px-3">Chỉnh sửa</a>
+                                @foreach ($apartmentList as $item)
+                                    <tr data-id={{ $item->id }} id="row_{{ $item->id }}">
+                                        <td>
+                                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="checkbox"
+                                                    value="{{ $item->id }}" />
                                             </div>
-                                            <div class="menu-item px-3">
-                                                <a href="#" data-kt-table-filter="delete_row"
-                                                    class="menu-link px-3">Xoá</a>
+                                        </td>
+                                        <td data-order="{{ $item->floor }}">
+                                            <a href="{{ route('admin.customers.show-apartment-update', ['id' => $item->id]) }}"
+                                                class="text-gray-800 text-hover-primary mb-1">{{ $item->name }}</a>
+                                            <span
+                                                class="text-muted fw-bold text-muted d-block fs-7">{{ $item->apartment_code }}</span>
+                                        </td>
+                                        <td>
+                                            @isset($item->owner)
+                                                {{ $item->owner }}
+                                            @endisset()
+                                        </td>
+                                        <td>
+                                            @if ($item->status == 'using')
+                                                <div class="badge badge-light-success">Đang ở</div>
+                                            @elseif ($item->status == 'empty')
+                                                <div class="badge badge-light-danger">Để trống</div>
+                                            @elseif ($item->status == 'absent')
+                                                <div class="badge badge-light-warning">Vắng</div>
+                                            @endif
+                                        </td>
+                                        <td></td>
+                                        <td>{{ $item->vehicle_number }}</td>
+                                        <td class="text-center">
+                                            <a href="#"
+                                                class="btn btn-light btn-active-light-primary btn-sm btn-icon"
+                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <span class="svg-icon svg-icon-5 m-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <rect x="10" y="10" width="4"
+                                                            height="4" rx="2" fill="currentColor"></rect>
+                                                        <rect x="17" y="10" width="4"
+                                                            height="4" rx="2" fill="currentColor"></rect>
+                                                        <rect x="3" y="10" width="4"
+                                                            height="4" rx="2" fill="currentColor"></rect>
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
+                                                data-kt-menu="true">
+                                                <div class="menu-item px-3">
+                                                    <a href="{{ route('admin.customers.show-apartment-update', ['id' => $item->id]) }}"
+                                                        class="menu-link px-3">Chỉnh sửa</a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="#" data-kt-table-filter="delete_row"
+                                                        class="menu-link px-3">Xoá</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -187,15 +190,15 @@
 
                             <div class="modal-header">
                                 <h2 class="fw-bolder">Xuất danh sách</h2>
-                                <div id="kt_export_close"
-                                    class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <div id="kt_export_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                                     <span class="svg-icon svg-icon-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
-                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                                transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                            <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                                transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="6" y="17.3137" width="16"
+                                                height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                                fill="currentColor" />
+                                            <rect x="7.41422" y="6" width="16" height="2"
+                                                rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
                                         </svg>
                                     </span>
                                 </div>
@@ -227,6 +230,50 @@
                         </div>
                     </div>
                 </div>
+                {{-- Modal Import --}}
+                <div class="modal fade " id="kt_import_modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable mw-850px">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="fw-bolder">Nhập dữ liệu file excel</h2>
+
+                                <div id="kt_export_close" data-bs-dismiss="modal" aria-label="Close"
+                                    class="btn btn-icon btn-sm btn-active-icon-primary">
+                                    <span class="svg-icon svg-icon-1">
+                                        <i class="bi bi-x-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                {{-- <form id="kt_export_form" class="form" action="#"> --}}
+                                <div class="fv-row mb-10 text-center w-100">
+                                    <button class="btn btn-primary" id="btn_upload_file">Tải lên</button>
+                                    <input type="file" name="file_import" id="file_import" hidden
+                                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                </div>
+                                <div class="show_data" style="display: none;">
+                                    <div class="show_data text-center" id="show_import">
+
+                                    </div>
+                                </div>
+                                {{-- </form> --}}
+                            </div>
+                            <div class="modal-footer show_data" style="display: none;">
+                                <div class="text-center">
+                                    <button type="reset" data-bs-dismiss="modal" aria-label="Close"
+                                        class="btn btn-light me-3">Huỷ</button>
+                                    <button type="submit" id="kt_import_submit" class="btn btn-primary" >
+                                        <span class="indicator-label">Lưu</span>
+                                        <span class="indicator-progress">Đang lưu...
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -236,9 +283,161 @@
 
     <script src="{{ url('/') }}/assets/js/custom/building/list/export.js"></script>
     <script src="{{ url('/') }}/assets/js/custom/custommer/apartment/list.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
     <style>
-        #kt_table_filter{
-            display:none;
+        #kt_table_filter {
+            display: none;
         }
     </style>
+    <script>
+        var dataAjax = [];
+        var process = `<span class="spinner-border text-primary ms-2" style="font-size: 20px;"></span>`;
+        $("#btn_upload_file").on("click", () => {
+            $("#file_import").click()
+        })
+        $("#file_import").on("change", function() {
+            $(".show_data").show();
+            $("#show_import").html(process)
+            upload();
+        })
+
+        $('#kt_import_modal').on('hidden.bs.modal', function() {
+            $(".show_data").hide();
+            $("#show_import").html('');
+            $("#file_import").val('');
+        })
+
+        function upload() {
+            var files = document.getElementById('file_import').files;
+            if (files.length == 0) {
+                alert("Please choose any file...");
+                return;
+            }
+            var filename = files[0].name;
+            var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+            if (extension == '.XLS' || extension == '.XLSX') {
+                //Here calling another method to read excel file into json
+                excelFileToJSON(files[0]);
+            } else {
+                alert("Please select a valid excel file.");
+            }
+        }
+        //Method to read excel file and convert it into JSON
+        function excelFileToJSON(file) {
+            try {
+                var reader = new FileReader();
+                let xxx;
+                reader.readAsBinaryString(file);
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    var workbook = XLSX.read(data, {
+                        type: 'binary'
+                    });
+                    var result = {};
+                    var firstSheetName = workbook.SheetNames[0];
+                    //reading only first sheet data
+                    var jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheetName]);
+                    //displaying the json result into HTML table
+                    displayJsonToHtmlTable(jsonData);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        //Method to display the data in HTML Table
+        function displayJsonToHtmlTable(jsonData) {
+            if (jsonData.length > 0 && jsonData.length <= 30) {
+                let element = `<table class="table table-striped">
+                    <thead class="thead-primary">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">building_id</th>
+                        <th scope="col">owner_id</th>
+                        <th scope="col">name</th>
+                        <th scope="col">apartment_code</th>
+                        <th scope="col">floor</th>
+                        <th scope="col">status</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                jsonData.forEach((e, key) => {
+                    // console.log(e);
+                    element += `<tr>
+                        <th scope="row">${key+1}</th>
+                        <td>${e.building_id}</td>
+                        <td>${e.owner_id?e.owner_id:''}</td>
+                        <td>${e.name}</td>
+                        <td>${e.apartment_code}</td>
+                        <td>${e.floor}</td>
+                        <td>${e.status}</td>
+                        </tr>`
+                    dataAjax.push(e);
+                });
+
+                element += `</tbody></table>`
+                $("#show_import").html(element);
+                // console.log(jsonData);
+                $("#kt_import_submit").attr('disabled', false);
+            } else {
+                $("#show_import").html('<span>File không thuộc dang Excel hoặc quá 30 dòng.</span>')
+                $("#kt_import_submit").attr('disabled', true);
+                $("#show_import").html('');
+
+            }
+        }
+
+        $("#kt_import_submit").click(e => {
+            console.log(JSON.stringify(dataAjax));
+            $("#kt_import_submit").attr('disabled', true);
+            $(".indicator-label").hide();
+            $(".indicator-progress").show()
+            $.ajax({
+                url: "{{route('admin.customers.apartment-import-excel')}}",
+                type: "post",
+                data: {
+                    data: JSON.stringify(dataAjax),
+                    _token: "{{csrf_token()}}"
+                },
+                dataType: 'json',
+                success: function(data) {
+                    Swal.fire({
+                        text: "Thành công!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Chấp nhận!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    }).then(function(e){
+                        $("#kt_import_modal").modal("hide")
+                        location.reload();
+                    })
+                },
+                error: function(data){
+                    console.log(data);
+                    let text = "Có lỗi khi import dữ liệu!";
+                    if(data.responseJSON.codeDataError){
+                        text = "Các căn hộ: ";
+                        data.responseJSON.codeDataError.forEach(element => {
+                            text+=" "+element+" ";
+                        });
+                        text+= " bị lỗi hoặc trùng mã căn hộ."
+                    }
+                    Swal.fire({
+                        text: text,
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Chấp nhận!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    }).then(function(e){
+                        $("#kt_import_modal").modal("hide")
+                        location.reload();
+                    })
+                }
+            })
+        })
+    </script>
 @endpush

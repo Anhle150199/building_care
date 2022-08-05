@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Custommer;
 
 use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Jobs\MailJob;
 use App\Mail\VerifyMail;
 use App\Models\AccessToken;
 use Illuminate\Http\Request;
@@ -58,7 +59,8 @@ class CustommerController extends BaseBuildingController
                 'customer_code' => 'string|required|unique:customers,customer_code',
                 'birthday' => 'required',
                 'status' => ['string', 'in:stay,leave,absent', 'required'],
-                'email' => ['required', 'string', 'unique:customers,email']
+                'email' => ['required', 'string', 'unique:customers,email'],
+                'isOwner'=>'in:0,1'
             ]
         );
 
@@ -72,11 +74,23 @@ class CustommerController extends BaseBuildingController
         try {
             $customer = new Customer();
             $new = $this->saveDataCustomer($customer, $request);
+            if($request->isOwner == 1){
+                Apartment::where("id", $request->apartment_id)->update([
+                    "owner_id"=>$new->id,
+                    "status"=>"using"
+                ]);
+            }
             // Gửi mail
             $token = AccessToken::createToken($new->id, 'verify-email','customer');
             $link = route('auth.verify-email', ['token'=>$token]); //1: admin, 0: user
-            $mailable = new VerifyMail($new->name, $link);
-            Mail::to($new->email)->send($mailable);
+            // $mailable = new VerifyMail($new->name, $link);
+            // Mail::to($new->email)->send($mailable);
+            MailJob::dispatch([
+                'link'=>$link,
+                "name"=>$new->name,
+                "email" =>$new->email,
+                'type'=>"verify",
+            ]);
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data cu dan']], 406);
         }
@@ -101,8 +115,12 @@ class CustommerController extends BaseBuildingController
         $data['methodAjax'] = 'put';
         $data['customerCurrent'] = $customerCurrent;
         $data['buildingActive'] = $this->getBuildingActive();
+        $buildingCustomer = Apartment::find($customerCurrent->apartment_id)->building_id;
+        if($buildingCustomer != $data['buildingActive'] ){
+            return redirect()->route("admin.customers.customer-list");
+        }
         $data['buildingList'] = $this->buildingList;
-        $apartments = Apartment::where('building_id', $data['buildingActive'])->get();
+        $apartments = Apartment::all();
         $data['apartments'] = $apartments;
         $ownedApartment = Apartment::where('owner_id', $id)->join('building', 'building_id', 'building.id')
             ->select('apartments.id as apartmentId', 'apartments.name as apartmentName', 'building.name as buildingName')->get();
@@ -120,7 +138,7 @@ class CustommerController extends BaseBuildingController
                 'customer_code' => 'string|required',
                 'birthday' => 'required',
                 'status' => ['string', 'in:stay,leave,absent', 'required'],
-                'email' => ['required', 'string', 'unique:customers,email']
+                'email' => ['required', 'string']
             ]
         );
 
@@ -143,8 +161,20 @@ class CustommerController extends BaseBuildingController
                     $oldApartmnet->save();
             }
         }
+        if($edit->email != $request->email){
+            $count = Customer::where('email', $request->email)->count();
+            if($count >0){
+                return new JsonResponse(['errors' => ['email' => 'Email bị trùng']], 406);
+            }
+        }
         try {
             $edit = $this->saveDataCustomer($edit, $request);
+            if($request->isOwner == 1){
+                Apartment::where("id", $request->apartment_id)->update([
+                    "owner_id"=>$edit->id,
+                    "status"=>"using"
+                ]);
+            }
         } catch (\Throwable $th) {
             return new JsonResponse(['errors' => ['Lỗi insert data']], 406);
         }

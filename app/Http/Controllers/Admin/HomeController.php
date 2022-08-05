@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\BaseBuildingController;
+use App\Models\Admin;
 use App\Models\Apartment;
 use App\Models\Customer;
 use App\Models\MaintenanceSchedule;
@@ -50,5 +51,23 @@ class HomeController extends BaseBuildingController
         $data['notifications'] = $notifications;
 
         return view('home', $data);
+    }
+
+    public function updateDeviceKey(Request $request)
+    {
+        try{
+
+            $userCurrent = Admin::find(Auth::user()->id);
+            $userCurrent->device_key=$request->token;
+            $userCurrent->save();
+            return response()->json([
+                'success'=>true, $request->all()
+            ]);
+        }catch(\Exception $e){
+            report($e);
+            return response()->json([
+                'success'=>false,$request->all()
+            ],500);
+        }
     }
 }
